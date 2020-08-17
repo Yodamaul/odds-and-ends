@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/dipaqo/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+</head>
+<body>
+  <center>
+    <h1>The Guessing Game</h1>
+    <hr>
+  <button id="1">Cup 1</button> <button id="2">Cup 2</button> <button id="3">Cup 3</button> <button id="4">Cup 4</button> <button id="5">Cup 5</button>
+  
+  
+  <h2>Player One's Choice: Cup <span class="1"></span></h2>
+  <h2>Player Two's Choice: Cup <span class="2"></span></h2>
+  
+  <h3>Player One Wins: <span id="o">0</span></h3>
+  <h3>Player Two Wins: <span id="t">0</span></h3>
+  </center>
+  
+<script id="jsbin-javascript">
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+var correct=getRandomInt(1,5); 
+
+var player =1;
+var one=0;
+var two=0;
+$("button").click(
+  
+  function(){
+    var id="."+player;
+    
+    
+    var t=$(this).attr("id");
+            
+    $(id).text(t);
+    player++;
+    
+    if(player==3){
+      var p1=parseInt($(".1").text());
+      var p2=parseInt($(".2").text());
+      
+     if(p1!=p2&&p1==correct){$.jGrowl("Player One Won", { life: 2000 });one++;} 
+      else if(p1!=p2&&p2==correct){$.jGrowl("Player Two Won", { life: 2000 });two++;}
+      else if(p1==p2&&p2==correct){$.jGrowl("You both Won", { life: 2000 });two++;one++;}
+      else{$.jGrowl("You both got it wrong, The Correct cup was "+correct, { life: 2000 });}
+      
+      $("h2 span").text("");
+      player=1;
+      correct=getRandomInt(1,5);
+      $("#o").text(one);
+      $("#t").text(two);
+      
+      
+      
+    }
+    
+            
+            }
+
+
+
+);
+</script>
+</body>
+</html>

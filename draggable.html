@@ -1,0 +1,620 @@
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/hazeyu/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<!--
+Created using JS Bin
+//jsbin.com
+
+Copyright (c) 2014 by Yekush (//jsbin.com/josusiji/12/edit)
+
+Released under the MIT license: //jsbin.mit-license.org
+-->
+<html lang="en">
+<head>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+<link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+<meta name="robots" content="noindex">
+<meta name="description" content="Finished DragV1 Abacus" />
+  <meta charset="utf-8">
+  <title>jQuery UI Draggable - Constrain movement</title>
+ <link href="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" rel="stylesheet" type="text/css" />
+  
+<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script> 
+
+  
+
+
+
+<style id="jsbin-css">
+.draggable {
+  background-image:url("//upload.wikimedia.org/wikipedia/commons/d/d3/5mukhi.png");
+  width: 2%;
+    height: 2px;
+    padding: .5em;
+    float: left;
+    margin: 0;
+
+background-size: 16px;
+
+}
+
+.draggable {
+    margin-bottom: 20px;
+    cursor: e-resize;
+}
+span:odd .draggable {
+   position:relative;
+    float:right;
+   padding: .5em;
+   margin: 0;
+ 
+}
+
+  
+  
+  
+
+#r1,#r2,#r3,#r4,#r5,#r6,#r7,#r8,#r9,#r10 {
+    background-color: #FF0;
+    width: 100%;
+    height: 10%;
+}
+
+ div #d1,#d2,#d3,#d4,#d5,#d6,#d7,#d8,#d9,#d10,#s1,#s2,#s3,#s4,#s5,#s6,#s7,#s8,#s9,#s10 {
+ 
+  width: 40%;
+    height: 15px;
+    padding: .5em;
+    float: left;
+    margin: 5px;
+}
+
+</style>
+ <script>
+$( document ).on( "pageinit", function() {
+  var $page = $(this);
+  $page.on( "swipeleft swiperight", function( e ) {
+  if ( $page.jqmData( "panel" ) !== "open" ) {
+    if ( e.type === "swipeleft"||e.type === "swiperight"  ) {
+    $page.find( "#mypanel" ).panel( "open" );
+    }
+  }
+  });
+  });
+  </script>
+</head>
+<body data-role="page">
+<center >
+<div data-role="panel" id="mypanel">
+      <h1>Switch To</h1>
+      <a class="ui-btn ui-btn-b ui-btn-inline" rel="external" href=
+      "https://yodamaul.firebaseapp.com/mcal.html">Matrix Calculator</a>
+      <a class="ui-btn ui-btn-a ui-btn-inline" rel="external" href=
+      "https://yodamaul.firebaseapp.com/mabac.html">Mayan Abacus</a>
+      <a class="ui-btn ui-btn-b ui-btn-inline" rel="external" href=
+      "https://yodamaul.firebaseapp.com/jabac.html">Japanese Abacus</a>
+      <a class="ui-btn ui-btn-a ui-btn-inline" rel="external" href=
+      "https://yodamaul.firebaseapp.com/cabac.html">Chinese Abacus</a>
+      <a class="ui-btn ui-btn-b ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/vabac.html">Vertical Abacus</a>
+      <a class="ui-btn ui-btn-a ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/dcalc.html">DNA Calculator</a>
+      <a class="ui-btn ui-btn-b ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/dprac.html">DNA Practice</a>
+      <a class="ui-btn ui-btn-a ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/habac.html">Horizontal Abacus</a>
+      <a class="ui-btn ui-btn-b ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/mtool.html">Music Tool</a>
+      <a class="ui-btn ui-btn-a ui-btn-inline" rel="external"href=
+      "https://yodamaul.firebaseapp.com/sabac.html">Slide Abacus</a>
+      <a class="ui-btn ui-btn-b ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/todo.html">Really Simple To-do
+      List</a><br>
+ <a class="ui-btn ui-btn-b ui-btn-inline"rel="external" href=
+      "https://yodamaul.firebaseapp.com/mprac.html">Math Practice
+      </a>
+
+    </div>
+  <div data-role="header">
+    
+    <h1>Draggable/Slidable Abacus</h1>
+    <a data-icon="info" data-ref="dialog" href="">Help</a>
+  </div>  
+ <div data-role="content">  
+
+  <div id="r1">
+<span id="s1" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d1" class="ui-widget-header">
+  </span>
+
+  <p id="c1">0</p>
+  </div>
+
+   
+  <div id="r2">
+<span id="s2" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d2" class="ui-widget-header">
+  </span>
+
+  <p id="c2">0</p>
+  </div>
+  
+  <div id="r3">
+<span id="s3" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d3" class="ui-widget-header">
+  </span>
+
+  <p id="c3">0</p>
+  </div>
+
+  <div id="r4">
+<span id="s4" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d4" class="ui-widget-header">
+  </span>
+
+  <p id="c4">0</p>
+  </div>
+
+  <div id="r5">
+<span id="s5" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d5" class="ui-widget-header">
+  </span>
+
+  <p id="c5">0</p>
+  </div>
+
+  <div id="r6">
+<span id="s6" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d6" class="ui-widget-header">
+  </span>
+
+  <p id="c6">0</p>
+  </div>
+
+  <div id="r7">
+<span id="s7" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d7" class="ui-widget-header">
+  </span>
+
+  <p id="c7">0</p>
+  </div>
+   <div id="r8">
+<span id="s8" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d8" class="ui-widget-header">
+  </span>
+
+  <p id="c8">0</p>
+  </div>
+
+  <div id="r9">
+<span id="s9" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d9" class="ui-widget-header">
+  </span>
+
+  <p id="c9">0</p>
+  </div>
+<div id="r10">
+<span id="s10" class="ui-widget-header">
+ 
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>
+<div  class="draggable ui-widget-content"></div> 
+<div  class="draggable ui-widget-content"></div>  
+  
+  </span> 
+  
+  
+  <span id="d10" class="ui-widget-header">
+  </span>
+
+  <p id="c10">0</p>
+  </div>
+ 
+  <h1 id="total"><h1>
+  
+  </div>
+
+  <div data-role="footer" >
+    <h3>&copy;YodaMaul Inc. 2014</h3>
+  </div>
+  
+  </center> 
+<script>$("body").bind('swipe',function(event, ui){var $page = $(this);
+  $page.on( "swipeleft swiperight", function( e ) {
+  if ( $page.jqmData( "panel" ) !== "open" ) {
+    if ( e.type === "swipeleft"||e.type === "swiperight"  ) {
+    $page.find( "#mypanel" ).panel( "open" );
+    }
+  }
+});
+   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jStorage/0.4.4/jstorage.min.js"></script>
+<script id="jsbin-javascript">
+  $.noConflict();
+var c1 = 0;
+var c2 = 0;
+var c3 = 0;
+var c4 = 0;
+var c5 = 0;
+var c6 = 0;
+var c7 = 0;
+var c8 = 0;
+var c9 = 0;
+var c10 = 0;
+var c = ["#c1", "#c2", "#c3", "#c4", "#c5", "#c6", "#c7", "#c8", "#c9", "#c10"];
+var d = ["#d1", "#d2", "#d3", "#d4", "#d5", "#d6", "#d7", "#d8", "#d9", "#d10"];
+var r = ["#r1", "#r2", "#r3", "#r4", "#r5", "#r6", "#r7", "#r8", "#r9", "#r10"];
+var s = ["#s1", "#s2", "#s3", "#s4", "#s5", "#s6", "#s7", "#s8", "#s9", "#s10"];
+var v = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10];
+var total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+try{$("#total").text("Total: " + total);}catch(e){console.log('error='+e);}
+
+for (j = 0; j < s.length; j++) {
+    $("div", s[j]).draggable({
+        axis: "x",
+        cancel: "a.ui-icon",
+        // clicking an icon won't initiate dragging
+        revert: "invalid",
+        // when not dropped, the item will revert back to its initial position
+        containment: r[j],
+        cursor: "move"
+    });
+}
+$(function() {
+    $(".draggable").draggable();
+    for (q = 0; q < d.length; q++) {
+        $(d[q]).droppable({
+            drop: function(event, ui) {
+                var x = $(this).attr('id');
+                switch (x) {
+                case "d1":
+                    var cc = c[0];
+                    if (c1 < 10) {
+                        c1++;
+                        $(cc).text(c1);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d2":
+                    cc = c[1];
+                    if (c2 < 10) {
+                        c2++;
+                        $(cc).text(c2);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d3":
+                    cc = c[2];
+                    if (c3 < 10) {
+                        c3++;
+                        $(cc).text(c3);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d4":
+                    cc = c[3];
+                    if (c2 < 10) {
+                        c4++;
+                        $(cc).text(c4);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d5":
+                    cc = c[4];
+                    if (c2 < 10) {
+                        c5++;
+                        $(cc).text(c5);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d6":
+                    cc = c[5];
+                    if (c2 < 10) {
+                        c6++;
+                        $(cc).text(c6);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d7":
+                    cc = c[6];
+                    if (c2 < 10) {
+                        c7++;
+                        $(cc).text(c7);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d8":
+                    cc = c[7];
+                    if (c8 < 10) {
+                        c8++;
+                        $(cc).text(c8);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d9":
+                    cc = c[8];
+                    if (c9 < 10) {
+                        c9++;
+                        $(cc).text(c9);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "d10":
+                    cc = c[9];
+                    if (c10 < 10) {
+                        c10++;
+                        $(cc).text(c10);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                }
+            }
+        });
+        $(s[q]).droppable({
+            drop: function(event, ui) {
+                var y = $(this).attr('id');
+                switch (y) {
+                case "s1":
+                    var cc = c[0];
+                    if (c1 > 0) {
+                        c1--;
+                        $(cc).text(c1);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s2":
+                    cc = c[1];
+                    if (c2 > 0) {
+                        c2--;
+                        $(cc).text(c2);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s3":
+                    cc = c[2];
+                    if (c3 > 0) {
+                        c3--;
+                        $(cc).text(c3);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s4":
+                    cc = c[3];
+                    if (c4 > 0) {
+                        c4--;
+                        $(cc).text(c4);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s5":
+                    cc = c[4];
+                    if (c5 > 0) {
+                        c5--;
+                        $(cc).text(c5);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s6":
+                    cc = c[5];
+                    if (c6 > 0) {
+                        c6--;
+                        $(cc).text(c6);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s7":
+                    cc = c[6];
+                    if (c7 > 0) {
+                        c7--;
+                        $(cc).text(c7);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s8":
+                    cc = c[7];
+                    if (c8 > 0) {
+                        c8--;
+                        $(cc).text(c8);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s9":
+                    cc = c[8];
+                    if (c9 > 0) {
+                        c9--;
+                        $(cc).text(c9);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                case "s10":
+                    cc = c[9];
+                    if (c10 > 0) {
+                        c10--;
+                        $(cc).text(c10);
+                        total = c1 * 1000000000 + c2 * 100000000 + c3 * 10000000 + c4 * 1000000 + c5 * 100000 + c6 * 10000 + c7 * 1000 + c8 * 100 + c9 * 10 + c10;
+                        $("#total").text("Total: " + total);
+                    }
+                    break;
+                }
+            }
+        });
+    }
+});
+</script>
+
+
+
+</body>
+</html>

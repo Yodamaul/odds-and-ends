@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/junuwu/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquerykeyframes/0.0.9/jquery.keyframes.min.js"></script>
+
+</head>
+
+<body>
+    <style>
+		
+		.sk-cube-grid {
+  width: 60px;
+  height: 60px;
+}
+.sk-cube-grid  {
+ position:relative;
+	top:50%;left:50%;
+		transform: translate(-50%, -50%);
+}
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: white;
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); 
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+  } 
+}
+		
+		
+        html,
+        body {
+            background: #212121;
+            margin: 0;
+            padding: 0;
+        	overflow:block;
+        }
+		#sun,#sun div{z-index:100000}
+		#earth:after {
+  position: absolute;
+  left: -15%;
+  top: 50%;
+  height: 1px;
+  background: white;
+  content: "";
+  width: 130%;
+  display: block;
+			transform: rotate(66.5deg);
+}
+		
+		.earthrotation {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 6px;
+  background: white;
+  content: "";
+  width: 10%;
+  display: block;
+				transform: rotate(-23.5deg);
+}
+		
+		
+		.track{z-index:10}
+        #sun {
+            background-color: white;
+            height: 8vh;
+            width: 8vh;
+            border-radius: 30vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+		
+		
+		#mercury{
+            background-color: magenta;
+            height: 2.4vh;
+            width: 2.4vh;
+            border-radius: 30vh;
+            position: absolute;
+        	top: 25% ;
+            left: 25%; 
+			transform: translate(-25%, -25%);
+
+        }
+		
+		#venus{
+            background-color: blue;
+            height: 4.8vh;
+            width: 4.8vh;
+            border-radius: 30vh;
+            position: absolute;
+        	top: 25% ;
+            left: 25%; 
+			transform: translate(-25%, -25%);
+
+        }
+		#venus2 {
+            background-color: orange;
+            height: 4.8vh;
+            width: 4.8vh;
+            border-radius: 30vh;
+            position: absolute;
+        	top: 25% ;
+            left: 25%; 
+			transform: translate(-25%, -25%);
+
+        }
+		
+	#jupiter {
+            background-color: brown;
+            height: 6vh;
+            width: 6vh;
+            border-radius: 30vh;
+            position: absolute;
+        	top: 25% ;
+            left: 25%; 
+			transform: translate(-25%, -25%);
+
+        }
+		
+        #earth {
+            background-color: lime;
+            height: 5vh;
+            width: 5vh;
+            border-radius: 30vh;
+            position: absolute;
+        	top: 25% ;
+            left: 25%; 
+			transform: translate(-25%, -25%);
+
+        }
+       #moon {
+            background-color: gray;
+            height: 2.5vh;
+            width: 2.5vh;
+            border-radius: 30vh;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            transform: translate(-25%, -25%);
+         
+        }
+        #moon2 {
+            background-color: red;
+            height: .5vh;
+            width: .5vh;
+            border-radius: 30vh;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            transform: translate(-25%, -25%);
+            -webkit-animation: moon2Orbit 3s linear infinite;
+            /* Chrome, Safari 5 */
+        }
+        div.track,div.track2{
+        	position:absolute;
+        	
+        	top:50%;
+        	left:50%;
+			border: 1px solid white;
+        	outline-color: red;
+        	transform: translate(-50%, -50%);
+        }
+		div.mercury.track{width:20vh;
+        	height:20vh;
+        	border-radius:30vh;
+		}div.venus.track{width:30vh;
+        	height:30vh;
+        	border-radius:30vh;
+		}div.venus.track2{width:30vh;
+        	height:30vh;
+        	border-radius:30vh;
+		}
+		
+		div.earth.track,div.earth.track2{width:40vh;
+        	height:40vh;
+        	border-radius:40vh;
+		}
+		
+		div.mars.track{width:50vh;
+        	height:50vh;
+        	border-radius:50vh;
+		}
+		
+		
+			div.saturn.track{width:65vh;
+        	height:65vh;
+        	border-radius:70vh;
+		}div.jupiter.track{width:75vh;
+        	height:75vh;
+        	border-radius:80vh;
+		}
+		
+		div.uranus.track{width:85vh;
+        	height:85vh;
+        	border-radius:100vh;
+		}
+		
+		div.neptune.track{width:95vh;
+        	height:95vh;
+        	border-radius:100vh;
+		}	div.moon.track{width:14vh;
+        	height:14vh;
+        	border-radius:100vh;
+		}
+		div.loading{position:fixed;top:0;left:0;width:100vw;height:100vh; background: #212121;z-index:999999999;
+		 -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 1s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+		
+		
+		}
+		
+		
+		
+		
+		@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+		
+		
+    </style>
+	<!-- <div class="loading">
+	<div class="sk-cube-grid">
+	  <div class="sk-cube sk-cube1"></div>
+	  <div class="sk-cube sk-cube2"></div>
+	  <div class="sk-cube sk-cube3"></div>
+	  <div class="sk-cube sk-cube4"></div>
+	  <div class="sk-cube sk-cube5"></div>
+	  <div class="sk-cube sk-cube6"></div>
+	  <div class="sk-cube sk-cube7"></div>
+	  <div class="sk-cube sk-cube8"></div>
+	  <div class="sk-cube sk-cube9"></div>
+	</div>
+	</div>
+	 -->
+    <div id="sun" class="clickable">
+       <div id="mercury" class="clickable">
+		
+		</div>
+        <div id="venus" class="clickable">
+
+        </div> <div id="jupiter" class="clickable">
+
+        </div>
+        <div id="earth" class="clickable">
+			<!--   <div class="venus track2"></div>
+			  		<div id="venus2" class="clickable">
+			  			
+			  			
+			  			
+			  			</div> -->
+			<div class="earthrotation" class="clickable" > </div>
+            <div class="moon track clickable"></div>
+            <div id="moon" class="clickable">
+                <div id="moon2" class="clickable"> </div>
+            </div>
+        
+		
+    </div>
+  <!--   <div class="tracks">
+        <div class="mercury track"></div>
+        <div class="venus track"></div>
+        <div class="earth track"></div>
+        <div class="mars track"></div>
+        <div class="saturn track"></div>
+        <div class="jupiter track"></div>
+        <div class="uranus track"></div>
+        <div class="neptune track"></div>
+    </div> -->
+</div>
+
+<script id="jsbin-javascript">
+var distanceFromCenter={
+	sun:0,
+	
+	earth:10
+	
+	
+	
+	
+	
+	
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Animations*/
+
+$.keyframe.define({
+    name: 'earthOrbit',
+    from: {
+        'transform': 'rotate(0deg)  translate(14vh, 14vh)  rotate(0deg) '
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(14vh, 14vh)  rotate(-360deg) '
+    }
+});
+$.keyframe.define({
+    name: 'jupiterOrbit',
+    from: {
+        'transform': 'rotate(0deg)  translate(30vh, 30vh)  rotate(0deg) '
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(30vh, 30vh)  rotate(-360deg) '
+    }
+});
+
+$.keyframe.define({
+    name: 'sunOrbit',
+    from: {
+        'transform': 'rotate(0deg)  translate(14vh, 14vh)  rotate(0deg) '
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(14vh, 14vh)  rotate(-360deg) '
+    }
+});
+
+$.keyframe.define({
+    name: 'mercuryOrbit',
+    from: {
+        'transform': 'rotate(0deg)  translate(7.5vh, 7.5vh)  rotate(0deg)'
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(7.5vh, 7.5vh)  rotate(-360deg)'
+    }
+});
+$.keyframe.define({
+    name: 'earthRotate',
+    from: {
+        'transform': ' translate3d(-2.5vh,-0vh, 0vh)  rotate(0) '
+    },
+    to: {
+        'transform': ' translate3d(2.5vh,0vh, 0vh)  rotate(-360deg)'
+    }
+});
+
+$.keyframe.define({
+    name: 'venusOrbit',
+    from: {
+        'transform': 'rotate(0deg)  translate(10.4vh, 10.4vh)  rotate(0deg)'
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(10.4vh, 10.4vh)  rotate(-360deg)'
+    }
+});
+
+
+$.keyframe.define({
+    name: 'moon2Orbit',
+    from: {
+        'transform': 'rotate(0deg) translate(2vh, 2vh)'
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(2vh, 2vh)'
+    }
+});
+
+$.keyframe.define({
+    name: 'moonOrbit',
+    from: {
+        'transform': 'rotate(0deg) translate(5vh, 5vh)'
+    },
+    to: {
+        'transform': 'rotate(360deg) translate(5vh, 5vh)'
+    }
+});
+
+$(window).load(function() {
+    $("#earth").playKeyframe(
+        'earthOrbit 10s linear 0s infinite');
+    $("#jupiter").playKeyframe(
+        'jupiterOrbit 30s linear 0s infinite');
+    $(".earthrotation").playKeyframe(
+        'earthRotate 0.28s linear 0s infinite');
+
+    	$("#mercury").playKeyframe(
+            'mercuryOrbit 4.8s linear 0s infinite');
+    $("#venus").playKeyframe(
+        'venusOrbit 6.2s linear 0s infinite');
+	$("#venus2").playKeyframe(
+        'venusOrbit 6.1s linear 0s infinite');
+    $("#moon").playKeyframe(
+        'moonOrbit 2.50s linear 0s infinite');
+    $("#moon2").playKeyframe(
+        'moon2Orbit 1s linear 0s infinite');
+
+
+});
+
+// $("div").mouseover(function() {console.log($(this).attr("id"));
+// 	var trackid=".track."+$(this).attr("id");
+// 	var id="#"+$(this).attr("id");
+//     $(trackid).css("border", "2px solid white");
+// 	 $(id).pauseKeyframe();
+// 	$( this ).mouseleave(function() {console.log("GEk");
+//   $(trackid).css("border", "1px solid white");
+// 		$(id).resumeKeyframe();
+// });
+	
+// });
+
+
+$(".clickable").click(function() {
+
+   var planet=$("#earth");
+	$(".track").hide();
+planet.pauseKeyframe();
+ 	$("body").prepend($("#earth"));
+	$("#earth").prepend($("#sun"));
+$("#sun").css({
+		top:"25%",left:"25%",
+		transform:"translate(-25%, 25%)"
+		
+		
+	});
+	
+	$("#sun").playKeyframe(
+            'sunOrbit 60s linear 0s infinite');
+});
+
+
+</script>
+</body>
+
+</html>

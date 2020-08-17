@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/gacipe/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+	<link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.3/fullcalendar.css" rel="stylesheet" type=
+	"text/css">
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.3/fullcalendar.js"></script>
+	<script src='https://cdn.firebase.com/js/client/2.0.4/firebase.js'></script>
+	<meta charset="utf-8">
+
+	<title>JS Bin</title>
+<style id="jsbin-css">
+h1{display:inline}
+#lll{float:right}
+
+#mmyModal iframe{width:100%}
+</style>
+</head>
+
+<body>
+	<div id="df" title="Update User">
+		<p class="validateTips">All form fields are required.</p>
+
+
+		<form class="fform">
+			<input class="form-control" placeholder="Event Name"><br>
+			<input class="form-control" id="ddd" placeholder="Event Start Date" type="date"><br>
+			<input class="form-control" placeholder="Event End Date" type="date"><br>
+			<input class="form-control" placeholder="Event Start Date" type="color"><br>
+
+			<textarea class="form-control" placeholder="Description of Event">
+</textarea>
+		</form>
+	</div>
+<div class="modal fade" id="mmyModal" tabindex="-1">
+			
+	<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal" type="button"><span>&times;</span></button>
+
+						<h4 class="modal-title" id="myModalLabel">Calender Timeline</h4>
+					</div>
+
+
+					<div class="modal-body">
+						<iframe src="/caltime.html"></iframe>
+					</div>
+
+
+					<div class="modal-footer">
+						<button class="btn btn-primary" id="ae" type="button">Add an Event</button><br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<div id="loe" title="List Of Events">
+		<p class="validateTips">All form fields are required.</p>
+
+
+		<table>
+			<tr>
+				<th>Date<br></th>
+
+				<th>Event Name<br></th>
+			</tr>
+		</table>
+	</div>
+
+
+	<div class="ct page-header">
+	 <button class=
+		"btn btn-primary btn-lg" data-target="#myModal" data-toggle="modal" id="lll" type="button">Add an
+		Event</button>
+
+		<div class="modal fade" id="myModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal" type="button"><span>&times;</span></button>
+
+						<h4 class="modal-title" id="myModalLabel">Add an Event</h4>
+					</div>
+
+
+					<div class="modal-body">
+						<form class="formm">
+							<input class="form-control" placeholder="Event Name"><br>
+							<input class="form-control" id="ddd" placeholder="Event Start Date" type="date"><br>
+							<input class="form-control" placeholder="Event End Date" type="date"><br>
+							<input class="form-control" placeholder="Event Start Date" type="color"><br>
+
+							<textarea class="form-control" placeholder="Description of Event">
+</textarea>
+						</form>
+						<br>
+						<br>
+					</div>
+
+
+					<div class="modal-footer">
+						<button class="btn btn-primary" id="ae" type="button">Add an Event</button><br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="calendar">
+	</div>
+<script id="jsbin-javascript">
+$("#lll").hide();
+
+$( ".a" ).click(function() {
+      $( "#loe" ).dialog( "open" );
+    });
+
+function addCalanderEvent(id, start, end, title, colour)
+{
+    var eventObject = {
+    title: title,
+    start: start,
+    end: end,
+    id: id,
+    color: colour
+    };
+$("#loe").children("table").append("<tr><td><center><center>"+start+" to "+end+"</center></td><td><center>"+title+"</center></td></tr>");
+    $('#calendar').fullCalendar('renderEvent', eventObject, true);
+    return eventObject;
+}
+
+function updateCalanderEvent(event,eee,start, end, title, colour)
+{
+   event.title=title;
+    event.start=start;
+   event.end=end;
+   event.color=colour;
+    
+
+  $('#calendar').fullCalendar('updateEvent', eee);
+    return eventObject;
+}
+
+
+$(document).ready(function() {
+ $( "#df" ).dialog({
+  dialogClass: "no-close",
+  buttons: [
+    {
+      text: "Update Event",
+      click: function() {
+        var aa=[];
+        
+        $(".fform").children("input").each(function(){
+          aa.push($(this).val());
+        });
+        
+        $(".fform").children("textarea").each(function(){
+          aa.push($(this).val());
+        });
+      $("#calendar").fullCalendar('removeEvents',aiaia); 
+        var url = "https://prodtools.firebaseio.com/cal/"+aiaia;
+         var time = new Firebase(url);
+         time.set(aa); 
+        $( this ).dialog( "close" );
+       
+        
+      }
+    
+    
+    },
+      {
+      text: "Delete this Event",
+      click: function() {
+          var url = "https://prodtools.firebaseio.com/cal/"+aiaia;
+         var time = new Firebase(url);
+         $('#calendar').fullCalendar( 'removeEvents',aiaia);
+         time.remove();
+        $( this ).dialog( "close" );
+      }
+      
+    }
+  ]
+});
+ $( "#loe" ).dialog({
+  dialogClass: "no-close",
+  buttons: [
+     {
+      text: "OK",
+      click: function() {
+        $( this ).dialog( "close" );
+      }
+      
+    }
+  ]
+});  
+  $( "#df" ).dialog("close");
+    $('#calendar').fullCalendar({ editable: true,
+//       eventClick: function(calEvent, jsEvent, view) {
+//         alert('Event: ' + calEvent.start._i);
+//     },
+                                 
+      eventMouseover:function(c,j,v){
+         $(this).css('border-color', 'red');
+      },
+    eventDragStart: function( event, jsEvent, ui, view ) { 
+            dragged = [ ui.helper[0], event ];
+        },
+
+      eventMouseout:function(c,j,v){
+         $(this).css('border-color', '');
+       },
+     dayClick: function(date, jsEvent, view) {
+      $("#ddd").val(date.format());
+   $('#lll').click();             
+                                   
+},
+      eventClick: function(date, jsEvent, view) {
+    aiaia=date.id;
+eevent=date;
+         $( "#df" ).dialog("open");
+ },                            
+ eventDrop: function(event, delta, revertFunc) {
+     console.log(event.title + " was dropped on" + event.start.format()+" to "+event.end.format());
+   
+    var sta=event.start.format();
+   var end=event.end.format();
+   console.log(sta);
+    console.log(end);
+  var ttarget = url + "/" + event.id;
+
+ var t1=new Firebase(ttarget+"/1");
+     t1.set(sta);
+ var t2=new Firebase(ttarget+"/2");
+ t2.set(end);
+},
+ eventResize:function(event, delta, revertFunc) {
+
+        console.log(event.title + " shrunk from " + event.start.format()+" to "+event.end.format());
+   
+    var sta=event.start.format();
+   var end=event.end.format();
+   console.log(sta);
+    console.log(end);
+  var ttarget = url + "/" + event.id;
+
+ var t1=new Firebase(ttarget+"/1");
+     t1.set(sta);
+ var t2=new Firebase(ttarget+"/2");
+ t2.set(end);
+ },
+   header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+    });
+
+});
+var url = "https://prodtools.firebaseio.com/cal";
+var time = new Firebase(url);
+
+$("#ae").click(function(){
+  var add=[];
+  current = event.timeStamp;
+	var target = url + "/" + current;
+	target = new Firebase(target);
+  $(".formm").children("input").each(function(){
+    add.push($(this).val());
+  });
+ $(".formm").children("textarea").each(function(){
+    add.push($(this).val());
+  });
+ target.set(add); 
+ $('#myModal').modal('toggle');
+});
+
+time.on("child_added",function(v){
+  var array=v.val();  
+  addCalanderEvent(v.key(), array[1], array[2], array[0], array[3]);
+});
+
+console.log($("#calendar").fullCalendar( 'clientEvents'));
+
+
+
+
+</script>
+</body>
+</html>

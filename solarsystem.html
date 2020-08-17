@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/xuwogi/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+<style id="jsbin-css">
+svg {
+    width: 100vw;
+    height: 100vh;
+}
+div.options {
+    width: 25vw;
+    height: 10vh;
+    position: fixed;
+    background-color: black;
+    color: white;
+    bottom: 0;
+	font-size:3vh;
+	overflow-y:scroll;
+	
+}
+
+div.options input{
+    width: 3vh;
+    height: 3vh;
+	
+}
+ 
+body,html{background-color:#212121;padding:none;margin:0;overflow:hidden;}
+</style>
+</head>
+
+<body>
+
+    
+    <div class="options">
+
+        <input onChange="Options.aroundSun = !Options.aroundSun" id="heliocentric" type="checkbox">
+        <label for="heliocentric">Heliocentric</label>
+    </div>
+	
+    <svg class="system" >
+        <!-- Paths -->
+        <circle r="30" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none" id="moonpath"></circle>
+		
+		
+        <circle class="track" r="77.4" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="144.4" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="200" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="304" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="1560" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="1916" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="2200" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+        <circle class="track"  r="2500" cx="400" cy="400" stroke="#EEEEEE" stroke-width="1" fill="none"></circle>
+
+        <!-- Planets -->
+        <circle  class="planet"  r="30" cx="3840" cy="2158" fill="#FFEB3B" id="sun"></circle>
+        <circle  class="planet"  r="5.7" cx="477.5" cy="0" fill="#9E9E9E" id="mercury"></circle>
+        <circle  class="planet"  r="14.25" cx="100" cy="50" fill="#FFF59D" id="venus"></circle>
+		<circle class="planet"  r="15" cx="600" cy="0" fill="#03A9F4" id="earth"></circle>
+        <circle  class="planet"  r="7.95" cx="100" cy="0" fill="#d32f2f" id="mars"></circle>
+        <circle  class="planet"  r="168" cx="1960" cy="0" fill="#c62828" id="jupiter"></circle>
+        <circle  class="planet"  r="141.75" cx="2316" cy="0" fill="#DD2C00" id="saturn"></circle>
+        <circle  class="planet"  r="60" cx="4240" cy="0" fill="#00BCD4" id="uranus"></circle>
+		<circle  class="planet"  r="58.2" cx="6420" cy="0" fill="#0097A7" id="neptune"></circle>
+    	<circle  class="planet"  r="4.05" cx="100" cy="50" fill="#FAFAFA" id="moon"></circle>
+
+
+    </svg>
+
+<script id="jsbin-javascript">
+
+
+// http://stackoverflow.com/questions/15073324/svg-zoom-with-mouse-wheel-inside-html-document
+var center={x:3840,y:2158};
+
+var Utility = {
+    toRadians: function(angle) {
+        return angle * (Math.PI / 180);
+    }
+
+};
+var allTracks=d3.selectAll(".track:not(.sun)");
+var Options = {
+    aroundSun: true,
+    centerplanet: "sun"
+};
+var Planet = {
+    earth: {
+		speed:100,
+        select: d3.select("#earth"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.earth.angleof--;
+
+            if (Options.aroundSun) {
+                Planet.earth.coordinates.x = Math.cos(Utility.toRadians(Planet.earth.angleof)) * 200 + Planet.sun.coordinates.x;
+                Planet.earth.coordinates.y = Math.sin(Utility.toRadians(Planet.earth.angleof)) * 200 + Planet.sun.coordinates.y;
+            } else {
+                Planet.earth.coordinates.x = Math.cos(Utility.toRadians(Planet.earth.angleof)) * 200 + center.x;
+                Planet.earth.coordinates.y = Math.sin(Utility.toRadians(Planet.earth.angleof)) * 200 + center.y;
+            }
+
+
+
+            Planet.earth.select.transition()
+                .duration(900)
+                .attr("cx", Planet.earth.coordinates.x)
+                .attr("cy", Planet.earth.coordinates.y)
+                .ease(d3.easeElastic);
+        },
+
+    },
+    sun: {
+		speed:100,
+        select: d3.select("#sun"),
+        angleof: 0,
+        coordinates: {
+            x: 2000,
+            y: 2000
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.sun.angleof--;
+            Planet.sun.coordinates.x = Math.cos(Utility.toRadians(Planet.sun.angleof)) * 300 + center.x;
+            Planet.sun.coordinates.y = Math.sin(Utility.toRadians(Planet.sun.angleof)) * 300 + center.y;
+            Planet.sun.select.transition()
+                .duration(900)
+                .attr("cx", Planet.sun.coordinates.x)
+                .attr("cy", Planet.sun.coordinates.y)
+                .ease(d3.easeElastic);
+			
+			
+	if(Options.aroundSun){
+	allTracks.transition()
+                .duration(900)
+                .attr("cx", Planet.sun.coordinates.x)
+                .attr("cy", Planet.sun.coordinates.y)
+                .ease(d3.easeElastic);}
+			
+	else{allTracks.transition()
+                .duration(900)
+                .attr("cx", center.x)
+                .attr("cy", center.y)
+                .ease(d3.easeElastic);
+		
+		
+	}
+        },
+
+    },
+    mercury: {
+		speed:24.1,
+        select: d3.select("#mercury"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.mercury.angleof--;
+            if (Options.aroundSun) {
+                Planet.mercury.coordinates.x = Math.cos(Utility.toRadians(Planet.mercury.angleof)) * 77.4 + Planet.sun.coordinates.x;
+                Planet.mercury.coordinates.y = Math.sin(Utility.toRadians(Planet.mercury.angleof)) * 77.4 + Planet.sun.coordinates.y;
+            } else {
+                Planet.mercury.coordinates.x = Math.cos(Utility.toRadians(Planet.mercury.angleof)) * 77.4 + center.x;
+                Planet.mercury.coordinates.y = Math.sin(Utility.toRadians(Planet.mercury.angleof)) * 77.4 + center.y;
+            }
+            Planet.mercury.select.transition()
+                .duration(900)
+                .attr("cx", Planet.mercury.coordinates.x)
+                .attr("cy", Planet.mercury.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        },
+
+    },
+    venus: {
+		speed:61.5,
+        select: d3.select("#venus"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.venus.angleof--;
+            if (Options.aroundSun) {
+                Planet.venus.coordinates.x = Math.cos(Utility.toRadians(Planet.venus.angleof)) * 144.4 + Planet.sun.coordinates.x;
+                Planet.venus.coordinates.y = Math.sin(Utility.toRadians(Planet.venus.angleof)) * 144.4 + Planet.sun.coordinates.y;
+            } else {
+                Planet.venus.coordinates.x = Math.cos(Utility.toRadians(Planet.venus.angleof)) * 144.4 + center.x;
+                Planet.venus.coordinates.y = Math.sin(Utility.toRadians(Planet.venus.angleof)) * 144.4 + center.y;
+            }
+
+            Planet.venus.select.transition()
+                .duration(900)
+                .attr("cx", Planet.venus.coordinates.x)
+                .attr("cy", Planet.venus.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        }
+    },
+    mars: {
+		speed:188,
+        select: d3.select("#mars"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.mars.angleof--;
+            if (Options.aroundSun) {
+                Planet.mars.coordinates.x = Math.cos(Utility.toRadians(Planet.mars.angleof)) * 304 + Planet.sun.coordinates.x;
+                Planet.mars.coordinates.y = Math.sin(Utility.toRadians(Planet.mars.angleof)) * 304 + Planet.sun.coordinates.y;
+            } else {
+                Planet.mars.coordinates.x = Math.cos(Utility.toRadians(Planet.mars.angleof)) * 304 + center.x;
+                Planet.mars.coordinates.y = Math.sin(Utility.toRadians(Planet.mars.angleof)) * 304 + center.y;
+            }
+
+            Planet.mars.select.transition()
+                .duration(900)
+                .attr("cx", Planet.mars.coordinates.x)
+                .attr("cy", Planet.mars.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        }
+
+    },
+    jupiter: {
+		speed:1190,
+        select: d3.select("#jupiter"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.jupiter.angleof--;
+            if (Options.aroundSun) {
+                Planet.jupiter.coordinates.x = Math.cos(Utility.toRadians(Planet.jupiter.angleof)) * 1560 + Planet.sun.coordinates.x;
+                Planet.jupiter.coordinates.y = Math.sin(Utility.toRadians(Planet.jupiter.angleof)) * 1560 + Planet.sun.coordinates.y;
+            } else {
+                Planet.jupiter.coordinates.x = Math.cos(Utility.toRadians(Planet.jupiter.angleof)) * 1560 + center.x;
+                Planet.jupiter.coordinates.y = Math.sin(Utility.toRadians(Planet.jupiter.angleof)) * 1560 + center.y;
+            }
+
+            Planet.jupiter.select.transition()
+                .duration(900)
+                .attr("cx", Planet.jupiter.coordinates.x)
+                .attr("cy", Planet.jupiter.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        }
+    },
+    saturn: {
+		speed:2940,
+        select: d3.select("#saturn"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.saturn.angleof--;
+            if (Options.aroundSun) {
+                Planet.saturn.coordinates.x = Math.cos(Utility.toRadians(Planet.saturn.angleof)) * 1916 + Planet.sun.coordinates.x;
+                Planet.saturn.coordinates.y = Math.sin(Utility.toRadians(Planet.saturn.angleof)) * 1916 + Planet.sun.coordinates.y;
+            } else {
+                Planet.saturn.coordinates.x = Math.cos(Utility.toRadians(Planet.saturn.angleof)) * 1916 + center.x;
+                Planet.saturn.coordinates.y = Math.sin(Utility.toRadians(Planet.saturn.angleof)) * 1916 + center.y;
+            }
+
+            Planet.saturn.select.transition()
+                .duration(900)
+                .attr("cx", Planet.saturn.coordinates.x)
+                .attr("cy", Planet.saturn.coordinates.y)
+                .ease(d3.easeElastic);
+
+        }
+    },
+    uranus: {
+		speed:8370,
+        select: d3.select("#uranus"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.uranus.angleof--;
+            if (Options.aroundSun) {
+                Planet.uranus.coordinates.x = Math.cos(Utility.toRadians(Planet.uranus.angleof)) * 2200 + Planet.sun.coordinates.x;
+                Planet.uranus.coordinates.y = Math.sin(Utility.toRadians(Planet.uranus.angleof)) * 2200 + Planet.sun.coordinates.y;
+            } else {
+                Planet.uranus.coordinates.x = Math.cos(Utility.toRadians(Planet.uranus.angleof)) * 2200 + center.x;
+                Planet.uranus.coordinates.y = Math.sin(Utility.toRadians(Planet.uranus.angleof)) * 2200 + center.y;
+            }
+
+            Planet.uranus.select.transition()
+                .duration(900)
+                .attr("cx", Planet.uranus.coordinates.x)
+                .attr("cy", Planet.uranus.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        }
+    },
+    neptune: {
+		speed:16370,
+        select: d3.select("#neptune"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.neptune.angleof--;
+            if (Options.aroundSun) {
+                Planet.neptune.coordinates.x = Math.cos(Utility.toRadians(Planet.neptune.angleof)) * 2500 + Planet.sun.coordinates.x;
+                Planet.neptune.coordinates.y = Math.sin(Utility.toRadians(Planet.neptune.angleof)) * 2500 + Planet.sun.coordinates.y;
+            } else {
+                Planet.neptune.coordinates.x = Math.cos(Utility.toRadians(Planet.neptune.angleof)) * 2500 + center.x;
+                Planet.neptune.coordinates.y = Math.sin(Utility.toRadians(Planet.neptune.angleof)) * 2500 + center.y;
+            }
+
+            Planet.neptune.select.transition()
+                .duration(900)
+                .attr("cx", Planet.neptune.coordinates.x)
+                .attr("cy", Planet.neptune.coordinates.y)
+                .ease(d3.easeElastic);
+
+
+        }
+    },
+    moon: {
+		speed:7.5,
+        select: d3.select("#moon"),
+        angleof: 0,
+        coordinates: {
+            x: 100,
+            y: 450
+        },
+        lastcoordinates: {
+            x: 100,
+            y: 450
+        },
+        move: function() {
+            Planet.moon.angleof--;
+            Planet.moon.select.transition()
+                .duration(30)
+                .attr("cx", Planet.earth.coordinates.x + Math.cos(Utility.toRadians(Planet.moon.angleof)) * 30)
+                .attr("cy", Planet.earth.coordinates.y + Math.sin(Utility.toRadians(Planet.moon.angleof)) * 30);
+
+        },
+    }
+}
+var Track = {
+    moonpath: d3.select("#moonpath"),
+
+};
+var Motion = {
+    mars: setInterval(Planet.mars.move, Planet.mars.speed),
+    venus: setInterval(Planet.venus.move, Planet.venus.speed),
+    earth: setInterval(Planet.earth.move, Planet.earth.speed),
+    sun: "IDONTKNOW",
+    mercury: setInterval(Planet.mercury.move, Planet.mercury.speed),
+    jupiter: setInterval(Planet.jupiter.move, Planet.jupiter.speed),
+    saturn: setInterval(Planet.saturn.move, Planet.saturn.speed),
+    uranus: setInterval(Planet.uranus.move, Planet.uranus.speed),
+    neptune: setInterval(Planet.neptune.move, Planet.neptune.speed),
+    moon: setInterval(Planet.moon.move, Planet.moon.speed),
+    moonpath: setInterval(function() {
+        Track.moonpath.transition()
+            .duration(900)
+            .attr("cx", Planet.earth.coordinates.x)
+            .attr("cy", Planet.earth.coordinates.y)
+            .ease(d3.easeElastic);
+    }, 100)
+};
+
+
+
+d3.selectAll(".planet").on("click", click);
+
+function click(d) {
+    var planet = {
+        name: this.id,
+        ref: Planet[this.id].select
+    };
+    if (Options.centerplanet == planet.name && planet.name !== "sun") {
+        planet = {
+            name: "sun",
+            ref: Planet.sun.select
+        };
+    }
+
+
+    Planet[Options.centerplanet].coordinates = Planet[Options.centerplanet].lastcoordinates;
+
+
+    Planet[Options.centerplanet].select.transition()
+        .duration(900)
+        .attr("cx", Planet[Options.centerplanet].lastcoordinates.x)
+        .attr("cy", Planet[Options.centerplanet].lastcoordinates.y)
+        .ease(d3.easeElastic);
+
+
+
+
+
+
+    planet.ref.transition().duration(900).attr("cx", center.x).attr("cy", center.y);
+
+
+
+allTracks.transition()
+                .duration(900)
+                .attr("cx", center.x)
+                .attr("cy", center.y)
+                .ease(d3.easeElastic);
+		
+
+
+    Planet[planet.name].lastcoordinates = Planet[planet.name].coordinates;
+    Planet[planet.name].coordinates = {
+        x: center.x,
+        y: center.y
+    };
+    Planet[planet.name].select.transition()
+        .duration(900)
+        .attr("cx", Planet[planet.name].coordinates.x)
+        .attr("cy", Planet[planet.name].coordinates.y)
+        .ease(d3.easeElastic);
+
+
+
+
+    Motion[Options.centerplanet] = setInterval(Planet[Options.centerplanet].move,Planet[Options.centerplanet].speed);
+    clearInterval(Motion[planet.name]);
+
+
+
+
+
+
+    Options.centerplanet = planet.name;
+
+}
+</script>
+</body>
+
+</html>

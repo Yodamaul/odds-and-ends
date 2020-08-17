@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/fuhuze/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+
+
+<html>
+<head>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	
+<link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	
+<script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+   
+    <meta charset="utf-8">
+
+    <title>Treasure Hunt</title>
+<style>
+#board td {
+    border:1px solid #000;
+    width:10px;
+    height:10px
+}
+
+#control td {
+    border:1px solid #000;
+    width:10px;
+    height:10px
+}
+
+
+</style>
+</head>
+
+<body>
+    <button onClick="login()">Login</button>
+  
+  
+  
+    <center>
+      <h1>Game did not Start yet....</h1>
+<H1>Treasure Hunt</H1>
+<h3>Try to Get to the Hidden Treasure</h3>
+<table>
+ 
+<td>
+    <table>
+        <tr>
+            <td>
+                <table id="board">
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+<td id="total" rowspan="2">
+              
+            </td>
+         
+        </tr>
+
+        <tr>
+        
+          <td >
+         <div id="progressbar"></div>     
+            
+            
+            <div id="nr"></div>
+          </td>
+
+            
+        </tr>
+    </table>
+  </td>
+  <td>
+
+
+
+  </td>
+</table>
+  <div id="dialog" title="Control">
+    <table>
+   <tr><td> <table id="control">
+                    <tr>
+                        <td><button id="NW" class="ui-icon ui-icon-arrowthick-1-nw">NW</button></td>
+
+                      <td><center><button id="N" class="ui-icon ui-icon-arrowthick-1-n"></button><center</td>
+
+                        <td><button id="NE" class="ui-icon ui-icon-arrowthick-1-ne"></button></td>
+                    </tr>
+
+                    <tr>
+                        <td><button id="W" class="ui-icon ui-icon-arrowthick-1-w"></button></td>
+
+                        <td><center><span class="ui-icon ui-icon-squaresmall-close"></span></center></td>
+
+                        <td><button id="E" class="ui-icon ui-icon-arrowthick-1-e"></button></td>
+                    </tr>
+
+                    <tr>
+                        <td><button id="SW" class="ui-icon ui-icon-arrowthick-1-sw"></button></td>
+
+                        <td><button id="S" class="ui-icon ui-icon-arrowthick-1-s"></button></td>
+
+                        <td><button is="SE" class="ui-icon ui-icon-arrowthick-1-se"></button></td>
+                    </tr> </table></td><td>  </td>
+         <td id="mo">Moves:0</td></tr> </table>
+  </center>
+</div>
+<script>
+/*jshint loopfunc: true */
+//noprotect
+//clear console
+console.clear();
+//Random Integer function
+
+
+function randomIntFromInterval(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    //Initializes JqueryUI stuff(2 Progressbars and a Dialog Box )
+$("#dialog").dialog({
+    dialogClass: "no-close"
+});
+$("#progressbar").progressbar({
+    value: 100
+});
+$("#nr").progressbar({
+    value: 0
+});
+
+if(GameHasStarted)
+{var med = false; //Gone through movement check?
+var sec = 0; //Seconds since Start
+var min = 0; //Minutes 
+var options = ["N", "NE", "NW", "E", "SE", "S", "SW", "W"]; //array of options
+var xfin1 = new Firebase("https://treasurehunt.firebaseio.com/Treasure/x"); //gets x value of treasure
+xfin1.once('value', function(nameSnapshot) {
+    xfin = nameSnapshot.val();
+});
+var yfin1 = new Firebase("https://treasurehunt.firebaseio.com/Treasure/y"); //gets y value of treasure
+yfin1.once('value', function(nameSnapshot) {
+    var yfin = nameSnapshot.val();
+});
+var xloc1 = new Firebase("https://treasurehunt.firebaseio.com/xplay"); //gets x value of player
+var xloc = xloc1.once('value', function(nameSnapshot) {
+    return nameSnapshot.val();
+});
+var yloc1 = new Firebase("https://treasurehunt.firebaseio.com/yplay"); //gets y value of player
+var yloc = yloc1.once('value', function(nameSnapshot) {
+    return nameSnapshot.val();
+});
+console.log(yloc);
+$("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); // sets block a certain color
+if (xfin === 0 && yfin === 0) {
+    xfin = randomIntFromInterval(0, 9);
+    yfin = randomIntFromInterval(0, 9);
+} // if you start on 0,0; you will go somewhere else
+var me = 5; // seconds left in this round
+var next = 2;// seconds left until next round
+var voted = false;// did they vote or naw?
+// gives you round number
+var round = new Firebase("https://treasurehunt.firebaseio.com/Time/roundnum"); 
+round = round.once('value', function(nameSnapshot) {
+    return nameSnapshot.val();
+});
+
+
+var importantStuff=function() {
+  if (xfin == xloc && yfin == yloc) {
+    var t = confirm("You have won... Play Again?");
+    if (t) {
+        console.clear();
+        $("td").css("background-color", "white");
+        $("td").removeClass();
+        xfin = randomIntFromInterval(0, 9);
+        yfin = randomIntFromInterval(0, 9);
+        xloc = randomIntFromInterval(0, 9);
+        yloc = randomIntFromInterval(0, 9);
+        $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black");
+    }
+}
+    if (me > 0) { //if time is greater than 0
+        me = me - 1; // subtract one second
+        $("#progressbar").progressbar("option", "value", me * 20); //moves timeinround Progressbar
+  }  
+  else if (me === 0 && next <= 0) {
+        med = false; //didn't go through movement check
+        round++;//increase round number
+        // resets time
+    next = 2; 
+        me = 5;
+    
+        $("#progressbar").progressbar("option", "value", me * 20); //starts progressbar off
+    }
+  else if (me === 0 && next > 0){
+        me = 0;
+    next=next-1;
+   $("#nr").progressbar("option", "value", next * 50); //moves timeuntilnext Progressbar
+     //if time in round equals zero and timeuntilnextround is greater than zero
+        if (med === false) { // if movementcheck equals false
+            var numms = []; //creates an array
+      var largest = 0;//largest equals 0
+            var key;//sets key
+            var word1;
+      for (var nu = 0; nu < options.length; nu++) {
+                var word = options[nu];
+        current=nu;
+                        word = new Firebase("https://treasurehunt.firebaseio.com/Moves/" + word);
+                    word.on('value', function(nameSnapshot) {if ( nameSnapshot.val()> largest) {largest = nameSnapshot.val();key = current;}
+                                                      
+                                                      
+                                                      });
+
+                    } //selects movement stuff....
+            
+            
+            console.log("Biggest Value"+options[parseInt(key)]);
+      switch (options[parseInt(key)]) {
+                case "N":
+                    if (yloc !== 0) {
+                        yloc = yloc - 1;
+                        yloc1.set(yloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "NE":
+                    if (yloc !== 0 && xloc !== 9) {
+                        yloc = yloc - 1;
+                        xloc = xloc + 1;
+                        yloc1.set(yloc);
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "NW":
+                    if (yloc !== 0 && xloc !== 0) {
+                        yloc = yloc - 1;
+                        xloc = xloc - 1;
+                        yloc1.set(yloc);
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "E":
+                    if (xloc !== 9) {
+                        xloc = xloc + 1;
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "SE":
+                    if (yloc !== 9 && xloc !== 9) {
+                        yloc = yloc + 1;
+                        xloc = xloc + 1;
+                        yloc1.set(yloc);
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "S":
+                    if (yloc !== 9) {
+                        yloc = yloc + 1;
+                        yloc1.set(yloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "SW":
+                    if (yloc !== 9 && xloc !== 0) {
+                        yloc = yloc + 1;
+                        xloc = xloc - 1;
+                        yloc1.set(yloc);
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+                case "W":
+                    if (xloc !== 0) {
+                        xloc = xloc - 1;
+                        xloc1.set(xloc);
+            $(".current").css("background-color", "yellow").removeClass("current"); //changes current block to yellow
+            $("#board tr").eq(yloc).children("td").eq(xloc).addClass("current").css("background-color", "black"); 
+                    }
+                    break;
+            } //does movement stuff
+    
+    
+    for (var unu = 0; unu < options.length; unu++) {
+                var word = options[unu];
+                    word = new Firebase("https://treasurehunt.firebaseio.com/Moves/" + word);
+                    word.set(0);
+
+                    }       
+
+
+
+      //changes moved block to black
+        
+      med = true; //Did Go through movement check...
+        
+    }
+        voted = false;//did they vote correctly
+        
+    
+    }
+ 
+};
+setInterval(importantStuff, 1000); //progressbarmove is called every second
+
+
+//Intitializes for Movement Script
+var postsRef = new Firebase("https://treasurehunt.firebaseio.com/Moves/");
+//Movement Script
+$("#control button").click(function() {
+  console.log(voted);
+    if (me > 0 && voted === false) {
+        var x = $(this).attr("id");
+        postsRef = new Firebase("https://treasurehunt.firebaseio.com/Moves/" + x);
+        switch (x) {
+            case "N":
+                if (yloc !== 0) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "NE":
+                if (yloc !== 0 && xloc !== 9) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "NW":
+                if (yloc !== 0 && xloc !== 0) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "E":
+                if (xloc !== 9) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "SE":
+                if (yloc !== 9 && xloc !== 9) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "S":
+                if (yloc !== 9) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "SW":
+                if (yloc !== 9 && xloc !== 0) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+            case "W":
+                if (xloc !== 0) {
+                    voted = true;
+                    postsRef.once("value", function(snapshot) {
+                        postsRef.set((snapshot.val() + 1));
+                    });
+                }
+                break;
+        }
+    } else if (me === 0 && voted !== true) {
+        alert("Time is Up, Sorry your vote does not count");
+    } else if (me !== 0 && voted === true) {
+        alert("You already Voted this round, Sorry...");
+    }
+  //Checks if you won or not
+
+});
+
+
+//Shows Total Time
+function abc() {
+    sec++;
+    if (sec == 60) {
+        min++;
+        sec = 0;
+    }
+    $("#total").text("Total Time Passed: " + min + "min" + sec + "sec");
+}
+setInterval(abc, 1000);
+}
+// Varible Init
+
+</script>
+</body>
+</html>

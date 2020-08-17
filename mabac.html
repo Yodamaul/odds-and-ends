@@ -1,0 +1,317 @@
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/hajato/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<!--
+Created using JS Bin
+//jsbin.com
+
+Copyright (c) 2014 by Yekush (//jsbin.com/geralo/2/edit)
+
+Released under the MIT license: //jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+<link href="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <meta name="description" content="Mayan Abacus" />
+<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <meta charset="utf-8">
+  <title>Mayan Abacus</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+<style id="jsbin-css">
+#tr3 .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+    
+  position: relative;
+ bottom: -100px;
+    margin: 0 10px 10px 0;
+}
+#tr2 .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+    
+  position: relative;
+ bottom: auto;
+    margin: 0 10px 10px 0;
+}
+
+p{text-align:center}
+
+
+
+
+.moved{background:#000;}
+
+#start,#start2,#start3,#start4,#start5,#start6,#start7,#start8,#start9,#start10,#start11 {
+    width: 15px;
+    height: 200px;
+    padding: .5em;
+    float: right;
+    margin: 5px;
+   
+}
+
+#top,#top2,#top3,#top4,#top5,#top6,#top7,#top8,#top9,#top10,#top11{    width: 15px;
+    height: 150px;
+    padding: .5em;
+    float: left;
+    margin: 5px;
+   
+}
+
+</style>
+</head>
+<body>
+ <center data-role="page">
+     <div data-role="panel" id="mypanel">
+<a   class="ui-btn ui-btn-b ui-btn-inline"  href="https://yodamaul.firebaseapp.com/mcal.html" >Matrix Calculator</a>
+<a   href="https://yodamaul.firebaseapp.com/mabac.html" class="ui-btn ui-btn-a ui-btn-inline">Mayan Abacus</a>
+<a     href="https://yodamaul.firebaseapp.com/jabac.html" class="ui-btn ui-btn-b ui-btn-inline">Japanese Abacus</a>
+<a   href="https://yodamaul.firebaseapp.com/cabac.html" class="ui-btn ui-btn-a ui-btn-inline" >Chinese Abacus</a>
+<a    href="https://yodamaul.firebaseapp.com/vabac.html" class="ui-btn ui-btn-b ui-btn-inline">Vertical Abacus</a>    
+<a   href="https://yodamaul.firebaseapp.com/dcalc.html" class="ui-btn ui-btn-a ui-btn-inline">DNA Calculator</a>
+<a   href="https://yodamaul.firebaseapp.com/dprac.html" class="ui-btn ui-btn-b ui-btn-inline">DNA Practice</a>    
+<a   class="ui-btn ui-btn-a ui-btn-inline"href="https://yodamaul.firebaseapp.com/habac.html" >Horizontal Abacus</a>  
+<a   class="ui-btn ui-btn-b ui-btn-inline"   href="https://yodamaul.firebaseapp.com/mtool.html" >Music Tool</a>
+<a   class="ui-btn ui-btn-a ui-btn-inline" href="https://yodamaul.firebaseapp.com/sabac.html" >Slide Abacus</a>
+<a   class="ui-btn ui-btn-b ui-btn-inline"  href="https://yodamaul.firebaseapp.com/todo.html" >Really Simple To-do List</a> 
+
+
+</div>
+  <div data-role="header">
+    
+    <h2>Mayan Abacus</h2>
+    <a data-icon="info" data-ref="dialog" href="https://yodamaul.firebaseapp.com/404.html">Help</a>
+  </div>  
+ <div data-role="content"> 
+
+  
+  <input id="aut"/><button>Submit</button>
+    
+ <table>
+  
+   <tr id="tr1">
+     <td> <p id="count">0</p></td>
+     <td><p id="count2">0</p></td>
+     <td> <p id="count3">0</p></td>
+     <td><p id="count4">0</p></td>
+     <td> <p id="count5">0</p></td>
+
+   
+   </tr>
+   <tr id="tr2">
+     <td>
+   <span id="top" class="ui-widget-header">
+   <div class="x" ></div>
+    <div class="x" ></div>
+      <div class="x" ></div>
+       </span> 
+     </td>
+     <td>
+   <span id="top2" class="ui-widget-header">
+  <div class="x" ></div>
+    <div class="x" ></div>
+      <div class="x" ></div>
+       </span> 
+     </td>
+     <td>
+   <span id="top3" class="ui-widget-header">
+   <div class="x" ></div>
+    <div class="x" ></div>
+      <div class="x" ></div>
+       </span> 
+     </td>
+     <td>
+   <span id="top4" class="ui-widget-header">
+  <div class="x" ></div>
+    <div class="x" ></div>
+      <div class="x" ></div>
+       </span> 
+     </td>
+     <td>
+   <span id="top5" class="ui-widget-header">
+  <div class="x" ></div>
+    <div class="x" ></div>
+      <div class="x" ></div>
+       </span> 
+     </td>
+    
+   
+   
+   
+   <tr id="tr3">
+  <td>
+    <span id="start" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  
+       </span>
+     </td>
+     <td>
+  <span id="start2" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  
+ </span>
+     </td>
+   <td>
+      <span id="start3" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+ 
+  </span>
+  
+     </td>
+   <td><span id="start4" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  
+  
+       </span></td>
+     <td>
+  <span id="start5" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+ 
+
+  </span>
+     </td>
+  
+
+   </tr>
+   
+   
+   
+   
+   
+   
+  </table>
+  
+  
+  
+  <h1>Total:<h2 id="total"></h2></h1>
+   
+   </div>
+  
+
+  
+  <div data-role="footer" >
+    <h3>&copy;YodaMaul Inc. 2014</h3>
+  </div>
+  
+  </center> 
+
+  
+  
+  
+  
+  
+
+   
+ 
+  
+ 
+   
+   
+
+  
+
+
+  
+
+  
+  
+  
+
+
+  
+  
+ 
+<script id="jsbin-javascript">
+$("button").click(
+function(){
+ 
+    alert("Work in Progress");
+ 
+  });
+
+$(".x").click(
+              function() 
+                  {
+                    var r1 = [];
+                    $("#tr1").find("p").each(function(){ r1.push("#"+this.id); });
+                    var r2 = [];
+                    $("#tr2").find("span").each(function(){ r2.push("#"+this.id); });
+                    var r3 = [];
+                    $("#tr3").find("span").each(function(){ r3.push("#"+this.id); });
+                     var parent="#"+$(this).closest("span").attr("id");
+                     var x=r2.indexOf(parent);
+                     var y = $( this ).siblings(".moved").andSelf().length;
+                     var total=0;
+                 if($.inArray(parent,r2)!=-1&&!$(this).hasClass("moved"))  
+                       {  
+                         $(this).nextAll().andSelf().addClass("moved").css("bottom", "-80px").css("background-color","black");  
+                         x=r2.indexOf(parent);
+                        y = $(r2[x]).children(".moved").length*5+$(r3[x]).children(".moved").length; 
+                         $(r1[x]).text(y);
+                        }
+                    else if($.inArray(parent,r2)!=-1&&$(this).hasClass("moved"))  
+                       {  
+                         $(this).prevAll().andSelf().removeClass("moved").css("bottom", "auto").css("background-color","yellow");  
+                          x=r2.indexOf(parent);
+                        y = $(r2[x]).children(".moved").length*5+$(r3[x]).children(".moved").length; 
+                         $(r1[x]).text(y);
+                        }
+                    else if($.inArray(parent,r3)!=-1&&!$(this).hasClass("moved"))  
+                       {  
+                         $(this).prevAll().andSelf().addClass("moved").css("bottom", "0px").css("background-color","black");  
+                         x=r3.indexOf(parent);
+                        y = $(r2[x]).children(".moved").length*5+$(r3[x]).children(".moved").length;
+                         $(r1[x]).text(y);
+                        }
+                    else if($.inArray(parent,r3)!=-1&&$(this).hasClass("moved"))  
+                       {  
+                         $(this).nextAll().andSelf().removeClass("moved").css("bottom", "-100px").css("background-color","yellow");  
+                          x=r3.indexOf(parent);
+                         y = $(r2[x]).children(".moved").length*5+$(r3[x]).children(".moved").length;
+                         $(r1[x]).text(y);
+                        }
+                   for(var f=0;f<r1.length;f++){total=total+(parseInt($(r1[f]).text())*Math.pow(20,(4-f)));
+                                           
+                                                $("h1").text("Total: "+total);   
+                                               
+                                               } 
+                  }
+              );
+</script>
+</body>
+</html>

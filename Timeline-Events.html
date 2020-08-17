@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/poxovo/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src='https://cdn.firebase.com/js/client/2.0.4/firebase.js'></script>
+  
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.1/d3.min.js" ></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+<style id="jsbin-css">
+th td{  border: 1px solid black;}
+
+
+.axis { /* axis labels */
+    fill: #808080;
+    font-family: sans-serif;
+    font-size: 10px;
+}
+
+.axis line{ /* axis tick marks */
+    stroke-width : 1;
+    stroke: grey;
+    shape-rendering: crispEdges;
+}
+
+.axis path { /* axis line */
+    stroke-width : 1;
+    stroke: grey;
+    shape-rendering: crispEdges;
+}
+
+/* timeline band */
+
+.band { /* band background */
+    fill: #FAFAFA;
+}
+
+/* labels */
+
+.bandLabel {
+    fill: #F0F0F0;
+    font: 10px sans-serif;
+    font-weight: bold;
+}
+
+.bandMinMaxLabel {
+    fill: blue;
+    font: 10px sans-serif;
+    font-weight: bold;
+}
+
+.bandMidLabel {
+    fill: red;
+    font: 10px sans-serif;
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* brush */
+
+.brush .extent {
+    stroke: gray;
+    fill: blue;
+    fill-opacity: .1;
+}
+
+.chart {
+    fill: #EEEEEE;
+}
+
+.interval {
+    fill: #AAFFFF;
+    stroke-width: 6;
+    cursor : default;
+    pointer-events: true;
+}
+
+.instant {
+    fill: #FFAAFF;
+    stroke-width: 6;
+    cursor : default;
+    /*pointer-events: true;*/
+}
+
+.instantLabel {
+    fill : blue;
+    font: 10px sans-serif;
+    shape-rendering: crispEdges;
+}
+
+.intervalLabel {
+    fill : black;
+    font: 10px sans-serif;
+    shape-rendering: crispEdges;
+}
+
+.item {
+    cursor : default;
+    pointer-events: auto;
+}
+
+.svg {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    background-color: #FFFFFF;
+}
+
+.tooltip {
+    width: auto;
+    position: absolute;
+    visibility: hidden;
+    color : black;
+    cursor:default;
+    background-color: #FFFFEE;
+    border: 1px solid;
+    padding: 4px;
+    shape-rendering: crispEdges;
+    pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+  <center>
+  <form>
+    <label for="uname">Username:</label>
+    <input id="uname" type="text"/>
+    <br><br>
+    <label for="ename">Name Of Event:</label>
+    <input id="ename" type="text"/>
+    <br><br>
+    <label for="dfro">Date From:</label>
+    <input id="dfro" class="dates"  />
+    <br><br>
+    <label for="dto">Date To:</label>
+    <input id="dto" class="dates" />
+    <br><br>
+    
+    <label for="des">Description of Event:</label>
+    <textarea id="des" ></textarea>
+    <br><br>
+    
+    <label for="ex">Extra Links/Attachments:</label>
+    <textarea id="ex"></textarea>
+    
+    <br><br>
+    
+    
+  </form>
+    <button>Submit</button>
+    <table><thead><tr>
+      <th>UserName</th>  
+      <th>Name Of Event</th> 
+      <th>Date From</th> 
+      <th>Date To</th> 
+      <th>Description</th> 
+      <th>Extra</th> 
+      
+      </tr></thead>
+    <tbody></tbody>
+    </table>   
+    
+    
+    </center>
+  <iframe width="100vw" height="600px" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" id="FrameID" src="https://www.pokebeach.com"></iframe>
+
+<script id="jsbin-javascript">
+
+function lae(element, index, array){
+	$("tbody tr").eq(0).append("<td>" + element + "</td>");
+}
+var add = [];
+var url = "https://prodtools.firebaseio.com/time";
+var time = new Firebase(url);
+var current;
+var domElement = "#timeline";
+var sourceFile = "";
+
+
+time.on("child_added", function(ssnapshot){
+
+    $("tbody").prepend("<tr></tr>");
+	array = ssnapshot.val();
+	array.forEach(lae);
+  document.getElementById('FrameID').contentWindow.location.reload(true);
+});
+$("button").click(function(){
+	add = [];
+	current = event.timeStamp;
+	var target = url + "/" + current;
+	target = new Firebase(target);
+	$("input").each(function()
+	{
+		add.push($(this).val());
+	});
+	$("textarea").each(function()
+	{
+		add.push($(this).val());
+	});
+	target.set(add);
+});
+ 
+</script>
+</body>
+</html>

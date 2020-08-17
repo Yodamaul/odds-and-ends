@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/jimebek/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Sankskrit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/css/ionic.css">
+    <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+
+
+<style id="jsbin-css">
+.item-done .item-content{
+    background:linear-gradient( 90deg, #33cd5f, white 5% ) !important;
+   
+}
+
+.bar-subheader.item-input-inset{top:44px !important;}
+</style>
+</head>
+
+<body ng-app="Word" ng-controller="sanskrit">
+    <div class="bar bar-header bar-dark ">
+        <h1 class="title">Sanskrit</h1>
+        <button ng-click="logout()" class="button button-clear">
+           <i class="icon ion-person"></i> {{uid| limitTo:3}}
+        </button>
+    </div>
+    <div class="bar bar-subheader bar-energized item-input-inset">
+        <button ng-disabled="uid=='Guest'" ng-click="openModal()" class="button-clear button-icon-left ion-plus button button-dark">
+           
+        </button>
+<label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input ng-model="query" type="search" placeholder="Search">
+        </label>
+        <button ng-click="showfinishedtog()" class="button-dark button button-clear">
+            {{showfinished == false ? "Show" : "Hide"}} Finished
+        </button>
+    </div>
+    <ion-content class="has-header has-subheader">
+
+        <div ng-if="type=='cards'" ng-hide="(showfinished ==false && word.done == true)" on-hold="delete(word.Key,word.Word)" ng-repeat="word in words | filter:query| orderBy:'Word' " class="list card">
+            <div class="item" ng-class="{'item-calm':word.done}">
+
+                <span class="item-note">Added By: {{word.Author || "Guest"}}</span>
+
+
+            </div>
+
+            <div class="item item-text-wrap">
+                <b>{{word.Word}}: </b> {{word.Definition}}
+                <span class="item-note"> {{word.Parts.join(", ") || ""}}</span> </div>
+
+            <div class="item item-toggle">
+                Done?
+                <label class="toggle toggle-calm">
+                    <input ng-model="word.done" type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+
+        </div>
+
+        <ion-list ng-if="type=='list'" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+            <ion-item  ng-class="{'item-done':word.done}" ng-repeat="word in words | filter:query| orderBy:'Word' ">
+            
+  <h2>{{word.Word}}</h2>
+                <p>{{word.Definition}}</p>
+                <ion-option-button ng-disabled="uid=='Guest'" class="ion-ios-trash-outline button-assertive icon " ng-click="delete(word.Key,word.Word)">
+                 
+                </ion-option-button>
+				<ion-option-button class="ion-android-checkmark-circle icon button-balanced" ng-click="word.done=!word.done">
+
+                </ion-option-button>  <ion-option-button ng-disabled="uid=='Guest'" class="ion-edit icon button-positive">
+
+                </ion-option-button>
+              
+
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+    <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar-dark">
+                <h1 class="title">Add New Word</h1>
+                <button ng-click="closeModal()" class="button button-clear button-assertive">Close</button>
+            </ion-header-bar>
+            <ion-content>
+                <ion-list>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Word</span>
+                        <input id="word" type="text" placeholder="Word in Sanskrit">
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Definition</span>
+                        <input id="def" type="text" placeholder="Meaning of Word">
+                    </label>
+
+                    <ion-checkbox id="{{word}}" ng-repeat="word in parts">{{word}}</ion-checkbox>
+
+                </ion-list>
+            </ion-content>
+            <ion-footer-bar class="bar-dark">
+                <div class="button-bar">
+                    <a ng-click="submit()" class="button button-clear button-energized icon-left ion-plus">Add Word</a>
+
+                </div>
+            </ion-footer-bar>
+        </ion-modal-view>
+    </script>
+<script id="jsbin-javascript">
+var app = angular.module("Word", ["ionic"]);
+app.controller("sanskrit", function($scope, $ionicPopup, $ionicModal) {
+    $scope.type = "list";
+    $ionicModal.fromTemplateUrl('my-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+    // Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        // Execute action
+    });
+    $scope.parts = ["Synonym", "Antonym", "Singular", "Plural", "Male", "Female"];
+    $scope.showfinished = true;
+    $scope.showfinishedtog = function() {
+        $scope.showfinished = !$scope.showfinished;
+    };
+    var config = {
+        apiKey: "AIzaSyDCc-5pEwcc93c34ZTVExqrp4TlFqamevY",
+        authDomain: "ymt.firebaseapp.com",
+        databaseURL: "https://ymt.firebaseio.com",
+        projectId: "firebase-ymt",
+        storageBucket: "firebase-ymt.appspot.com",
+        messagingSenderId: "756764279874"
+    };
+
+    function login() {
+//         firebase.auth().signInWithPopup(provider).then(function(result) {
+//             // This gives you a Google Access Token. You can use it to access the Google API.
+//             var token = result.credential.accessToken;
+//             // The signed-in user info.
+//             var user = result.user;
+//             $scope.uid = (user.displayName);
+//             localStorage.setItem("user", $scope.uid);
+//             // ...
+//         }).catch(function(error) {
+//             // Handle Errors here.
+//             var errorCode = error.code;
+//             var errorMessage = error.message;
+//             // The email of the user's account used.
+//             var email = error.email;
+//             // The firebase.auth.AuthCredential type that was used.
+//             var credential = error.credential;
+//             // ...
+//             console.log(error);
+//         });
+
+
+    }
+
+    firebase.initializeApp(config);
+    $scope.words = [];
+    var database = firebase.database().ref('sanskrit/');
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/plus.login');
+    var masterlist = {};
+    $scope.uid = localStorage.getItem("user");
+    if (!$scope.uid || $scope.uid == "Guest") {
+        login();
+    }
+    var words = [];
+    var userDone = firebase.database().ref($scope.uid);
+
+
+
+    $scope.submit = function() {
+        if ($("#word").val() !== "" && $("#def").val() !== "") {
+            var arr = [];
+
+
+
+
+            $('div.checkbox input:checked').each(function() {
+                arr.push($(this).closest("label").attr('id'));
+            });
+
+            database.push({
+                Word: $("#word").val(),
+                Definition: $("#def").val(),
+                Author: $scope.uid,
+                Parts: arr
+            });
+            $("#word").val("");
+            $("#def").val("");
+            $('input:checkbox').removeAttr('checked');
+            $scope.closeModal();
+        } else {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Fields are Empty!',
+                template: 'Please populate them...'
+            });
+        }
+    };
+
+
+    database.on('child_added', function(data) {
+        words.push(data.val().Word);
+        var obj = {
+            "Word": data.val().Word,
+            "Definition": data.val().Definition,
+            "Context": data.val().con,
+            "Key": data.key,
+            "Author": data.val().Author,
+            "Parts": data.val().Parts,
+            "done": false
+        };
+        masterlist[data.key] = $scope.words.length;
+        $scope.words.push(obj);
+
+
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    });
+    database.on('child_removed', function(data) {
+        $scope.words.splice(masterlist[data.key]);
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    });
+    $scope.logout = function() {
+
+        var logoutPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'Are you sure you want to log out?'
+        });
+
+        logoutPopup.then(function(res) {
+            firebase.auth().signOut();
+            localStorage.setItem("user", "Guest");
+            $scope.uid = "Guest";
+        });
+
+
+
+    };
+
+    $scope.delete = function(key, word) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'Are you sure you want to delete: ' + word
+        });
+
+        confirmPopup.then(function(res) {
+            if (res) {
+                database.child(key).remove();
+            }
+        });
+
+
+
+    };
+    $scope.shouldShowDelete = false;
+    $scope.shouldShowReorder = false;
+    $scope.listCanSwipe = true
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,620 @@
+
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by Yekush (http://jsbin.com/qesuzo/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<!--
+Created using JS Bin
+//jsbin.com
+
+Copyright (c) 2014 by Yekush (//jsbin.com/fibela/1/edit)
+
+Released under the MIT license: //jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+<link href="https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+<link href="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" rel="stylesheet" type="text/css" />
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+ <script src=
+    "//cdnjs.cloudflare.com/ajax/libs/jStorage/0.4.4/jstorage.min.js"></script>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/resources/demos/style.css">
+
+  <meta name="description" content="Japanese Abacus Mouseover" />
+ <meta charset="utf-8">
+  <title>Japanese Abacus</title>
+
+
+<style id="jsbin-css">
+#bottom .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+
+  position: relative;
+ bottom: -100px;
+    margin: 0 10px 10px 0;
+}
+#topc .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+
+  position: relative;
+ bottom: 6px;
+    margin: 0 10px 10px 0;
+}
+
+p{text-align:center}
+
+
+
+
+.moved{background:#000;}
+
+#bottom span{
+    width: 15px;
+    height: 200px;
+    padding: .5em;
+    float: right;
+    margin: 5px;
+
+}
+
+#topc span{    width: 15px;
+    height: 80px;
+    padding: .5em;
+    float: left;
+    margin: 5px;
+
+}
+
+</style>
+ <script>
+$( document ).on( "pageinit", ".ui-page", function() {
+  var $page = $(this);
+  $page.on( "swipeleft swiperight", function( e ) {
+  if ( $page.jqmData( "panel" ) !== "open" ) {
+    if ( e.type === "swipeleft"||e.type === "swiperight"  ) {
+    $page.find( "#mypanel" ).panel( "open" );
+    }
+  }
+  });
+  });
+  </script>
+</head>
+<body data-role="page">
+
+  <div data-role="header">
+   <h1>Japanese Abacus</h1></div>
+ <div data-role="content">
+ <!--   <span data-role="collapsible">
+     <h1>About The Japanese Abacus</h1>
+    <p>This an online Japanese Abacus. The Japanese Abacuse, unlike the school one that most people are uses to, is vertical, and is split into two sections.The tops represent 5's while the bottom represent ones. You can add ot delete columns, but only in 2's, following the Japanese Tradition. To learn more, click on the <b>Help</b> button or <a href="https://jsbin.com/fafaba/1" data-theme="b"  data-theme="b" data-icon="info" data-rel="dialog" data-close-btn="right">click here</a>.</p>
+     </span> -->
+<input id="f"/><button id="s">Submit</button>
+
+ <table>
+
+   <tr id="c">
+     <td id="s1"><!-- <center><input min="9" value="11" step="2" type="number"/></center>
+       <center><button id="s">Submit</button></center> --></td>
+
+     <td class="a"> <p id="count10">0</p></td>
+     <td class="b"><p id="count9">0</p></td>
+     <td class="c"> <p id="count8">0</p></td>
+     <td class="a"><p id="count7">0</p></td>
+     <td class="a"> <p id="count6">0</p></td>
+     <td class="a"><p id="count5">0</p></td>
+     <td class="a"> <p id="count4">0</p></td>
+     <td class="a"><p id="count3">0</p></td>
+     <td class="a"><p id="count2">0</p></td>
+     <td class="a"><p id="count1">0</p></td>
+     <td class="a"><p id="count0">0</p></td>
+   </tr>
+
+   <tr id="topc">
+     <td id="s2"><center><button id="a">Add</button> </center></td>
+     <td>
+   <span id="top10" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top9" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top8" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top7" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top6" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top5" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top4" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top3" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top2" class="ui-widget-header">
+   <div class="x" ></div>
+
+       </span>
+     </td>
+     <td>
+   <span id="top1" class="ui-widget-header">
+		 <div class="x" ></div></span></td>
+     <td>
+   <span id="top0" class="ui-widget-header">
+     <div class="x" ></div>
+
+       </span>
+     </td>
+
+
+
+
+
+
+   </tr>
+
+
+
+   <tr id="bottom">
+
+     <td id="s3"><center><button id="d">Delete</button></center> </td>
+     <td>
+
+    <span id="start10" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+       </span>
+     </td>
+     <td>
+  <span id="start9" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+ </span>
+     </td>
+   <td>
+      <span id="start8" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+  </span>
+
+     </td>
+   <td><span id="start7" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+
+       </span></td>
+     <td>
+  <span id="start6" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+
+  </span>
+     </td>
+   <td>
+      <span id="start5" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+
+  </span>
+
+
+     </td>
+
+ <td>
+  <span id="start4" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+  </span>
+     </td>
+ <td>
+  <span id="start3" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+  </span>
+     </td>
+   <td>
+  <span id="start2" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+
+  </span>
+     </td>
+ <td>
+  <span id="start1" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+    </span>
+     </td><td>
+   <span id="start0" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+    </span>
+
+     </td>
+
+
+
+
+
+
+   </tr>
+
+
+
+
+
+
+  </table>
+  <center>
+<h1 class="pp">Total</h1>
+<div data-role="collapsible"><h1>History</h1>
+<ul data-role="listview"></ul>
+<button id="cd">Clear History</button>
+</div>
+<center>
+<table id="clean"></table>
+		</center></center></div>
+
+
+<script id="jsbin-javascript">
+
+//Undo and Redo
+//Add additional Columns
+//JSON
+//Settings Panel
+//change number of col (Text)
+//Move Buttons*Done
+//Current Value
+//Table-Clean
+//Log- EveryThing *Done
+//Drag
+
+var all = [];
+var key = [];
+
+$("#s").click(function(){
+
+        function splitToParts() {
+           $("#topc .x").css("background-color", "yellow").css("bottom", "6px");
+      $("#bottom .x").css("background-color", "yellow").css("bottom", "-100px");
+        $("p").text("0");
+                var wholePart = Math.floor(n);
+                var parts = [];
+                var multiplier = 1;
+                while (wholePart > 0) {
+                        var result = wholePart % 10;
+                        if (result >= 0) {
+                                parts.unshift(result *
+                                        multiplier);
+                        }
+                        wholePart = Math.floor(wholePart / 10);
+                        multiplier *= 10;
+                }
+
+         for (var i =0; i < parts.length; i++) {
+
+                  var x = parts.length - i;
+                        var moved = parts[i] / (Math.pow(10, x -
+                                1));
+           parts[i]=moved;
+         }
+           parts.reverse();
+          for(var j=parts.length-1;j>-1;j--)
+             {
+
+               $("#count"+j).text(parts[j]);
+               console.log(j);
+              if(parts[j]<5)
+                {$("#start"+j+" .x").not($("#start"+j+" .x").slice(parts[j])).css("background-color", "black").css(
+                        "bottom", "0px");}
+              else {
+                 {$("#start"+j+" .x").not($("#start"+j+" .x").slice(parts[j]-5)).css("background-color", "black").css(
+                        "bottom", "0px");
+                $("#top"+j+" .x").css("background-color", "black").css("bottom", "-60px");}
+
+
+
+
+
+              }
+             }
+        }
+
+        var n = parseInt($("#f").val(), 10);
+        $(".pp").text(n);
+       $("ul").append("<li>Entered "+n+"</li>");
+  splitToParts();
+  $("#f").val("");
+});
+
+
+$(document).on("click",".x",function() {
+    var x = $(this).css("bottom");
+    var count = [];
+        $("#c").find("p").each(function() {
+                count.push("#" + this.id);
+        });
+    var five = [];
+        $("#topc").find("span").each(function() {
+                five.push("#" + this.id);
+        });
+     var ones= [];
+        $("#bottom").find("span").each(function() {
+                ones.push("#" + this.id);
+        });
+ if   (x == "-100px") {
+        $(this).prevAll().andSelf().addClass("moved").css("bottom", "4px");
+    }
+  else if (x == "4px") {
+        $(this).nextAll().andSelf().removeClass("moved").css("bottom","-100px");
+    }
+  else if (x == "6px") {
+        $(this).nextAll().andSelf().addClass("moved").css("bottom","-60px");
+        }
+else if (x == "-60px") {
+        $(this).prevAll().andSelf().removeClass("moved").css("bottom","6px");
+        }
+
+  for(var t=0;t<ones.length;t++)
+{
+  var fo=$(five[t]).children(".moved").length*5+$(ones[t]).children(".moved").length;
+  $(count[t]).text(fo);
+}
+
+  var cv = [];
+        $("#c").find("p").each(function() {
+                cv.push($("#" + this.id).text());
+        });
+
+  var tre = 0;
+  var tc = count.length;
+        for (var rw = 0; rw < cv.length; rw++) {
+                tre = tre + cv[rw] * Math.pow(10, tc - rw - 1);
+        }
+        var zqaw = tre.toLocaleString("en");
+       $(".pp").text(zqaw);
+  $("ul").append("<li>"+zqaw+"</li>");
+
+
+});
+
+
+
+$(document).on("click","#a",function()
+           {
+             var s=$("#c p:first").attr("id");
+             s=s.slice(5);
+             s=parseInt(s)+1;
+
+             $("#s1").after("<td><p id='count"+s+"'>0</p></td>");
+             $("#s1").after("<td><p id='count"+s+1+"'>0</p></td>");
+             $("#s2").after("<td><span id='top"+s+"' class='ui-widget-header'><div class='x'></div></span></td>");
+             $("#s2").after("<td><span id='top"+s+1+"' class='ui-widget-header'><div class='x'></div></span></td>");
+             $("#s3").after("<td><span id='start"+s+"' class='ui-widget-header'><div class='x'></div><div class='x'></div><div class='x'></div><div class='x'></div></span></td>");
+             $("#s3").after("<td><span id='start"+s+1+"' class='ui-widget-header'><div class='x'></div><div class='x'></div><div class='x'></div><div class='x'></div></span></td>");
+      $("ul").append("<li>2 rows added</li>");
+            $(".pp").text("2 rows added");
+           } );
+
+$(document).on("click","#d",function()
+           {
+
+             $("#c td:lt(3):has(p)").remove();
+              $("#topc td:lt(3):has(span)").remove();
+             $("#bottom td:lt(3):has(span)").remove();
+             $("ul").append("<li>2 rows deleted</li>");
+
+            $(".pp").text("2 rows deleted");
+             $("#topc .x").css("background-color", "yellow").css("bottom", "6px");
+      $("#bottom .x").css("background-color", "yellow").css("bottom", "-100px");
+        $("p").text("0");
+           } );
+
+
+
+
+
+  var tyt=$('ul').html().toString();
+console.log($.jStorage.get("JSON"));
+$( window ).unload(function() {
+  $.jStorage.set("JSON",$('ul').html().toString());});
+
+
+
+
+$(document).ready(
+function(){
+
+
+ var t= $.jStorage.get("JSON");
+ console.log("T "+t);
+  $("ul").append(t);
+}
+
+);
+
+
+
+$(document).on("click","li",function bigfunct() {
+   function abcd() {
+           $("#topc .x").css("background-color", "yellow").css("bottom", "6px");
+      $("#bottom .x").css("background-color", "yellow").css("bottom", "-100px");
+        $("p").text("0");
+                var wholePart = Math.floor(n);
+                var parts = [];
+                var multiplier = 1;
+                while (wholePart > 0) {
+                        var result = wholePart % 10;
+                        if (result >= 0) {
+                                parts.unshift(result *
+                                        multiplier);
+                        }
+                        wholePart = Math.floor(wholePart / 10);
+                        multiplier *= 10;
+                }
+
+         for (var i =0; i < parts.length; i++) {
+
+                  var x = parts.length - i;
+                        var moved = parts[i] / (Math.pow(10, x -
+                                1));
+           parts[i]=moved;
+         }
+           parts.reverse();
+          for(var j=parts.length-1;j>-1;j--)
+             {
+
+               $("#count"+j).text(parts[j]);
+               console.log(j);
+              if(parts[j]<5)
+                {$("#start"+j+" .x").not($("#start"+j+" .x").slice(parts[j])).css("background-color", "black").css(
+                        "bottom", "0px");}
+              else {
+                 {$("#start"+j+" .x").not($("#start"+j+" .x").slice(parts[j]-5)).css("background-color", "black").css(
+                        "bottom", "0px");
+                $("#top"+j+" .x").css("background-color", "black").css("bottom", "-60px");}
+
+
+
+
+
+              }
+             }
+        }
+
+
+
+
+
+  var n = $(this).text().replace(/,/g , "");
+        $(".pp").text(n);
+
+  if(n=="2 rows Added")
+    {
+      var s=$("#c p:first").attr("id");
+             s=s.slice(5);
+             s=parseInt(s)+1;
+
+             $("#s1").after("<td><p id='count"+s+"'>0</p></td>");
+             $("#s1").after("<td><p id='count"+s+1+"'>0</p></td>");
+             $("#s2").after("<td><span id='top"+s+"' class='ui-widget-header'><div class='x'></div></span></td>");
+             $("#s2").after("<td><span id='top"+s+1+"' class='ui-widget-header'><div class='x'></div></span></td>");
+             $("#s3").after("<td><span id='start"+s+"' class='ui-widget-header'><div class='x'></div><div class='x'></div><div class='x'></div><div class='x'></div></span></td>");
+             $("#s3").after("<td><span id='start"+s+1+"' class='ui-widget-header'><div class='x'></div><div class='x'></div><div class='x'></div><div class='x'></div></span></td>");
+      $("ul").append("<li>2 rows added</li>");
+
+    }
+    else
+    {
+      abcd();
+       $("ul").append("<li>List Clicked "+n+"</li>");
+
+
+  }
+
+});
+
+
+$("#cd").click(function(){
+  var conf= confirm("Are you sure you want to delete all data. Once it is lost there is no way to retrieve it.Do you still wish to delete your data?");
+ if(conf){
+ $("ul li").remove();
+  $.jStorage.set("JSON",$('ul').html().toString());}});
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

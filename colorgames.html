@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/hemurag/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+<style id="jsbin-css">
+td {
+background-color:red;  
+width:50px;
+height:50px;
+color:white  
+}
+</style>
+</head>
+<body>
+  <table>
+  </table>
+  <p>make all the squares blue</p>
+  <p>Level: <span>1</span></p>
+<script id="jsbin-javascript">
+var createTable = function(num){
+  for(var i=0;i<num;i++){
+  var table=$("table")
+  table.append("<tr></tr>")
+}
+$("tr").each(function(e){
+  for(var j=0;j<num;j++){
+    $(this).append("<td></td>")
+  }
+  
+})
+}
+createTable(5)
+var level=1
+var checkWin=function(){
+  var won=true
+   $("td").each(function(e){
+  var colour=$(this).css("background-color")
+  if(colour!=="rgb(0, 0, 255)"&&colour!=="rgb(0, 1, 255)"&&colour!=="rgb(0, 255, 1)"&&colour!=="rgb(0, 2, 255)"&&colour!=="rgb(0, 255, 3)"&&colour!=="rgb(0, 255, 4)"&&colour!=="rgb(0, 255, 5)"&&colour!=="rgb(255, 2, 0)"){
+    won=false;
+  }
+})
+     if(won)handleWins()
+}
+var brushcolour="blue";
+var handleWins = function(){
+  level+=1;
+  $("span").text(level)
+  $("td").each(function(e){
+  $(this).css("background-color","red")
+  $(this).text("")
+})
+if(level===5){
+  $("tr").eq(2).children("td").eq(0).css("background-color","rgb(0,1,255)")
+
+  $("tr").eq(2).children("td").eq(4).css("background-color","rgb(0,255,1)")
+}if(level===6){
+brushcolour="blue"
+  $("tr").eq(2).children("td").eq(2).css("background-color","rgb(0,0,0)")
+
+  $("tr").eq(2).children("td").eq(1).text(">")
+}if(level===7){
+
+  $("tr").eq(2).children("td").eq(2).css("background-color","rgb(0,255,1)")
+  $("tr").eq(1).children("td").eq(1).css("background-color","rgb(0,255,1)");  
+  $("tr").eq(0).children("td").eq(0).css("background-color","rgb(0,0,255)");  
+  $("tr").eq(1).children("td").eq(3).css("background-color","rgb(0,255,1)")
+  $("tr").eq(0).children("td").eq(2).css("background-color","rgb(0,255,1)")
+  $("tr").eq(3).children("td").eq(2).css("background-color","rgb(255,0,1)")
+}else if(level===8){
+  
+  $("tr").eq(2).children("td").eq(2).css("background-color","rgb(0,255,0)")
+  $("tr").eq(1).children("td").eq(1).css("background-color","rgb(0,255,0)");  
+  $("tr").eq(0).children("td").eq(0).css("background-color","rgb(0,2,255)");  
+  $("tr").eq(1).children("td").eq(3).css("background-color","rgb(0,255,3)")
+}else if(level===9){ 
+  $("tr").eq(1).children("td").eq(3).css("background-color","rgb(0,255,5)")
+  brushcolour="rgb(0,10,255)"
+}else if(level===10){
+  
+  $("tr").eq(2).children("td").eq(4).css("background-color","rgb(255,0,2)")
+  $("tr").eq(1).children("td").eq(3).css("background-color","rgb(0,0,0)")
+}
+}
+$(document).on("mouseenter","td",function(e){
+  if(level===1){
+  $(e.target).css("background-color","blue")
+  }else if(level===4){
+    
+  
+  var colour=$(e.target).css("background-color")
+  if(colour!=="rgb(0, 0, 255)"){
+    $(e.target).css("background-color","blue")
+  }else{
+    $(e.target).css("background-color","rgb(0,255,0)")
+  }
+  }else if(level>=5){
+  var colour=$(e.target).css("background-color")
+      if(colour==="rgb(0, 1, 255)"){
+        brushcolour="blue";
+        return;
+      }else if(colour==="rgb(0, 2, 255)"){
+        brushcolour="rgb(0, 255, 0)";
+        return;
+  }else if(colour==="rgb(0, 255, 1)"){
+           brushcolour="rgb(0,255,0)";
+    return;
+    
+  }else if(colour==="rgb(255, 0, 1)"){
+    if(brushcolour==="rgb(0,255,0)")$(e.target).css("background-color","rgb(0, 1, 255)")
+    return;
+    
+  }else if(colour==="rgb(255, 0, 2)"){
+  $("td").each(function(j){
+  $(this).css("background-color","red")
+  $(this).text("")
+    
+  })
+    return;
+    
+  }else if(colour==="rgb(0, 255, 2)"){
+            
+    $(e.target).css("background-color","rgb(0, 1, 255)")
+    return;
+    
+  }else if(colour==="rgb(0, 255, 3)"){
+           brushcolour="rgb(0,0,255)";
+    return;
+    
+  }else if(colour==="rgb(0, 255, 5)"){
+           brushcolour="rgb(0,255,4)";
+    return;
+    
+  }else if(colour==="rgb(0, 0, 0)"){
+    return;
+  }
+    
+    $(e.target).css("background-color",brushcolour)
+    
+ colour=$(e.target).css("background-color")
+           if($(e.target).text()===">"){
+             var i=$(e.target).index()
+             var ii=$(e.target).parent("tr").index()
+               $("tr").eq(ii).children("td").eq(i+1).css("background-color",colour)
+
+           }           if($(e.target).text()==="^"){
+             var i=$(e.target).index()
+             var ii=$(e.target).parent("tr").index()
+               $("tr").eq(ii-1).children("td").eq(i).css("background-color",colour)
+
+           }
+  }
+  checkWin()
+})
+$(document).on("mouseleave","td",function(e){
+  if(level===2){
+  $(e.target).css("background-color","blue")
+checkWin()
+  }
+})
+$(document).on("click","td",function(e){
+  if(level===3){
+  $(e.target).css("background-color","blue")
+checkWin()
+}
+})
+
+</script>
+</body>
+</html>

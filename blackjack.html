@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/nedohi/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<link href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+
+<meta charset=utf-8 />
+  <title>BlackJack</title>
+
+<style id="jsbin-css">
+p{ display: inline;}
+</style>
+</head>
+<body>
+  <center>
+  <h1>Blackjack</h1>
+    <h2>Player One's Turn</h2>
+  <div id="p1"> Total:<span id="t1">0</span></div>
+   <hr> <div id="p2">Total:<span id="t2">  0</span></div>
+  
+<hr>
+	
+
+  <button id="deal">Deal Hand</button>  <button class="hit">Hit Me</button> <button class="hold">Hold</button>
+  
+  
+  
+    <h3 >Player One: <span id="po">0</span> wins</h3>
+  <h3 >Player Two: <span id="pt">0</span> wins</h3>
+  </center>
+<script id="jsbin-javascript">
+//noprotect
+var deal=function(){$("p").remove();
+	var card1 = deck[getRandomInt(1, 52)];
+	$("#p1").prepend("<p>" + card1 + "</p>");
+	var index = deck.indexOf(card1);
+	if (index > -1) {
+		deck.splice(index, 1);
+		cid--;
+	}
+	var card2 = deck[getRandomInt(1, 51)];
+	$("#p1").prepend("<p>" + deck[getRandomInt(1, 51)] + "</p> ");
+	var indexy = deck.indexOf(card2);
+	if (indexy > -1) {
+		deck.splice(indexy, 1);
+		cid--;
+	}
+	var card3 = deck[getRandomInt(1, 50)];
+	$("#p2").prepend("<p>" + deck[getRandomInt(1, 50)] + " </p>");
+	var indexx = deck.indexOf(card3);
+	if (indexx > -1) {
+		deck.splice(indexx, 1);
+		cid--;
+	}
+	var card4 = deck[getRandomInt(1, 49)];
+	$("#p2").prepend("<p>" + card4 + "</p>  ");
+	var indexxx = deck.indexOf(card4);
+	if (indexxx > -1) {
+		deck.splice(indexxx, 1);
+		cid--;
+	}
+	
+  var t1;
+	var tt1 = $("#p1 p").eq(0).text().split(" ");
+	var tt2 = $("#p1 p").eq(1).text().split(" ");
+	
+  if (tt1[0] == "J" || tt1[0] == "Q" || tt1[0] == "K") {
+		t1 = parseInt(window[tt1[0]]);
+	}
+  else if (tt1[0] == "A") {
+		var abc = confirm("Player One, Do you want your A to be One(Cancel) or 11(OK)");
+		if (abc) {
+			t1 = 11;
+		} else {
+			t1 = 1;
+		}
+	} 
+  else {
+		t1 = parseInt(tt1[0]);
+	}
+  
+	if (tt2[0] == "J" || tt2[0] == "Q" || tt2[0] == "K") {
+		t1 += parseInt(window[tt2[0]]);
+	}
+  else if (tt2[0] == "A") {
+		var abcc = confirm("Player One,Do you want your A to be One(Cancel) or 11(OK)");
+		if (abcc) {
+			t1 += 11;
+		} else {
+			t1 += 1;
+		}
+	} 
+  else {
+		t1 += parseInt(tt2[0]);
+	}
+  
+  
+	var t2;
+	var ttt1 = $("#p2 p").eq(0).text().split(" ");
+	var ttt2 = $("#p2 p").eq(1).text().split(" ");
+  
+  
+	if (ttt1[0] == "J" || ttt1[0] == "Q" || ttt1[0] == "K") {
+		t2 = parseInt(window[ttt1[0]]);
+	} 
+  else if (ttt1[0] == "A") {
+		var aabc = confirm("Player Two,Do you want your A to be One(Cancel) or 11(OK)");
+		if (aabc) {
+			t2 = 11;
+		} else {
+			t2 = 1;
+		}
+	} 
+  else {
+		t2 = parseInt(ttt1[0]);
+	}
+  
+	if (ttt2[0] == "J" || ttt2[0] == "Q" || ttt2[0] == "K") {
+		t2 += parseInt(window[ttt2[0]]);
+	} 
+  else if (ttt2[0] == "A") {
+		var zabcc = confirm("Player Two,Do you want your A to be One(Cancel) or 11(OK)");
+		if (zabcc) {
+			t2 += 11;
+		} else {
+			t2 += 1;
+		}
+	} 
+  else {
+		t2 += parseInt(ttt2[0]);
+	}
+  
+  
+	$("#t1").text(t1);
+	$("#t2").text(t2);};
+
+
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+var deck = [];
+var s = ["&#9827", "&#9824", "&#9825", "&#9826"];
+var c = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "K", "Q", "J"];
+var A = 1;
+var Q = 10;
+var J = 10;
+var K = 10;
+var cid = 52;
+var cp=1;
+var pow=0;
+var ptw=0;
+for (var x = 0; x < c.length; x++) {
+	for (var y = 0; y < s.length; y++) {
+		deck.push(c[x] +" "+ s[y]);
+	}
+}
+
+$("#deal").click(function() {deal();
+	
+});
+
+$(".hit").click(function() {
+ 
+  var id="#p"+cp+" p";
+  var sid="#t"+cp;
+  var x1=parseInt($(sid).text());
+	var xx1 = $(id).eq(0).text().split(" ");
+  var card1 = deck[getRandomInt(1, cid)];
+  var qwe="#p"+cp;
+  $(qwe).prepend("<p>" + card1 + "</p> ");
+ 
+  var index = deck.indexOf(card1);
+	if (index > -1) {
+		deck.splice(index, 1);
+		cid--;
+	}
+	
+  if (xx1[0] == "J" || xx1[0] == "Q" || xx1[0] == "K") {
+		x1 += parseInt(window[xx1[0]]);$(sid).text(x1); 
+	}
+  else if (xx1[0] == "A") {
+		var abc = confirm("Player One, Do you want your A to be One(Cancel) or 11(OK)");
+		if (abc) {
+			x1 += 11;$(sid).text(x1); 
+		} else {
+			x1 += 1;$(sid).text(x1); 
+		}
+	} 
+  else {
+		x1 += parseInt(xx1[0]);$(sid).text(x1); 
+	}
+ if(x1>21){$(sid).text("Busted!!!");}});
+
+$(".hold").click(function(){
+  cp++;
+  $("h2").text("Player Two's Turn");
+  if(cp==3){
+  $("h2").text("Player One's Turn");   
+    cp=1;
+deck=[];
+ for (var x = 0; x < c.length; x++) {
+	for (var y = 0; y < s.length; y++) {
+		deck.push(c[x] +" "+ s[y]);
+	}
+}
+   if($("#t1").text()=="Busted!!!"&&$("#t2").text()!="Busted!!!"){
+     ptw++;
+     $("#pt").text(ptw);
+     alert("Player One Busted");
+   }
+    else if($("#t2").text()=="Busted!!!"&&$("#t1").text()!="Busted!!!"){
+      pow++;
+     $("#po").text(pow);
+    alert("Player Two Busted");
+    }
+   else if($("#t1").text()>$("#t2").text()){
+     pow++;
+     $("#po").text(pow);
+     alert("Player One Wins");
+   }
+   else if($("#t2").text()>$("#t1").text()){
+       ptw++;
+     $("#pt").text(ptw);
+   alert("Player Two Wins");}
+    else{ 
+      alert("It was a Tie");
+      ptw++;
+     $("#pt").text(ptw); pow++;
+     $("#po").text(pow);}
+    
+    
+    
+    
+ $("div span").text("0");   
+ $("p").remove();
+    
+    
+    deal();
+  }
+  
+  
+});
+
+
+</script>
+</body>
+</html>

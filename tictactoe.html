@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/sabele/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+
+<head>
+  <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<style id="jsbin-css">
+td {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+}
+body {
+  background-color: #2980b9;
+}
+h1,p {
+  color: white
+}
+button {
+  width: 50vw;
+  height: 44px;
+  background-color: #1abc9c;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+  <center>
+    <table>
+      <tr>
+        <td class="d1 r1 c1"> </td>
+        <td class="r1 c2"> </td>
+        <td class="d2 r1 c3"> </td>
+      </tr>
+        <tr>
+        <td class="r2 c1"> </td>
+        <td class="d1 d2 r2 c2"> </td>
+        <td class="r2 c3"> </td>
+      </tr>
+
+      <tr>
+        <td class="d2 r3 c1"> </td>
+        <td class="r3 c2"> </td>
+        <td class="d1 r3 c3"> </td>
+      </tr>
+
+    </table>
+		<h1></h1>
+		<button>Restart</button>
+		<p class="Player">Player <span>0</span></p>
+		<p class="CPU">CPU <span>0</span></p>
+		<p class="Ties">Ties: <span>0</span></p>
+  </center>
+<script id="jsbin-javascript">
+var allClasses = ["d1", "d2", "c1", "c2", "c3", "r1", "r2", "r3"];
+var colors = ["#e67e22", "#e74c3c"];
+var i = -1;
+var wins = parseInt(localStorage.getItem("wins")),
+  losses = parseInt(localStorage.getItem("losses")),
+  ties = parseInt(localStorage.getItem("ties"));
+
+$(".Player span").text(wins);
+$(".CPU span").text(losses);
+$(".Ties span").text(ties);
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+function computerMove() {
+	
+	
+	
+	
+	
+	
+	
+};
+
+function check() {
+  for (var index in allClasses) {
+    var array = [];
+    var cl = "." + allClasses[index];
+    $(cl).each(function(e) {
+      array.push($(this).css("backgroundColor"));
+    });
+    if (array.indexOf("rgb(255, 255, 255)") == -1) {
+      var won = array[0] == array[1] && array[1] == array[2];
+      if (won) {
+        var x = array[0].split(",");
+        var rgb = [];
+        for (var iii in x) {
+          rgb[iii] = parseInt(x[iii].replace(/^\D+/g, ''));
+        }
+        var hex = rgbToHex(rgb[0], rgb[1], rgb[2]);
+        var winnerUser = (colors.indexOf(hex)) + 1;
+        var winner = [cl, winnerUser];
+        return winner;
+      }
+    }
+  }
+  return false;
+}
+
+
+
+$("td").click(function(e) {
+
+  if ($(e.target).css("backgroundColor") == "rgb(255, 255, 255)") {
+
+    i++;
+    $(e.target).css({
+      "background-color": colors[i % 2]
+    });
+
+
+
+
+
+    $(e.target).addClass("touched");
+    var anyoneWon = check();
+    if (anyoneWon !== false) {
+      $("h1").text("Player " + anyoneWon[1] + " Won!");
+      $("td:not(.touched)").not().css({
+        "background-color": "black"
+      });
+      $(anyoneWon[0]).css({
+        "border": "3px solid white"
+      });
+      if (anyoneWon[1] == 1) {
+        localStorage.setItem("wins", wins + 1);
+        wins = localStorage.getItem("wins");
+      } else {
+        localStorage.setItem("losses", losses + 1);
+        losses = localStorage.getItem("losses");
+      }
+    } else if ($("td:not(.touched)").length === 0) {
+      $("h1").text("It's A Tie! :(");
+      localStorage.setItem("ties", ties + 1);
+      ties = localStorage.getItem("ties");
+    }
+  }
+});
+
+$("button").click(function() {
+  location.reload();
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+//jsbin.com
+
+Copyright (c) 2014 by Yekush (//jsbin.com/hogidu/1/edit)
+
+Released under the MIT license: //jsbin.mit-license.org
+-->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<script src="time_files/jquery.js"></script>
+<link href="time_files/bootstrap-combined.css" rel="stylesheet" type="text/css">
+<script src="time_files/bootstrap.js"></script>
+<script src="time_files/jquery-1.js"></script>
+<script src="time_files/jquery-ui.js"></script>
+<script src="time_files/jquery-2.js"></script>
+<script src="time_files/firebase.js"></script>
+<script src="time_files/d3.js"></script>
+<meta charset="utf-8">
+<title>JS Bin</title>
+<style id="jsbin-css">
+th td{  border: 1px solid black;}
+
+
+</style>
+<style id="jsbin-css">
+iframe{width:90vw;height:70vh}
+</style>
+</head>
+<body class="well"><div class="page-header">
+  <h1>Timeline <small>By:Yodamaul</small></h1>
+</div>
+  <center>
+
+     <div class="panel-group panel-primary" id="accordion" role="tablist" aria-multiselectable="false">
+  <div class="panel panel-default">
+    <div class="panel-heading panel-primary" role="tab" id="headingOne">
+      <h4 class="panel-title well">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">
+          Add an Element to the Timeline
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+       <form>
+    <input class="form-control" placeholder="Username" id="uname" type="text">
+    <br><br>
+    <input class="form-control" placeholder="Name of Event" id="ename" type="text">
+    <br><br>
+    <input class="form-control" placeholder="Date From" id="dfro" type="text">
+    <br><br>
+    <input class="form-control" placeholder="Date To" id="dto" type="text">
+    <br><br>
+
+    <textarea class="form-control" placeholder="Description of Event" id="des"></textarea>
+    <br><br>
+
+    <textarea class="form-control" placeholder="Extra Links/Attachments" id="ex"></textarea>
+
+    <br><br>
+
+
+  </form><button>Submit</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title well">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          See the Table
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+
+    <table id="hi" class="table"><thead><tr>
+      <th class=" sort-header">UserName</th>
+      <th class=" sort-header">Name Of Event</th>
+      <th class=" sort-header">Date From</th>
+      <th class=" sort-header">Date To</th>
+      <th class=" sort-header">Description</th>
+      <th class=" sort-header">Extra</th>
+
+      </tr></thead>
+    <tbody><tr><td>Hello</td><td>Its Me</td><td>200</td><td>2000</td><td>I was wondering if after all these years</td><td>You'd like to meet</td></tr><tr><td>Yodamaul</td><td>Star Wars</td><td>250Bc</td><td>250</td><td>Star Wars, one of the best Franchises of all time was created</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Star Wars</td><td>1977</td><td></td><td>Star Wars, one of the best Franchises of all time was created</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Industrial Revolution</td><td>1760</td><td>1830</td><td>Industrial Revolution</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>The Renaissance</td><td>1300</td><td>1700</td><td>An enlightenment of the human mind</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Site Creation</td><td>2014</td><td>2015</td><td>I created my Website</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Korean War</td><td>1950</td><td>1953</td><td>A Civil War between N. and S.Korea, USA helped the South Koreans</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Vietnam War</td><td>1955</td><td>1975</td><td>A civil war that took place in Vietnam, The
+USA helped</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Civil War</td><td>1861</td><td>1865</td><td>The war over Slavery between the North and South </td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Kush's Birth</td><td>2000</td><td></td><td>Kush was Born</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>Cold War</td><td>1947</td><td>1991</td><td>A "cold war" between First and Second World Countries; Mainly America and The Soviet Union</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>WW2</td><td>1939</td><td>1945</td><td>The Second World war, started by Hitler</td><td>N/A</td></tr><tr><td>Yodamaul</td><td>WW1</td><td>1914</td><td>1919</td><td>World War One, an international war started with the assassination of Archduke Franz Ferdinand</td><td>N/A</td></tr></tbody>
+    </table>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+
+
+  <iframe sandbox="allow-same-origin allow-scripts allow-popups allow-forms" id="FrameID" src="time_files/timeline.htm"></iframe>
+ </center> <script src="time_files/tablesort.js"></script>
+  <script>new Tablesort(document.getElementById('hi'));</script>
+<script id="jsbin-javascript">
+
+function lae(element, index, array){
+	$("tbody tr").eq(0).append("<td>" + element + "</td>");
+}
+var add = [];
+var url = "https://prodtools.firebaseio.com/time";
+var time = new Firebase(url);
+var current;
+var domElement = "#timeline";
+var sourceFile = "";
+
+
+time.on("child_added", function(ssnapshot){
+
+    $("tbody").prepend("<tr></tr>");
+	array = ssnapshot.val();
+	array.forEach(lae);
+  document.getElementById('FrameID').contentWindow.location.reload(true);
+});
+$("button").click(function(){
+	add = [];
+	current = event.timeStamp;
+	var target = url + "/" + current;
+	target = new Firebase(target);
+	$("input").each(function()
+	{
+		add.push($(this).val());
+	});
+	$("textarea").each(function()
+	{
+		add.push($(this).val());
+	});
+	target.set(add);
+});
+
+</script>
+<script id="jsbin-javascript">
+$("body,h4").addClass("well");
+
+</script>
+
+</body></html>

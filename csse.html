@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by Pa31476 (http://jsbin.com/bemigo/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+  <title>Kush CSSE Project</title>
+<style id="jsbin-css">
+body {
+  background-color: #2c3e50;
+  color: #f1c40f;
+  margin: 0;
+  overflow:hidden
+}
+#titlePage {
+  position: absolute;
+  top: calc(50vh - 110px);
+  left: calc(50vw - 272px);
+  height: 220px;
+}
+#toolbar1 {
+  width: 100vw;
+  height: 10vh;
+  background-color: #7f8c8d;
+}
+#titlePage {
+  -webkit-animation: fadein 5s;
+  /* Safari, Chrome and Opera > 12.1 */
+
+  -moz-animation: fadein 5s;
+  /* Firefox < 16 */
+
+  -ms-animation: fadein 5s;
+  /* Internet Explorer */
+
+  -o-animation: fadein 5s;
+  /* Opera < 12.1 */
+
+  animation: fadein 5s;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Firefox < 16 */
+
+@-moz-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Safari, Chrome and Opera > 12.1 */
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Internet Explorer */
+
+@-ms-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Opera < 12.1 */
+
+@-o-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#donutchart {
+  width: 100vw;
+  height: 90vh;
+}
+.buttons,
+.slider {
+  position: absolute;
+  display: inline-block;
+}
+.slider {
+  margin-left: .82vw;
+  margin-right: .1vw;
+  bottom: 5vh
+}
+.slider input {
+  width: 66vw
+}
+.buttons {
+  right: 0
+}
+.buttons button {
+  width: 10vw;
+  height: 5vh
+}
+input[type=range] {
+  -webkit-appearance: none;
+  border-radius: 8px;
+  height: 7px;
+  border: 1px solid #bdc3c7;
+  background-color: #fff;
+}
+.answers {
+  width: 35vw;
+  position: absolute;
+  z-index: 10000;
+  background-color: #2c3e50;
+  top: 0;
+  height: 90vh;
+  left: -35vw;
+  word-wrap: break-word;
+  overflow-y: scroll;
+  opacity: .75
+}
+.help {
+  width: 25vw;
+  position: absolute;
+  z-index: 10000;
+  background-color: #2c3e50;
+  top: 0;
+  height: 30vh;
+  right: 0;
+  opacity: .75;overflow-y: scroll;
+}
+.header {
+  width: 100%;
+  height: 5vh;
+  font-size: 4vh;
+}
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body class="firstPage">
+  <div id="titlePage">
+    <center>
+      <h1>Unit 4: Big Data</h1>
+      <h3>By: Kush Pakki</h3>
+      <h4>CSSE Block 1</h4>
+      <h4>05/11/2016</h4>
+      <h4>What I used: HTML/CSS, Javascript, Google Charts API, Google Spreadsheets</h4>
+    </center>
+  </div>
+
+  <div id="secondPage">
+
+    <div id="donutchart"></div>
+    <div id="toolbar1">
+      <div class="slider">
+        <input type="range" id="myRange" value="0" max="10" step="1" />
+
+      </div>
+      <div class="buttons">
+        <button id="stop"><i class="fa fa-stop" aria-hidden="true"></i>
+        </button>
+
+
+        <button id="pie"><i class="fa fa-pie-chart" aria-hidden="true"></i>
+        </button>
+
+        <button id="bar"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+        </button>
+
+        <br>
+        <button id="next"><i class="fa fa-magic" aria-hidden="true"></i>
+        </button>
+        <button id="help"><i class="fa fa-info-circle" aria-hidden="true"></i>
+        </button>
+        <button id="answers"><i class="fa fa-book" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="answers">
+    <div class="header"><center>Answers</center></div>
+    <ol>
+      <li>The Data was collected using Google Forms. Everyone in our class was asked to take the survey in the beginning of class from April 4th to May 2nd. A multitude of questions were asked, ranging from How many hours you slept, to How you are feeling. </li><br>
+      <li>The main languages I used were HyperTextMarkupLanguage,CascadingStyleSheets,and JavaScript. I utilized Google Charts APIS and Jquery. The overall look and feel was made with HTML and CSS. All interactions were done using JS/Jquery. I started with the graphs, and slowly worked my way up to a working webpage. The data was collected, compiled, and modified on Google Sheets, an Excel like product on the cloud. </li><br>
+      <li>
+       Donut Chart: I had a ton of dates, and a ton of feels, so I just made a pie chart. I really didn't get much out of it, except that on Wednesday April 13 and Tuesday April 26 people seemed to be really happy. The 13th was in Fine arts week, so that explains that. The 26th was interesting though. That day was Super Tuesday Part 732, so I guess people were hopeful for their respective canidates. If we had the data from the next day, I could formally make a hypothesis from the political standpoint.
+ <br>
+       Bar Chart: I found that the more HW you do, the less you sleep, which was expected, but done just to make a point. The Data Story here is obvious, teacher gives student more home work, student does HW for a long time, student doesn't sleep. Because student didn't sleep, student doesn't pay attention in class, which causes teacher to give more HW, and by the time the semester is over the student is almost dead. Then they expect the student to take a final exam. Which he fails, thus the cycle repeats. (This is all assuming most of that time was spent on HW...)
+ <br>
+        Sankey Chart: This chart tells us a lot of data in one graph. The main things I got were people tended to feel "Meh" most of the time, which really isn't surprising. I also learned most of us were Oldest Siblings, so cool. More importantly the graph shows our relaxation preferences, either TV or Video Games. Youtube and Nothing were in a close second. Like 3 people read a book, shows how far we've come as americans...
+      </li><br>
+      <li>According to my data analysis, the age group that seems to the happiest are youngest siblings. Therefore you might want to invest in an older sibling. Amazon and Ebay are great places to look, and only look in a Walmart or a Costco if you would like a generic sibling. The next step is to eliminate any competition. Any younger siblings must go, this is an imperitive step for your happiness. Following these suggestions will allow you to have a happier life overall. Also make sure every day is April 13,2016 or April 26, 2016. These days are the days of maximum happiness.
+        <br><br>
+      In all seriousness though,it seems you should either watch TV or Play Video Games to relax. According to the Sankey Chart, both TV and Video games had 6 instances of Good or Great the day after doing these things. On the flipside, TV had 4 Bad or Terrible, which is the highest. Therefore I conclude you must play more Video Games, as they give the optimal feels and also increase your Eye-Hand coordination, Team building skills, among other things.
+      </li>
+    </ol>
+  </div>
+
+
+  <div class="help">
+     <div class="header"><center>Help</center></div>
+    <ul>
+      <li>Slider = Controls Date</li>
+      <li><i class="fa fa-stop" aria-hidden="true"></i> = Stops Animation for Donut Graph</li>
+
+      <li><i class="fa fa-pie-chart" aria-hidden="true"></i> = Donut Graph</li>
+
+      <li><i class="fa fa-bar-chart" aria-hidden="true"></i> = Scatter Plot</li>
+
+      <li><i class="fa fa-magic" aria-hidden="true"></i> = Sankey Chart</li>
+
+      <li><i class="fa fa-info-circle" aria-hidden="true"></i> = This Thing</li>
+
+      <li><i class="fa fa-book" aria-hidden="true"></i> = Answers</li>
+
+    </ul>
+    <ol>
+      <li>Donut Graph - Automatically goes through the days showing how people felt on that day. Controlled by slider. </li>
+      <li>Scatter Plot- Shows the relation between work and sleep.</li>
+      <li>Sankey Chart- Shows what people did, how they felt and what they are. The graph shows the connections between the first two, and the second two. Hovering over something gives the entire connection map. The thickness of the line = how many times.</li>
+    </ol>
+  </div>
+<script id="jsbin-javascript">
+// Data
+var colors = ['#a6cee3', '#b2df8a', '#fb9a99', '#fdbf6f', '#cab2d6', '#ffff99', '#1f78b4', '#33a02c'];
+var dataFIRST = {
+  "4/4/2016": [
+    ['Meh', 0],
+    ['Good', 0],
+    ['Terrible', 0],
+    ['Bad', 1],
+    ['Great', 0]
+  ],
+  "4/5/2016": [
+    ['Meh', 2],
+    ['Good', 0],
+    ['Terrible', 0],
+    ['Bad', 0],
+    ['Great', 0]
+  ],
+  "4/11/2016": [
+    ['Meh', 4],
+    ['Good', 5],
+    ['Terrible', 2],
+    ['Bad', 1],
+    ['Great', 2]
+  ],
+  "4/12/2016": [
+    ['Meh', 0],
+    ['Good', 0],
+    ['Terrible', 0],
+    ['Bad', 1],
+    ['Great', 0]
+  ],
+  "4/13/2016": [
+    ['Meh', 7],
+    ['Good', 7],
+    ['Terrible', 0],
+    ['Bad', 0],
+    ['Great', 2]
+  ],
+  "4/15/2016": [
+    ['Meh', 5],
+    ['Good', 9],
+    ['Terrible', 1],
+    ['Bad', 0],
+    ['Great', 3]
+  ],
+  "4/19/2016": [
+    ['Meh', 5],
+    ['Good', 1],
+    ['Terrible', 0],
+    ['Bad', 1],
+    ['Great', 1]
+  ],
+  "4/21/2016": [
+    ['Meh', 4],
+    ['Good', 3],
+    ['Terrible', 0],
+    ['Bad', 0],
+    ['Great', 0]
+  ],
+  "4/26/2016": [
+    ['Meh', 0],
+    ['Good', 4],
+    ['Terrible', 0],
+    ['Bad', 1],
+    ['Great', 3]
+  ],
+  "4/28/2016": [
+    ['Meh', 19],
+    ['Good', 1],
+    ['Terrible', 1],
+    ['Bad', 1],
+    ['Great', 0]
+  ],
+  "5/2/2016": [
+    ['Meh', 8],
+    ['Good', 5],
+    ['Terrible', 0],
+    ['Bad', 1],
+    ['Great', 1]
+  ],
+};
+var dates = ["4/4/2016", "4/5/2016", "4/11/2016", "4/12/2016", "4/13/2016", "4/15/2016", "4/19/2016", "4/21/2016", "4/26/2016", "4/28/2016", "5/2/2016"];
+var dataTHIRD = [
+
+
+  ['Nothing', 'Bad', 2],
+  ['Nothing', 'Good', 3],
+  ['Nothing', 'Meh', 4],
+
+  ['Phone', 'Good', 1],
+  ['Phone', 'Great', 1],
+  ['Phone', 'Meh', 2],
+
+  ['Read', 'Good', 1],
+  ['Read', 'Meh', 2],
+
+  ['Sleep', 'Good', 1],
+  ['Sleep', 'Meh', 3],
+  ['Sleep', 'Terrible', 1],
+
+  ['Social Stuff', 'Meh', 1],
+  ['Social Stuff', 'Bad', 1],
+  ['Social Stuff', 'Good', 1],
+
+  ['Television', 'Bad', 2],
+  ['Television', 'Great', 3],
+  ['Television', 'Terrible', 2],
+  ['Television', 'Good', 3],
+  ['Television', 'Meh', 3],
+
+
+
+  ['Video Games', 'Bad', 1],
+  ['Video Games', 'Great', 2],
+  ['Video Games', 'Good', 4],
+  ['Video Games', 'Meh', 4],
+
+  ['Youtube', 'Good', 2],
+  ['Youtube', 'Meh', 2],
+  ['Youtube', 'Great', 3],
+  ["Bad", "Middle Sibling", 1],
+  ["Good", "Middle Sibling", 11],
+  ["Great", "Middle Sibling", 5],
+  ["Meh", "Middle Sibling", 16],
+  ["Terrible", "Middle Sibling", 1],
+  ["Bad", "Oldest Sibling", 5],
+  ["Good", "Oldest Sibling", 17],
+  ["Great", "Oldest Sibling", 4],
+  ["Meh", "Oldest Sibling", 20],
+  ["Terrible", "Oldest Sibling", 2],
+  ["Good", "Only Child", 2],
+  ["Meh", "Only Child", 4],
+  ["Bad", "Youngest Sibling", 1],
+  ["Good", "Youngest Sibling", 5],
+  ["Great", "Youngest Sibling", 3],
+  ["Meh", "Youngest Sibling", 14]
+
+
+];
+
+
+
+//Global Variables
+var interval; // Interval for First Animation
+google.charts.load("current", {
+  packages: ["corechart", "sankey"]
+}); google.charts.setOnLoadCallback(drawChart);
+
+
+
+//Click Handlers
+// After Click on First Page, will make title disappear, change body class to secondPage
+$(".firstPage").click(function() {
+
+
+  $("#titlePage").animate({
+    opacity: 0.25,
+    left: "+=50",
+    height: "toggle"
+  }, 3000, function() {
+    $("#titlePage").remove();
+    $("body").removeClass("firstPage").addClass("secondPage");
+  });
+});
+
+// Stops Animation
+$("#stop").click(function() {
+  window.clearInterval(interval);
+});
+
+
+//Functions
+
+//Handles Slider Movement
+$("#myRange").change(function() {
+  clearInterval(interval);
+  var x = document.getElementById("myRange").value;
+
+  var fakeelement = [
+    ['Feeling', 'Number of People per Day']
+  ];
+  var array = dataFIRST[dates[x]];
+  for (var i = 0; i < 5; i++) {
+    fakeelement[i + 1] = array[i];
+  }
+  var options = {
+    title: 'How People are Feeling on ' + dates[x],
+    pieHole: 0.4,
+  };
+  var data = google.visualization.arrayToDataTable(fakeelement);
+  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+  chart.draw(data, options);
+});
+
+//Draws the Pie Chart
+function drawChart() {
+  var c = 0;
+  interval = window.setInterval(function() {
+    var fakeelement = [
+      ['Feeling', 'Number of People per Day']
+    ];
+    var array = dataFIRST[dates[c]];
+    for (var i = 0; i < 5; i++) {
+      fakeelement[i + 1] = array[i];
+    }
+    var options = {
+      title: 'How People are Feeling on ' + dates[c],
+      pieHole: 0.4
+    };
+    var data = google.visualization.arrayToDataTable(fakeelement);
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+    c++;
+    if (c >= dates.length) clearInterval(interval);
+  }, 3000);
+
+}
+
+
+$("#next").click(function() {
+  clearInterval(interval);
+
+
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'From');
+  data.addColumn('string', 'To');
+  data.addColumn('number', 'Weight');
+  data.addRows(dataTHIRD);
+  var options = {
+
+    sankey: {
+      node: {
+        colors: colors,
+        nodePadding: 10
+      },
+      link: {
+        colorMode: 'gradient',
+        colors: colors
+      }
+    }
+  };
+  var chart = new google.visualization.Sankey(document.getElementById('donutchart'));
+  chart.draw(data, options);
+
+});
+
+
+
+$("#bar").click(function() {
+  clearInterval(interval);
+  var data = google.visualization.arrayToDataTable([
+    ['Average Hours Slept', 'Hours Worked'],
+    [1, 10],
+    [4.5, 2],
+    [5, 0.625],
+    [6, 2.65],
+    [6.25, 3],
+    [6.5, 3.9],
+    [7, 2.444444444],
+    [7.5, 2.7],
+    [8, 1.348958334],
+    [8.5, 1.666666667],
+    [8.75, 0],
+    [9, 1.944444444],
+    [9.5, 0],
+    [15, 0]
+  ]);
+
+  var options = {
+    title: 'Hours Slept vs Average Hours Worked',
+    vAxis: {
+      title: 'Hours Worked'
+    },
+    hAxis: {
+      title: 'Average Hours Slept'
+    },
+    legend: 'none',
+    trendlines: {
+      0: {}
+    } // Draw a trendline for data series 0.
+  };
+
+  var chart = new google.visualization.ScatterChart(document.getElementById('donutchart'));
+  chart.draw(data, options);
+});
+
+
+$("#pie").click(function() {
+  clearInterval(interval);
+  drawChart();
+});
+
+
+
+
+
+
+var out = false;
+$("#answers").click(function() {
+  if (!out) {
+    $(".answers").animate({
+      left: "0px"
+    }, 2000);
+    out = !out;
+  } else {
+    $(".answers").animate({
+      left: "-35vw"
+    }, 2000);
+    out = !out;
+
+  }
+});
+
+
+
+
+var out2 = true;
+$("#help").click(function() {
+  if (!out2) {
+    $(".help").animate({
+      top: "0px"
+    }, 2000);
+    out2 = !out2;
+  } else {
+    $(".help").animate({
+      top: "-50vh"
+    }, 2000);
+    out2 = !out2;
+
+  }
+});
+</script>
+</body>
+
+</html>

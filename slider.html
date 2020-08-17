@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/qidik/7/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+  <meta name="description" content="Slider Abacus 10 rows W/O Total" />
+  <meta charset="utf-8">
+  <title>Slider Abacus</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/vader\jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+<style id="jsbin-css">
+.container{width:300px;height:50px}
+.slider{width:200px}
+</style>
+</head>
+<body>
+  <span class="container"><div id="s" class="slider"></div><p id ="amount">0</p></span>
+  <span class="container"><div id="s2" class="slider"></div><p id ="amount2">0</p></span>
+  <span class="container"><div id="s3" class="slider"></div><p id ="amount3">0</p></span>
+  <span class="container"><div id="s4" class="slider"></div><p id ="amount4">0</p></span>
+  <span class="container"><div id="s5" class="slider"></div><p id ="amount5">0</p></span>
+  <span class="container"><div id="s6" class="slider"></div><p id ="amount6">0</p></span>
+  <span class="container"><div id="s7" class="slider"></div><p id ="amount7">0</p></span>
+  <span class="container"><div id="s8" class="slider"></div><p id ="amount8">0</p></span>
+  <span class="container"><div id="s9" class="slider"></div><p id ="amount9">0</p></span>
+  <span class="container"><div id="s10" class="slider"></div><p id ="amount10">0</p></span>
+   <h1>Total:<h1>
+<script id="jsbin-javascript">
+$(function() {
+  var a=["#amount","#amount2","#amount3","#amount4","#amount5","#amount6","#amount7","#amount8","#amount9","#amount10"]; 
+  var s=["#s","#s2","#s3","#s4","#s5","#s6","#s7","#s8","#s9","#s10"]; 
+ 
+    
+  
+  
+  for (i = 0; i < s.length; i++) { 
+     
+    $( s[i] ).slider({
+      value:0,
+      min: 0,
+      max: 10,
+      step: 1,
+      slide: function( event, ui ) {
+       var t = $(this).attr('id');
+
+        switch (t)
+          {
+    case "s":
+        var b=a[0];
+         
+        break;
+    case "s2":
+        b=a[1];
+        break;
+    case "s3":
+         b=a[2];
+        break;
+    case "s4":
+        b=a[3];
+        break;
+    case "s5":
+         b=a[4];
+        break;
+      case "s6":
+        b=a[5];  
+        break;
+    case "s7":
+        b=a[6];
+        break;
+    case "s8":
+         b=a[7];
+        break;
+    case "s9":
+        b=a[8];
+        break;
+    case "s10":
+         b=a[9];
+          }
+        $(b).text( ui.value );
+           
+        
+      }
+    });
+  }
+  });
+
+  
+</script>
+</body>
+</html>

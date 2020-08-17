@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+<meta name="robots" content="noindex">
+<html>
+<head>
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link href="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css"
+    rel="stylesheet" type="text/css">
+    <script src="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+    <script src=
+    "//cdnjs.cloudflare.com/ajax/libs/jStorage/0.4.4/jstorage.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.0/alertify.js"></script>
+    <meta charset="utf-8" content=
+    "width=device-width; initial-scale=1; maximum-scale=1 minimum-scale=1; user-scalable=no"
+    name="viewport">
+
+    <title>JS Bin</title>
+<style id="jsbin-css">
+.warn {
+    background-color:red
+}
+
+.ui-page {
+    background:#000
+}
+
+.ui-input-text {
+    width:40px;
+    border:0
+}
+
+.ui-input-text input {
+    text-align:center
+}
+
+.it {
+    display:inline-block
+}
+
+.no {
+    border:0
+}
+
+.zebra td,.zebra th {
+    padding:10px;
+    border-bottom:1px solid #f2f2f2
+}
+
+.zebra tbody tr:nth-child(even) {
+    background:grey;
+    -webkit-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow:0 1px 0 rgba(255,255,255,.8) inset
+}
+
+.zebra th {
+    text-align:left;
+    text-shadow:0 1px 0 rgba(255,255,255,.5);
+    border-bottom:1px solid #ccc;
+    background-color:#eee;
+    background-image:-webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#eee));
+    background-image:-webkit-linear-gradient(top,#f5f5f5,#eee);
+    background-image:-moz-linear-gradient(top,#f5f5f5,#eee);
+    background-image:-ms-linear-gradient(top,#f5f5f5,#eee);
+    background-image:-o-linear-gradient(top,#f5f5f5,#eee);
+    background-image:linear-gradient(top,#f5f5f5,#eee)
+}
+
+.zebra th:first-child {
+    -moz-border-radius:6px 0 0;
+    -webkit-border-radius:6px 0 0 0;
+    border-radius:6px 0 0 0
+}
+
+.zebra th:last-child {
+    -moz-border-radius:0 6px 0 0;
+    -webkit-border-radius:0 6px 0 0;
+    border-radius:0 6px 0 0
+}
+
+.zebra th:only-child {
+    -moz-border-radius:6px 6px 0 0;
+    -webkit-border-radius:6px 6px 0 0;
+    border-radius:6px 6px 0 0
+}
+
+.zebra tfoot td {
+    border-bottom:0;
+    border-top:1px solid #fff;
+    background-color:#f1f1f1
+}
+
+.zebra tfoot td:first-child {
+    -moz-border-radius:0 0 0 6px;
+    -webkit-border-radius:0 0 0 6px;
+    border-radius:0 0 0 6px
+}
+
+.zebra tfoot td:last-child {
+    -moz-border-radius:0 0 6px;
+    -webkit-border-radius:0 0 6px 0;
+    border-radius:0 0 6px 0
+}
+
+.zebra tfoot td:only-child {
+    -moz-border-radius:0 0 6px 6px;
+    -webkit-border-radius:0 0 6px 6px;
+    border-radius:0 0 6px 6px
+}
+
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {
+/* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance:none;
+    margin:0
+/* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#ti {
+    font-size:20px
+}
+
+input {
+    text-align:center
+}
+</style>
+</head>
+
+<body data-role="page" data-theme="b" onload="retain()">
+    <div id="big">
+        <div data-role="header" data-theme="b">
+            <a data-close-btn="right" data-icon="info" data-rel="dialog"
+            data-theme="b" href="http://jsbin.com/fafaba/1">Help</a>
+
+            <h1 id="ti">Matrix Calculator</h1><button class=
+            "ui-btn ui-btn-inline" id="print">Print</button>
+        </div>
+
+        <div data-role="content" data-theme="b">
+            <span data-role="collapsible"></span>
+
+            <h1><span data-role="collapsible">About The Matrix
+            Calculator</span></h1>
+
+            <p><span data-role="collapsible">This a tool where you can do
+            Matrix Operations. You can also print out your results. For more
+            info press help or <a data-close-btn="right" data-icon="info"
+            data-rel="dialog" data-theme="b" href=
+            "http://jsbin.com/fafaba/1">click
+            here</a>.</span></p><select data-native-menu="false">
+                <option selected="selected">
+                    Select An Operation:
+                </option>
+
+                <option class="i" id="+" value="Add">
+                    Addition
+                </option>
+
+                <option class="i" id="-" value="Minus">
+                    Subtraction
+                </option>
+
+                <option class="i" id="X" value="MultMat">
+                    Multiply two Matricies
+                </option>
+
+                <option class="i" id="Scalar X" value="MultSca">
+                    Multiply Matrix by number
+                </option>
+
+                <option class="i" id="/" value="Divide">
+                    Division
+                </option>
+
+                <option class="i" id="0" value="Zero">
+                    Get The Zero Matrix of A
+                </option>
+
+                <option class="i" id="INVERSE" value="Inv">
+                    Get the Inverse Matrix of A
+                </option>
+
+                <option class="i" id="IDENTITY" value="Iden">
+                    Get the Identity Matrix of A
+                </option>
+
+                <option class="i" id="TRANSPOSE" value="Trans">
+                    Get the Transpose of A
+                </option>
+
+                <option class="i" id="DETERMINANT" value="Deter">
+                    Get the Determinant of A
+                </option>
+            </select> <span id="inputs">Matrix 1 Dimensions:<input class="dim"
+            id="row1" max="9" min="1" type="range" value="1">
+            <span>X</span><input class="dim" id="col1" max="9" min="1" type=
+            "range" value="1"><span class="un">Matrix 2
+            Dimensions:<input class="dim" id="row2" max="9" min="1" type=
+            "range" value="1"> <span>X</span><input class="dim" id="col2" max=
+            "9" min="1" type="range" value="1"></span></span><button data-role=
+            "button" id="b1">Submit</button><br>
+
+            <table class="it zebra a" id="one"></table>
+
+            <table class="it no">
+                <tr>
+                    <td class="no"></td>
+                </tr>
+
+                <tr>
+                    <td class="no">
+                        <h1 id="op">+</h1>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="no"></td>
+                </tr>
+            </table>
+
+            <table class="zebra it a un" id="two"></table><br>
+            <hr>
+            <br>
+            <br>
+            <button data-role="button" id="b2">=</button><br>
+            <br>
+            <hr>
+
+            <table class="zebra" id="three"></table><br>
+        </div>
+
+        <div data-role="footer" class="ui-bar">
+          <center>
+<form action="http://jsbin.com/xacobu/">
+    <input type="submit"  data-icon="home" value="Go To Home Page">
+</form>
+            </center>
+            </div>
+
+
+
+
+    </div>
+<script id="jsbin-javascript">
+/*jshint loopfunc:true */
+//noprotect
+console.clear();
+$("#print").click(function() {
+    print();
+});
+var printVar = "";
+var print1 = function(a, b) {
+    for (var aaa = 0; aaa < a; aaa++) {
+        $("#three").append("<tr></tr>");
+    }
+    for (var bbb = 0; bbb < b; bbb++) {
+        $("#three tr").each(function() {
+            $(this).append("<td>" + printVar + "</td>");
+        });
+    }
+};
+$(document).ready(function() {
+    $("#big").hide();
+    var iss = $.jStorage.get("is");
+    var onne = $.jStorage.get("one");
+    var twwo = $.jStorage.get("two");
+    for (var aaa = 0; aaa < iss[0]; aaa++) {
+        $("#one").append("<tr></tr>");
+    }
+    for (var bbb = 0; bbb < iss[1]; bbb++) {
+        $("#one tr").each(function() {
+            $(this).append("<td><div><input/></div></td>");
+        });
+    }
+    for (var aaaa = 0; aaaa < iss[2]; aaaa++) {
+        $("#two").append("<tr></tr>");
+    }
+    for (var bbbb = 0; bbbb < iss[3]; bbbb++) {
+        $("#two tr").each(function() {
+            $(this).append("<td><div><input/></div></td>");
+        });
+    }
+    for (var o = 0; o < onne.length; o++) {
+        $("#one input").eq(o).val(onne[o]);
+    }
+    for (var t = 0; t < twwo.length; t++) {
+        $("#two input").eq(t).val(twwo[t]);
+    }
+});
+var retain = function() {
+    var iss = $.jStorage.get("is");
+    $("#one div").addClass(
+        "ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset");
+    $("#two div").addClass(
+        "ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset");
+    for (var did = 0; did < iss.length; did++) {
+        $("#inputs input").eq(did).val(parseInt(iss[did]));
+    }
+    $("#big").show();
+    $(".dim").slider("refresh");
+};
+Add = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    if (a == c && b == d) {
+        print1(a, b);
+        for (var addVar = 0; addVar < (a * b); addVar++) {
+            $("#three td").eq(addVar).append("<p>" + (parseInt($(
+                '#one input').eq(addVar).val()) + parseInt($(
+                '#two input').eq(addVar).val())) + "</p>");
+        }
+    } else {
+        alert(
+            "In order to add two Matricies, they need to be of equal dimensions"
+        );
+    }
+};
+Minus = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    if (a == c && b == d) {
+        print1(a, b);
+        for (var diffVar = 0; diffVar < (a * b); diffVar++) {
+            $("#three td").eq(diffVar).append("<p>" + (parseInt($(
+                '#one input').eq(diffVar).val()) - parseInt($(
+                '#two input').eq(diffVar).val())) + "</p>");
+        }
+    } else {
+        alert(
+            "In order to subtract two Matricies, they need to be of equal dimensions"
+        );
+    }
+};
+MultMat = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    if (b == c) {
+        var total = 0;
+        var rv = 0;
+        var cv = 0;
+        var tde = 0;
+        var numOfOper = 0;
+        print1(a, d);
+        for (var r = 0; r < b + 1; r++) {
+            //console.log("R: "+r);
+            if (r < b && r < c && rv < a) {
+                total += parseInt($("#one tr").eq(rv).find("input").eq(r).val()) *
+                    parseInt($("#two tr").eq(r).find("input").eq(cv).val());
+            } else if (r == b && r == c && rv < a) {
+                //$("#three td").getClass();
+                $("#three td").eq(tde).append("<p>" + total + "</p>");
+                numOfOper++;
+                r = -1;
+                total = 0;
+                tde++;
+                cv++;
+            } else if (rv == a) {
+                return;
+            }
+            if (numOfOper == d) {
+                rv++;
+                numOfOper = 0;
+                cv = 0;
+            }
+        }
+    } else {
+        alert(
+            "In order to multiply two Matricies, the number of rows in the second Matrix needs to equal the number of columns in the first"
+        );
+    }
+};
+Zero = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    printVar = 0;
+    print1(a, b);
+};
+Iden = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    if (a == b) {
+        print1(a, b);
+        for (var ccc = 0; ccc < a * b; ccc++) {
+            if (ccc === 0 || ccc % (a + 1) === 0) {
+                $("#three td").eq(ccc).append("<p>1</p>");
+            } else {
+                $("#three td").eq(ccc).append("<p>0</p>");
+            }
+        }
+    } else {
+        print1(b, b);
+        for (var cccc = 0; cccc < b * b; cccc++) {
+            if (cccc === 0 || cccc % (b + 1) === 0) {
+                $("#three td").eq(cccc).append("<p>1</p>");
+            } else {
+                $("#three td").eq(cccc).append("<p>0</p>");
+            }
+        }
+    }
+};
+Trans = function(a, b, c, d) {
+    $("#three").find("tr").remove();
+    print1(a, b);
+    var arr2 = [];
+    var y = 0;
+    for (var ff = 0; ff < a + 1; ff++) {
+        console.log(ff);
+        if (ff < a) arr2.push($("#one tr").eq(ff).find("input").eq(y).val());
+        else if (ff == a) {
+            y++;
+            ff = -1;
+        }
+        if (y == b) {
+            ff = a + 1;
+        }
+    }
+    for (var tt = 0; tt < arr2.length; tt++) {
+        $("#three td").eq(tt).append("<p>" + arr2[tt] + "</p>");
+    }
+};
+MultSca = function(a, b, c, d) {
+    if (a == b && a == 1) {
+        print1(c, d);
+        for (var y = 0; y < (d * c); y++) {
+            $("#three td").eq(y).append("<p>" + (parseInt($("#one input").val()) *
+                parseInt($("#two input").eq(y).val())) + "</p>");
+        }
+    } else {
+        alert(
+            "Make sure the first matrix is a one by one matrix, the second one can be of any size."
+        );
+    }
+};
+var determinant2 = function(det2) {
+    return (det2[0] * det2[3]) - (det2[1] * det2[2]);
+};
+var determinant3 = function(det3) {
+    //  alert(det3);
+    return (det3[0] * ((det3[4] * det3[8]) - (det3[5] * det3[7]))) - (det3[
+        1] * ((det3[3] * det3[8]) - (det3[5] * det3[6]))) + (det3[2] *
+        ((det3[3] * det3[7]) - (det3[4] * det3[6])));
+};
+var determinant4 = function(det4) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 4; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 4; ii++) {
+            for (var iii = 0; iii < 4; iii++) {
+                if (iii != avoid) {
+                    master[avoid].push(det4[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det4[0][0] * (determinant3(master[0]))) - (det4[0][1] * (
+        determinant3(master[1]))) + (det4[0][2] * (determinant3(
+        master[2]))) - (det4[0][3] * (determinant3(master[3]))));
+};
+var determinant5 = function(det5) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 5; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 5; ii++) {
+            master[avoid][ii - 1] = [];
+            for (var iii = 0; iii < 5; iii++) {
+                if (iii != avoid) {
+                    master[avoid][ii - 1].push(det5[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det5[0][0] * (determinant4(master[0]))) - (det5[0][1] * (
+        determinant4(master[1]))) + (det5[0][2] * (determinant4(
+        master[2]))) - (det5[0][3] * (determinant4(master[3]))) + (
+        det5[0][4] * (determinant4(master[4]))));
+};
+var determinant6 = function(det6) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 6; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 6; ii++) {
+            master[avoid][ii - 1] = [];
+            for (var iii = 0; iii < 6; iii++) {
+                if (iii != avoid) {
+                    master[avoid][ii - 1].push(det6[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det6[0][0] * (determinant5(master[0]))) - (det6[0][1] * (
+        determinant5(master[1]))) + (det6[0][2] * (determinant5(
+        master[2]))) - (det6[0][3] * (determinant5(master[3]))) + (
+        det6[0][4] * (determinant5(master[4]))) - (det6[0][5] * (
+        determinant5(master[5]))));
+};
+var determinant7 = function(det7) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 7; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 7; ii++) {
+            master[avoid][ii - 1] = [];
+            for (var iii = 0; iii < 7; iii++) {
+                if (iii != avoid) {
+                    master[avoid][ii - 1].push(det7[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det7[0][0] * (determinant6(master[0]))) - (det7[0][1] * (
+        determinant6(master[1]))) + (det7[0][2] * (determinant6(
+        master[2]))) - (det7[0][3] * (determinant6(master[3]))) + (
+        det7[0][4] * (determinant6(master[4]))) - (det7[0][5] * (
+        determinant6(master[5]))) + (det7[0][6] * (determinant6(
+        master[6]))));
+};
+var determinant8 = function(det8) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 8; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 8; ii++) {
+            master[avoid][ii - 1] = [];
+            for (var iii = 0; iii < 8; iii++) {
+                if (iii != avoid) {
+                    master[avoid][ii - 1].push(det8[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det8[0][0] * (determinant7(master[0]))) - (det8[0][1] * (
+        determinant7(master[1]))) + (det8[0][2] * (determinant7(
+        master[2]))) - (det8[0][3] * (determinant7(master[3]))) + (
+        det8[0][4] * (determinant7(master[4]))) - (det8[0][5] * (
+        determinant7(master[5]))) + (det8[0][6] * (determinant7(
+        master[6]))) - (det8[0][7] * (determinant7(master[7]))));
+};
+var determinant9 = function(det9) {
+    var master = [];
+    var avoid = 0;
+    for (var i = 0; i < 9; i++) {
+        master[avoid] = [];
+        for (var ii = 1; ii < 9; ii++) {
+            master[avoid][ii - 1] = [];
+            for (var iii = 0; iii < 9; iii++) {
+                if (iii != avoid) {
+                    master[avoid][ii - 1].push(det9[ii][iii]);
+                }
+            }
+        }
+        avoid++;
+    }
+    return ((det9[0][0] * (determinant8(master[0]))) - (det9[0][1] * (
+        determinant8(master[1]))) + (det9[0][2] * (determinant8(
+        master[2]))) - (det9[0][3] * (determinant8(master[3]))) + (
+        det9[0][4] * (determinant8(master[4]))) - (det9[0][5] * (
+        determinant8(master[5]))) + (det9[0][6] * (determinant8(
+        master[6]))) - (det9[0][7] * (determinant8(master[7]))) + (
+        det9[0][8] * (determinant8(master[8]))));
+};
+Deter = function(a, b, c, d) {
+    var tableval = [];
+    $("#three").find("td").remove();
+    if (a > 3) {
+        for (var tvar = 0; tvar < a; tvar++) {
+            tableval[tvar] = [];
+            for (var ii = 0; ii < b; ii++) {
+                tableval[tvar][ii] = $("#one tr").eq(tvar).find("input").eq(
+                    ii).val();
+            }
+        }
+    } else {
+        for (var tvarr = 0; tvarr < (a * a); tvarr++) {
+            tableval[tvarr] = $("#one input ").eq(tvarr).val();
+        }
+    }
+    if (a == b) {
+        $("#three").append("<td><p>" + window["determinant" + a](tableval) +
+            "</p></td>");
+    }
+};
+$("#b1").click(function() {
+    $(".un").show();
+    $(".dim").removeClass("warn");
+    $(".a").find("tr").remove();
+    var oper = $(".i:checked").val();
+    var dimensions = [];
+    var error =
+        "The following Input(s) have been left blank or are not integers";
+    $("#op").text($(".i:checked").attr("id"));
+    $('#inputs input').each(function(e) {
+        dimensions.push(parseInt($(this).val()));
+        if ($(this).val() === "") {
+            $(this).addClass("warn");
+            error += "\n " + $(this).attr("id");
+        }
+    });
+    if (error !=
+        "The following Input(s) have been left blank or are not integers"
+    ) {
+        alert(error);
+        return;
+    }
+    if (oper === undefined) {
+        alert("You have not picked an Operation");
+        return;
+    }
+    for (var i = 0; i < dimensions[0]; i++) {
+        $("#one").append("<tr></tr>");
+    }
+    for (var j = 0; j < dimensions[1]; j++) {
+        $("#one tr").append(
+            "<td><div class='ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset'><input type='number'></div></td>"
+        );
+    }
+    for (var k = 0; k < dimensions[2]; k++) {
+        $("#two").append("<tr></tr>");
+    }
+    for (var l = 0; l < dimensions[3]; l++) {
+        $("#two tr").append(
+            "<td><div class='ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset'><input type='number'></div></td>"
+        );
+    }
+    if ($.inArray(oper, ["Inv", "Deter", "Iden", "Trans"]) != -1) $(
+        ".un").hide();
+    $("#b2").click(function() {
+        $("input").removeClass("warn");
+        $("table input").each(function(e) {
+            if ($(this).val() === "" || isNaN($(this).val())) {
+                $(this).addClass("warn");
+                return;
+            }
+        });
+        if ($('.warn').length === 0 || $(".un:hidden").length !==
+            0) window[oper](dimensions[0], dimensions[1],
+            dimensions[2], dimensions[3]);
+    });
+});
+window.onbeforeunload = function() {
+    var dimen = [];
+    $('#inputs input').each(function(e) {
+        dimen.push(parseInt($(this).val()));
+    });
+    var one = [];
+    $('#one input').each(function(e) {
+        one.push(parseInt($(this).val()));
+    });
+    var two = [];
+    $('#two input').each(function(e) {
+        two.push(parseInt($(this).val()));
+    });
+    $.jStorage.set("is", dimen);
+    $.jStorage.set("one", one);
+    $.jStorage.set("two", two);
+    console.log(dimen);
+    console.log("dimen= " + $.jStorage.get("is"));
+};
+//Transpose --fin
+//Inverse
+//Print
+//localStorage--fin
+//MediaQuery
+//Identity-- Fin
+//Zero Matrix -- Fin
+//Determinant--Fin
+//Latex
+//Jquery UI --Fin
+//Jquery Punch --NotNeeded
+//Try-Catch --Tried and Caught :)
+</script>
+</body>
+</html>

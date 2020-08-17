@@ -1,0 +1,44 @@
+@font-face {
+    font-family: LemonMilk;
+    src: url("/fonts/LemonMilkbold.otf") format("opentype");
+}
+@font-face {
+    font-family: LemonMilkLight;
+    src: url("/fonts/LemonMilk.otf") format("opentype");
+}
+
+
+
+
+
+::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
+
+*{
+font-family: LemonMilkLight !important
+
+}
+
+h1,h2,h3,h4,h5,h6{
+
+    font-family: LemonMilk !important
+}
+.content{margin-bottom:40px!important}
+img.landing{object-fit: cover;
+
+}
+
+.uk-logo{font-family: 'Roboto', sans-serif!important; color:black !important}

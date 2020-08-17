@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by Yekush (http://jsbin.com/gahabaw/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head><!-- Compiled and minified CSS -->
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script> <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   
+          
+    <link href="https://cdn.quilljs.com/1.2.2/quill.snow.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <title>JS Bin</title>
+<style id="jsbin-css">
+.viewers{margin:10px}
+div.toolbar{position:relative;width: 50%; height: 50%;z-index:12321421}
+div.hi{position:static}
+div.toolbar button{width:100px}
+</style>
+</head>
+
+<body ng-app="Blog" ng-controller="blogs">
+    <h1 class="title" contenteditable='true'>THIS IS THE TITLE</h1>
+    <div id="editor3">
+    </div>
+    <button onclick="upload()">Upload</button>
+    <button onclick="edit()">Done Editing</button>
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.2.2/quill.js"></script>
+   
+    <!-- Initialize Quill editor -->
+    <script>
+        var toolbarOptions = [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],
+        
+          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+          [{ 'direction': 'rtl' }],                         // text direction
+        
+          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          [ 'image' ,'video' ],
+        
+          ['clean']                                         // remove formatting button
+        ];
+        	
+         
+        var quill3 = new Quill('#editor3', {
+          modules: {
+            toolbar: toolbarOptions
+          },
+          theme: 'snow'
+        });
+    </script>
+   <div ng-repeat="(key,val) in arr track by $index" class="hi" ng-init="ale($index,key,val)"  editor="{{key}}"> <div class="toolbar">
+        <button ng-click="edit(key)">Edit</button><br>
+        <button ng-click="del(key)">Delete</button><br>
+        <button ng-click="priv()">Make Private</button>
+    </div>
+    		<div class="viewers"></div>
+        
+    </div>
+   
+  <div class="fixed-action-btn">
+    <a data-activates="slide-out" class="btn-floating button-collapse btn-large  teal accent-3">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+        
+  <ul id="slide-out" class="side-nav">
+    <li><div class="userView">
+      <div class="background">
+        <img src="http://4.bp.blogspot.com/-SOwlSY_1TlQ/VGDoWuuwYhI/AAAAAAAAB_M/v5rL5n38FGE/s1600/background_03.png">
+      </div>
+      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#!name"><span class="white-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="deep-purple-text material-icons">lens
+</i>First Link With Icon</a></li>
+  
+    <li><div class="divider"></div></li>
+    <li ng-repeat="(x,y) in arr track by $index"><a href="#!">{{y.title}}</a></li>
+
+        
+  </ul>
+ 
+<script id="jsbin-javascript">
+
+  // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+        
+
+
+var config = {
+      apiKey: "AIzaSyBX3h1nakgn3VS4U8-FLC947oXxHsn9Rak",
+      authDomain: "yodamaul-4f77e.firebaseapp.com",
+      databaseURL: "https://yodamaul-4f77e.firebaseio.com",
+      storageBucket: "yodamaul-4f77e.appspot.com",
+      messagingSenderId: "900619251966"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+	 var editing=false;
+  var storageRef = firebase.storage().ref();
+
+  var dataBIG = {};
+function save(dataBIG){
+	
+	var jsonse = JSON.stringify(dataBIG);
+          var blob = new Blob([jsonse], {
+              type: "application/json"
+          });
+          var ref = storageRef.child('JSON/blogs.json');
+
+          ref.put(blob).then(function(snapshot) {
+              console.log("DONE");
+          });
+      }
+	
+var tt,nn,kk;
+function edit()
+{
+	editing=false;
+	quill3.setContents([
+  { insert: '\n' }
+]);
+	
+}
+
+function saveUpdatefirstTime(data,key){
+	var obj={};
+	obj[key]=data;
+	 var ref2 = storageRef.child('JSON/'+key+'.json');
+ var jsonse = JSON.stringify(obj);
+     var blob = new Blob([jsonse], {
+              type: "application/json"
+          });
+          ref2.put(blob).then(function(snapshot) {
+              console.log("DONE");
+          });
+	
+}
+function saveUpdateupdate(data1,key,n){
+	
+	 var ref2 = storageRef.child('JSON/'+n+'.json');
+	
+      ref2.getDownloadURL().then(function(url) {
+
+          $.getJSON(url)
+              .done(function(data) {
+                  var dataBG = data; 
+				  dataBG[key]=data1;
+			  
+			  var jsonse2 = JSON.stringify(dataBG);
+     var blob = new Blob([jsonse2], {
+              type: "application/json"
+          });
+          ref2.put(blob).then(function(snapshot) {
+              console.log("DONE");
+          });
+	
+              });
+});
+								 }
+								 
+								 
+function upload() {
+      var conf = confirm("Are you done?");
+      if (conf) {
+		  if(editing){
+		var delta = quill3.getContents();
+          var data = delta;
+          var author = "Author";
+          var title = $(".title").html();
+          var date = new Date();
+          var n = date.getTime();
+          var cleanScript = {
+              'date_created': nn,
+			  'date_updated': n,
+              'title': tt,
+              'type': 'script',
+              'html': $("#editor3 .ql-editor").html(),
+              'delta': delta,
+              'author': author,
+
+          };
+          dataBIG[kk] = cleanScript;
+			save(dataBIG);
+			  saveUpdateupdate(dataBIG[kk],n,nn);
+		  }	  
+			  
+			  			  
+			  
+		  else if(!editing){
+          var delta = quill3.getContents();
+          var data = delta;
+          var author = "Author";
+          var title = $(".title").html();
+          var date = new Date();
+          var n = date.getTime();
+          var cleanScript = {
+              'date_created': n,
+              'title': title,
+              'type': 'script',
+              'html': $("#editor3 .ql-editor").html(),
+              'delta': delta,
+              'author': author,
+
+          };
+          dataBIG[n] = cleanScript;
+        save(dataBIG);
+	saveUpdatefirstTime(dataBIG[n],n);
+		  
+		  }
+	  }
+  }
+
+  function test() {
+      var delta = quill.getContents();
+      console.log(delta);
+
+  }
+function priv(){
+	
+}
+
+
+  var app = angular.module('Blog', []);
+  app.controller('blogs', function($scope,$filter) {
+      var editors = [];
+      $scope.arr = '';
+
+      $scope.ale = function(a, k ,v) {
+
+			 var titleCard = {
+          "ops": [{
+              "attributes": {
+              },
+              "insert": v.title
+          }, {
+              "attributes": {
+                  "align": "center",
+                  "header": 1
+              },
+              "insert": "\n"
+          }, {
+              "attributes": {
+                  "color": "#bbbbbb"
+              },
+              "insert": "By: "+v.author
+          }, {
+              "attributes": {
+                  "align": "center"
+              },
+              "insert": "\n"
+          }, {
+              "attributes": {
+                  "color": "#bbbbbb"
+              },
+              "insert": "Date: "+ $filter('date')(v.date_created,"medium")
+
+          }, {
+              "attributes": {
+                  "align": "center"
+              },
+              "insert": "\n"
+          }, {
+              "attributes": {
+                  "color": "#bbbbbb"
+              },
+              "insert": "(Last Updated : "+$filter('date')(v.date_updated,"medium")+")"
+          }, {
+              "attributes": {
+                  "align": "center"
+              },
+              "insert": "\n"
+          }, {
+              "insert": "\n"
+          }]
+        };
+		 var blog= titleCard.ops.concat($scope.arr[k].delta['ops']);
+		
+          var quill = new Quill($('.viewers').get(a), {
+              modules: {
+                  toolbar: 0
+              },
+              readOnly: true,
+              theme: 'snow'
+          });
+
+          quill.setContents(blog);
+
+
+      };
+
+$scope.del=function(key){
+	delete $scope.arr[key]; 
+	console.log(key);
+	save($scope.arr);
+};
+
+$scope.edit=function(key){
+	editing=true;
+	nn=$scope.arr[key].date_created;
+	tt=$scope.arr[key].title;
+	kk=key;  quill3.setContents($scope.arr[key].delta["ops"]);
+	};
+
+      var ref2 = storageRef.child('JSON/blogs.json');
+      ref2.getDownloadURL().then(function(url) {
+
+          $.getJSON(url)
+              .done(function(data) {
+                  dataBIG = data;
+                  $scope.arr = data;
+                  if (!$scope.$$phase) {
+                      $scope.$apply();
+                  }
+              });
+
+
+
+      });
+
+  });
+</script>
+</body>
+
+</html>

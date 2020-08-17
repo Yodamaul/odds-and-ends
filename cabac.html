@@ -1,0 +1,452 @@
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by Yekush (http://jsbin.com/kikiy/10/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+  <meta name="description" content="Chinese Abacus" />
+<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <meta charset="utf-8">
+  <title>Chinese Abacus</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/black-tie\jquery-ui.css">
+
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
+<style id="jsbin-css">
+#bottom .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+
+  position: relative;
+ bottom: -75px;
+    margin: 0 10px 10px 0;
+}
+#topc .x {
+    background: #FF0;
+    color: #00F;
+    width: 0;
+    height: 2px;
+    padding: .5em;
+
+  position: relative;
+ bottom: 6px;
+    margin: 0 10px 10px 0;
+}
+
+
+
+
+
+
+.moved{background:#000;}
+
+#start,#start2,#start3,#start4,#start5,#start6,#start7,#start8,#start9,#start10 {
+    width: 15px;
+    height: 200px;
+    padding: .5em;
+    float: right;
+    margin: 5px;
+
+}
+
+#top,#top2,#top3,#top4,#top5,#top6,#top7,#top8,#top9,#top10{    width: 15px;
+    height: 80px;
+    padding: .5em;
+    float: left;
+    margin: 5px;
+
+}
+
+
+</style>
+</head>
+<body>
+	<h1>Suanpan</h1>
+	<h3>Html, Jquery, JQM </h3>
+	<p>The Chinese Abacus, also called the Suanpan consists of 10 rows with each row separated into two sections by a long bar. There are 5 beads on the bottom section and 2 at the top. The value of each of the top beads is 5 while the bottom beads are all valued at one. This allows for easier counting, while the school abacus solves this by using two different colors.</p>
+ <table>
+
+   <tr>
+     <td> <p id="count">0</p></td>
+     <td><p id="count2">0</p></td>
+     <td> <p id="count3">0</p></td>
+     <td><p id="count4">0</p></td>
+     <td> <p id="count5">0</p></td>
+     <td><p id="count6">0</p></td>
+     <td> <p id="count7">0</p></td>
+     <td><p id="count8">0</p></td>
+     <td> <p id="count9">0</p></td>
+     <td><p id="count10">0</p></td>
+   </tr>
+   <tr id="topc">
+     <td>
+   <span id="top" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top2" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top3" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top4" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top5" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top6" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top7" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top8" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top9" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+     <td>
+   <span id="top10" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+       </span>
+     </td>
+
+
+
+
+
+
+   </tr>
+
+
+
+   <tr id="bottom">
+  <td>
+    <span id="start" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+       </span>
+     </td>
+     <td>
+  <span id="start2" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+ </span>
+     </td>
+   <td>
+      <span id="start3" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+  </span>
+
+     </td>
+   <td><span id="start4" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+       </span></td>
+     <td>
+  <span id="start5" class="ui-widget-header">
+  <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+     </td>
+   <td>
+      <span id="start6" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+
+
+     </td>
+
+ <td>
+  <span id="start7" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+     </td>
+ <td>
+  <span id="start8" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+     </td>
+   <td>
+  <span id="start9" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+     </td>
+ <td>
+  <span id="start10" class="ui-widget-header">
+   <div class="x" ></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x"></div>
+  <div class="x" ></div>
+
+  </span>
+
+     </td>
+
+
+
+
+
+
+   </tr>
+
+
+
+
+
+
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h1>Total:<h1 id="total"></h1></h1>
+
+
+
+
+
+
+<script id="jsbin-javascript">
+
+
+
+$(".x").click(function() {
+    var x = $(this).css("bottom");
+    var a = $("#start .moved").length+$("#top .moved").length*5;
+    var b = $("#start2 .moved").length+$("#top2 .moved").length*5;
+    var c = $("#start3 .moved").length+$("#top3 .moved").length*5;
+    var d = $("#start4 .moved").length+$("#top4 .moved").length*5;
+    var e = $("#start5 .moved").length+$("#top5 .moved").length*5;
+    var f = $("#start6 .moved").length+$("#top6 .moved").length*5;
+    var g = $("#start7 .moved").length+$("#top7 .moved").length*5;
+    var h = $("#start8.moved").length+$("#top8 .moved").length*5;
+    var i = $("#start9 .moved").length+$("#top9 .moved").length*5;
+    var j = $("#start10 .moved").length+$("#top10 .moved").length*5;
+    var z= (a*(Math.pow(10,9)))+(b*(Math.pow(10,8)))+(c*(Math.pow(10,7)))+(d*(Math.pow(10,6)))+(e*(Math.pow(10,5)))+(f*(Math.pow(10,4)))+(g*(Math.pow(10,3)))+(h*(Math.pow(10,2)))+(i*(Math.pow(10,1)))+(j*(Math.pow(10,0)));
+
+  if      (x == "-75px") {
+        $(this).prevAll().andSelf().addClass("moved").css("bottom", "4px");
+
+
+
+    a = $("#start .moved").length+$("#top .moved").length*5;
+        $("#count").text(a);
+        b = $("#start2 .moved").length+$("#top2 .moved").length*5;
+        $("#count2").text(b);
+        c = $("#start3 .moved").length+$("#top3 .moved").length*5;
+        $("#count3").text(c);
+        d = $("#start4 .moved").length+$("#top4 .moved").length*5;
+        $("#count4").text(d);
+        e = $("#start5 .moved").length+$("#top5 .moved").length*5;
+        $("#count5").text(e);
+        f = $("#start6 .moved").length+$("#top6 .moved").length*5;
+        $("#count6").text(f);
+        g = $("#start7 .moved").length+$("#top7 .moved").length*5;
+        $("#count7").text(g);
+        h = $("#start8 .moved").length+$("#top8 .moved").length*5;
+        $("#count8").text(h);
+        i = $("#start9 .moved").length+$("#top9 .moved").length*5;
+        $("#count9").text(i);
+        j = $("#start10 .moved").length+$("#top10 .moved").length*5;
+        $("#count10").text(j);
+        z= (a*(Math.pow(10,9)))+(b*(Math.pow(10,8)))+(c*(Math.pow(10,7)))+(d*(Math.pow(10,6)))+(e*(Math.pow(10,5)))+(f*(Math.pow(10,4)))+(g*(Math.pow(10,3)))+(h*(Math.pow(10,2)))+(i*(Math.pow(10,1)))+(j*(Math.pow(10,0)));
+        z=z.toLocaleString("en") ;
+      $("#total").text(z);
+    }
+  else if (x == "4px") {
+        $(this).nextAll().andSelf().removeClass("moved").css("bottom","-75px");
+       a = $("#start .moved").length+$("#top .moved").length*5;
+        $("#count").text(a);
+        b = $("#start2 .moved").length+$("#top2 .moved").length*5;
+        $("#count2").text(b);
+        c = $("#start3 .moved").length+$("#top3 .moved").length*5;
+        $("#count3").text(c);
+        d = $("#start4 .moved").length+$("#top4 .moved").length*5;
+        $("#count4").text(d);
+        e = $("#start5 .moved").length+$("#top5 .moved").length*5;
+        $("#count5").text(e);
+        f = $("#start6 .moved").length+$("#top6 .moved").length*5;
+        $("#count6").text(f);
+        g = $("#start7 .moved").length+$("#top7 .moved").length*5;
+        $("#count7").text(g);
+        h = $("#start8 .moved").length+$("#top8 .moved").length*5;
+        $("#count8").text(h);
+        i = $("#start9 .moved").length+$("#top9 .moved").length*5;
+        $("#count9").text(i);
+        j = $("#start10 .moved").length+$("#top10 .moved").length*5;
+        $("#count10").text(j);
+        z= (a*(Math.pow(10,9)))+(b*(Math.pow(10,8)))+(c*(Math.pow(10,7)))+(d*(Math.pow(10,6)))+(e*(Math.pow(10,5)))+(f*(Math.pow(10,4)))+(g*(Math.pow(10,3)))+(h*(Math.pow(10,2)))+(i*(Math.pow(10,1)))+(j*(Math.pow(10,0)));
+        z=z.toLocaleString("en") ;
+      $("#total").text(z);
+
+    }
+  else if (x == "6px") {
+        $(this).nextAll().andSelf().addClass("moved").css("bottom","-40px");
+       a = $("#start .moved").length+$("#top .moved").length*5;
+        $("#count").text(a);
+        b = $("#start2 .moved").length+$("#top2 .moved").length*5;
+        $("#count2").text(b);
+        c = $("#start3 .moved").length+$("#top3 .moved").length*5;
+        $("#count3").text(c);
+        d = $("#start4 .moved").length+$("#top4 .moved").length*5;
+        $("#count4").text(d);
+        e = $("#start5 .moved").length+$("#top5 .moved").length*5;
+        $("#count5").text(e);
+        f = $("#start6 .moved").length+$("#top6 .moved").length*5;
+        $("#count6").text(f);
+        g = $("#start7 .moved").length+$("#top7 .moved").length*5;
+        $("#count7").text(g);
+        h = $("#start8 .moved").length+$("#top8 .moved").length*5;
+        $("#count8").text(h);
+        i = $("#start9 .moved").length+$("#top9 .moved").length*5;
+        $("#count9").text(i);
+        j = $("#start10 .moved").length+$("#top10 .moved").length*5;
+        $("#count10").text(j);
+        z= (a*(Math.pow(10,9)))+(b*(Math.pow(10,8)))+(c*(Math.pow(10,7)))+(d*(Math.pow(10,6)))+(e*(Math.pow(10,5)))+(f*(Math.pow(10,4)))+(g*(Math.pow(10,3)))+(h*(Math.pow(10,2)))+(i*(Math.pow(10,1)))+(j*(Math.pow(10,0)));
+        z=z.toLocaleString("en") ;
+      $("#total").text(z);
+        }
+else if   (x == "-40px") {
+        $(this).prevAll().andSelf().removeClass("moved").css("bottom","6px");
+       a = $("#start .moved").length+$("#top .moved").length*5;
+        $("#count").text(a);
+        b = $("#start2 .moved").length+$("#top2 .moved").length*5;
+        $("#count2").text(b);
+        c = $("#start3 .moved").length+$("#top3 .moved").length*5;
+        $("#count3").text(c);
+        d = $("#start4 .moved").length+$("#top4 .moved").length*5;
+        $("#count4").text(d);
+        e = $("#start5 .moved").length+$("#top5 .moved").length*5;
+        $("#count5").text(e);
+        f = $("#start6 .moved").length+$("#top6 .moved").length*5;
+        $("#count6").text(f);
+        g = $("#start7 .moved").length+$("#top7 .moved").length*5;
+        $("#count7").text(g);
+        h = $("#start8 .moved").length+$("#top8 .moved").length*5;
+        $("#count8").text(h);
+        i = $("#start9 .moved").length+$("#top9 .moved").length*5;
+        $("#count9").text(i);
+        j = $("#start10 .moved").length+$("#top10 .moved").length*5;
+        $("#count10").text(j);
+        z= (a*(Math.pow(10,9)))+(b*(Math.pow(10,8)))+(c*(Math.pow(10,7)))+(d*(Math.pow(10,6)))+(e*(Math.pow(10,5)))+(f*(Math.pow(10,4)))+(g*(Math.pow(10,3)))+(h*(Math.pow(10,2)))+(i*(Math.pow(10,1)))+(j*(Math.pow(10,0)));
+        z=z.toLocaleString("en") ;
+      $("#total").text(z);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+</script>
+</body>
+</html>

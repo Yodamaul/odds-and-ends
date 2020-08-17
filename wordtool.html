@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by Yekush (http://jsbin.com/zikico/8/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+  <script src="https://code.ionicframework.com/1.2.1/js/ionic.bundle.min.js"></script>
+  <link href="https://code.ionicframework.com/1.2.1/css/ionic.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://code.ionicframework.com/1.2.1/js/angular/angular-animate.min.js"></script>
+  <meta name="viewport" content="user-scalable=no" />
+
+
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+  <title>ASKP Words</title>
+  <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.css" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.16/toaster.min.js"></script>
+
+<style id="jsbin-css">
+.button.word,
+.button.def {
+  width: 50vw
+}
+.button.def2 {
+  width: calc(50vw / 3)
+}
+.item-button-left {
+  padding-left: 0
+}
+.front {
+  width: 100vw;
+  height: 70vh
+}
+.front2 {
+  width: 100vw;
+  height: 65vh
+}
+.popover {
+  height: 20vh
+}
+.false {
+  border-color: #e42112;
+  background-color: #ef473a;
+  color: #fff;
+}
+.true {
+  border-color: #28a54c;
+  background-color: #33cd5f;
+  color: #fff;
+}
+.s1s1 {
+  width: 90vw
+}
+.create {
+  width: 100vw
+}
+ion-content {
+  background-color: #444444
+}
+#user,
+#pass,
+.dIn[type="text"] {
+  color: white
+}
+select {
+  display: none
+}
+.deff {
+  background-color: white
+}
+.list {
+  margin-bottom: 0px
+}
+.illCart {
+  height: 46vh
+}
+</style>
+</head>
+
+<body ng-app="ionicApp" ng-controller="wordListController">
+
+
+
+  <ion-side-menus>
+
+    <!-- Center content -->
+    <ion-side-menu-content>
+      <ion-header-bar class="bar-positive">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+
+        <h1 class="title">Word Tool</h1>
+        <button class="button button-icon icon ion-help"></button>
+
+      </ion-header-bar>
+
+      <div class="bar bar-subheader bar-dark">
+        <h2 class="title">Logged In As: {{name}}</h2>
+      </div>
+      <ng-include src="page213"></ng-include>
+      <toaster-container></toaster-container>
+    </ion-side-menu-content>
+
+
+    <ion-side-menu ng-if="page213!='login.html'" side="left">
+      <ion-header-bar class="bar-energized">
+        <h1 class="title">Select Page</h1>
+      </ion-header-bar>
+      <ion-content>
+        <ion-list>
+          <a class="item item-dark" ng-click="changePage('enterwords.html')">
+           Add Words</a>
+
+          <a class="item item-dark" ng-click="changePage('allWords.html')">
+              All My Words</a>
+
+          <a class="item  item-dark item-icon-right" ng-click="changePage('worldWords.html')">
+              All Words <i class="icon ion-android-globe"></i></a>
+
+          <a class="item item-dark" ng-click="changePage('test.html')">
+              Learn Words</a>
+          <a class="item item-dark" ng-click="changePage('categories.html')">
+              Categories</a>
+
+          <a class="item item-assertive" ng-click="logout()">
+              Logout</a>
+        </ion-list>
+      </ion-content>
+    </ion-side-menu>
+
+  </ion-side-menus>
+
+
+
+  <script id="enterwords.html" type="text/ng-template">
+    <ion-content class=" has-subheader" scroll="false">
+      <div class="list">
+
+        <div class="item item-input-inset item-dark">
+          <label class="item-input-wrapper">
+            <input ng-model="projectList.search" type="text" class="newWord" placeholder="Word">
+          </label>
+          <button ng-click="addWord()" class="button button-small">
+            Submit
+          </button>
+        </div>
+
+      </div>
+
+      <ion-scroll class="front">
+        <ion-list>
+          <div ng-repeat="(key,val) in words | custom:projectList.search:searchWhere " class="item item-button-left item-dark" href="#">
+
+
+            <div class="buttons">
+              <button class="button word {{val[1] }}" ng-click="speak('{{key}}')">
+                {{key}}
+              </button>
+
+              <button ng-click="define('{{key}}',$event)" class="button def">
+                Definition
+              </button>
+            </div>
+      </ion-scroll>
+
+      </div>
+
+
+      </ion-list>
+
+    </ion-content>
+
+
+
+  </script>
+
+  <script id="categories.html" type="text/ng-template">
+    <ion-content class="catttt has-subheader" scroll="false">
+
+      <div class="card" ng-click="pick('{{key}}',$event)" ng-repeat="key in cats">
+        <div class="item item-text-wrap item-energized item-button-right">
+          {{key}}
+        </div>
+      </div>
+
+
+
+    </ion-content>
+
+
+
+  </script>
+
+  <script id="login.html" type="text/ng-template">
+    <ion-header-bar class="bar-dark">
+      <h1 class="title">Word List</h1>
+    </ion-header-bar>
+    <ion-content>
+      <img src="blob:https%3A//drive.google.com/b0dabda7-5403-43e1-bb87-76cce901ac6d" alt="">
+      <div class="list">
+
+        <label class="item item-dark item-input">
+          <span class="input-label stable">Username</span>
+          <input type="text" class="stable " id="user">
+        </label>
+        <label class="item item-dark item-input">
+          <span class="input-label stable">Password</span>
+          <input type="password" class="stable " id="pass">
+        </label>
+      </div>
+      <center>
+        <button ng-click="authUser()" class="button button-block  login button-positive">
+          Login</button>
+        <button ng-click="log()" class="button button-block button-assertive"><i class="icon ion-social-googleplus-outline"> Login With Google Plus</i> </button>
+
+      </center>
+    </ion-content>
+
+    <ion-footer-bar class="bar bar-dark">
+
+      <button ng-click="showPopup()" class="button button-clear button-royal icon ion-help">
+        Forgot Password
+      </button>
+      <button ng-click="openModal()" class="button button-clear button-assertive icon-right ion-clipboard">
+        Register Now
+      </button>
+
+    </ion-footer-bar>
+  </script>
+
+  <script id="test.html" type="text/ng-template">
+    <ion-content class="has-subheader" scroll="false">
+      <center>
+        <h3>Test Words</h3>
+      </center>
+
+      <ul class="list">
+
+        <li class="item item-toggle">
+          <span class="taw">Testing All Words</span>
+          <label ng-click="sa()" class="toggle toggle-assertive">
+            <input id="all" type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+
+
+      </ul>
+
+      <button ng-click="newWordPick()" class="button button-full button-positive">
+        New Word
+      </button>
+      <button ng-click="speakAgain()" class="button button-full button-positive">
+        Speak Word
+      </button>
+      <button ng-click="defineTEST($event)" class="button button-full button-positive">
+        Define Word
+      </button>
+
+    </ion-content>
+    <ion-footer-bar class="item-input-inset bar-dark">
+      <label class="item-input-wrapper">
+
+        <input id="guess" type="text" placeholder="Enter Answer">
+      </label>
+      <button ng-click="checkIT()" class="button button-clear">
+        Submit
+      </button>
+    </ion-footer-bar>
+
+
+  </script>
+
+  <script id="allWords.html" type="text/ng-template">
+    <ion-content class="has-subheader" scroll="false">
+      <div class="list">
+
+        <div class="item item-input-inset  item-dark">
+          <label class="item-input-wrapper">
+            <input ng-model="projectList.search" type="text" class="newWord s1s1" placeholder="Word">
+
+          </label>
+
+          <button ng-click="changeSearch()" class=" icon-right button-clear">{{searchWhere}} <i class="icon ion-search"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+      <ion-scroll class="front2">
+        <ion-list class="wordLISTlist">
+          <div on-hold="cate('{{key}}')" ng-repeat="(key,val) in words | custom:projectList.search:searchWhere " class="item item-button-left item-dark" href="#">
+
+
+            <div class="buttons">
+              <button class="button word {{val[1] }}" ng-click="speak('{{key}}')">
+                {{key}}
+              </button>
+
+              <button ng-click="define('{{key}}',$event)" class="button def2 icon ion-information-circled">
+                <button ng-click="learnt('{{key}}',true,$event)" class="button def2 icon ion-checkmark-circled">
+                  <button ng-click="learnt('{{key}}',false,$event)" class="button def2 icon ion-close-circled">
+
+                  </button>
+            </div>
+      </ion-scroll>
+
+      </div>
+
+
+      </ion-list>
+
+    </ion-content>
+    <ion-footer-bar class="bar-dark">
+      <div class="tabs tabs-dark">
+        <a ng-click="show('learned')" class="tab-item">
+    Known
+  </a>
+        <a ng-click="show('all')" class="tab-item">
+    All
+  </a>
+        <a ng-click="show('notlearned')" class="tab-item">
+    Unknown
+  </a>
+      </div>
+
+
+    </ion-footer-bar>
+  </script>
+
+  <script id="worldWords.html" type="text/ng-template">
+    <ion-content class="has-subheader" scroll="false">
+      <div class="list">
+
+        <div class="item item-input-inset  item-dark">
+          <label class="item-input-wrapper">
+            <input ng-model="projectList.search" type="text" class="newWord s1s1" placeholder="Word">
+
+          </label>
+
+          <button ng-click="changeSearch()" class=" icon-right button-clear">{{searchWhere}} <i class="icon ion-search"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+      <ion-scroll class="front2">
+        <ion-list class="wordLISTlist">
+          <div ng-repeat="(key,val) in allWords | custom:projectList.search:searchWhere " class="item item-button-left item-dark" href="#">
+
+
+            <div class="buttons">
+              <button class="button word" ng-click="speak('{{key}}')">
+                {{key}}
+              </button>
+
+              <button ng-click="define('{{key}}',$event)" class="button def2 icon ion-information-circled">
+                <button ng-click="alert({{val}})" class="button def2 icon ion-person">
+                  <button ng-click="addME('{{key}}')" class="button def2 icon ion-plus-round">
+
+                  </button>
+            </div>
+      </ion-scroll>
+
+      </div>
+
+
+      </ion-list>
+
+    </ion-content>
+    <ion-footer-bar class="bar-dark">
+      <div class="tabs tabs-background-dark">
+        <a ng-click="show('learned')" class="tab-item">
+    Known
+  </a>
+        <a ng-click="show('all')" class="tab-item">
+    All
+  </a>
+        <a ng-click="show('notlearned')" class="tab-item">
+    Unknown
+  </a>
+      </div>
+
+
+    </ion-footer-bar>
+  </script>
+
+
+  <script id="my-modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-dark">
+        <h1 class="title">Register</h1>
+        <button ng-click="closeModal()" class="button button-clear icon ion-close">
+        </button>
+
+      </ion-header-bar>
+      <ion-content>
+        <ion-list>
+          <label ng-repeat="reg in regs" class="item item-input item-floating-label">
+            <span class="input-label">{{reg}}
+</span>
+            <input class="dIn" placeholder="{{reg}}" type="text">
+          </label>
+
+        </ion-list>
+      </ion-content>
+      <ion-footer-bar class="bar-dark">
+        <button ng-click="cUser()" class="button create button-positive">
+          Login</button>
+      </ion-footer-bar>
+    </ion-modal-view>
+
+  </script>
+  <script id="categorize.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-dark">
+        <h1 class="title">Category</h1>
+        <button ng-click="closeModal()" class="button button-clear icon ion-close">
+        </button>
+
+      </ion-header-bar>
+      <ion-content scroll="false">
+        <div class="card">
+          <div class="item item-divider">
+            {{categorizingWord}}
+          </div>
+          <div class="item item-text-wrap">
+           {{words[categorizingWord][0] | arrayText}}
+          </div>
+          <div class="item item-divider">
+            <ion-scroll direction="x" class="wide-as-needed">
+
+              Tags: {{allTags}}
+            </ion-scroll>
+          </div>
+        </div>
+        <div class="item item-input">
+          <label class="item-input-wrapper">
+            <input type="text" id="newcat" placeholder="New Category">
+          </label>
+          <button ng-click="tagNew()" class="button button-small">
+            Add
+          </button>
+        </div>
+        <ion-scroll class="illCart">
+          <ion-list>
+
+            <ion-checkbox ng-click="tags('{{key}}')" ng-repeat="key in cats">{{key}}</ion-checkbox>
+
+          </ion-list>
+        </ion-scroll>
+
+
+      </ion-content>
+
+      <ion-footer-bar class="bar-positive">
+        <center>
+          <h1 ng-click="catog()" class="title button button-clear">Submit</h1>
+        </center>
+
+
+
+      </ion-footer-bar>
+    </ion-modal-view>
+
+  </script>
+  <script id="help.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-dark">
+        <h1 class="title">Help</h1>
+        <button ng-click="closeModal()" class="button button-clear icon ion-close">
+        </button>
+
+      </ion-header-bar>
+      <ion-content>
+        Hello THIS IS HELP SECTION.
+
+
+
+
+
+
+
+
+
+      </ion-content>
+
+      <ion-footer-bar class="bar-dark">
+
+      </ion-footer-bar>
+    </ion-modal-view>
+
+  </script>
+  <script id="my-popover.html" type="text/ng-template">
+    <ion-popover-view>
+      <ion-header-bar>
+        <h1 class="title">{{currentWord}}</h1>
+      </ion-header-bar>
+      <ion-content class="deff">
+        <center>
+          {{allWords[currentWord][0] | arrayText}}</center>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+  <script id="my-popover2.html" type="text/ng-template">
+    <ion-popover-view>
+      <ion-header-bar>
+        <h1 class="title">WORD HIDDEN</h1>
+      </ion-header-bar>
+      <ion-content class="deff">
+        <center>
+          {{words[testedWord][0] | arrayText}}</center>
+      </ion-content>
+    </ion-popover-view>
+  </script>
+
+
+
+
+
+
+
+<script id="jsbin-javascript">
+function pickRandomProperty(obj) {
+  var result;
+  var count = 0;
+  for (var prop in obj)
+    if (Math.random() < 1 / ++count)
+      result = prop;
+  return result;
+}
+
+
+var app = angular.module('ionicApp', ["ionic", 'toaster', 'ngAnimate']);
+app.controller('wordListController', function($scope,
+  $ionicLoading, $ionicModal, $ionicPopover, $ionicPopup, $compile, toaster) {
+
+
+
+
+
+
+
+  //SCOPE Variables
+  $scope.searchWhere = "All";
+  $scope.cats = [
+    "Science", "Biology", "Physics", "Ecology", "Geology",
+    "Math", "Algebra", "Calculus", "Geometry", "Basic Math"
+  ];
+  $scope.user = "";
+  $scope.page213 = 'login.html';
+  $scope.correct = true;
+  $scope.regs = ["Name", "Email", "Password", "Re-enter Password"];
+  $scope.currentWord = "";
+  $scope.words = {};
+  $scope.name = "";
+  $scope.allWords = {};
+  $scope.showALL = true;
+  $scope.testedWord = "";
+  $scope.categorizingWord = "";
+
+  //Regular Variables
+  var ref = new Firebase("https://spell.firebaseio.com");
+  var user = ref.getAuth();
+  var ref2 = new Firebase("https://spell.firebaseio.com/wordList/" + $scope.user.uid);
+  var current;
+  var times = 1;
+
+
+
+
+
+
+  //IS LOGGED IN CHECK
+  if (user !== null) {
+    $scope.user = user;
+    $scope.page213 = "allWords.html";
+    ref2 = new Firebase("https://spell.firebaseio.com/wordList/" + $scope.user.uid);
+    ref.child("users").child($scope.user.uid).once("value", function(data) {
+      $scope.name = data.val();
+
+    });
+  } //CHECKS IF LOGGED IN
+
+
+
+
+
+  //SCOPE FUNTIONS
+  $scope.changeSearch = function() {
+
+    if ($scope.searchWhere == "All") {
+      $scope.searchWhere = "Words";
+    } else {
+
+      $scope.searchWhere = "All";
+
+    }
+  };
+  $scope.cate = function(k) {
+
+    $scope.openModal1(k);
+
+
+  };
+  //REGULAR FUNCTIONS
+  function searchFor(key) {
+
+    ref.child("wordList").once("value", function(data) {
+      var exists = false;
+      data.forEach(function(childSnapshot) {
+
+        console.log(key + childSnapshot.child(key).exists());
+        if (!exists) {
+          exists = childSnapshot.child(key).exists();
+        }
+
+      });
+
+      if (exists) {
+        alert("That word is already is in the database!");
+      } else {
+        console.log("IAM ADDING");
+        $.getJSON('//api.pearson.com/v2/dictionaries/ldoce5/entries?headword=' + key.toUpperCase(), function(data) {
+
+          ref.child("wordList").child(key.toLowerCase()).child("Definition").set(data.results[0].senses[0].definition);
+
+          ref.child("wordList").child(key.toLowerCase()).child("users").child($scope.user.uid).set(false);
+
+          ref.child("wordList").child(key.toLowerCase()).child("by").set($scope.user.uid);
+
+
+
+
+        });
+
+
+      }
+
+    });
+
+
+
+
+  }
+
+  function getParent(snapshot) {
+    // You can get the reference (A Firebase object) from a snapshot
+    // using .ref().
+    var ref = snapshot.ref();
+    // Now simply find the parent and return the name.
+    return ref.parent().name();
+  }
+
+  //LOGIN/ REGISTRATION STUFF
+
+  $scope.authUser = function() {
+
+
+    ref.authWithPassword({
+      email: $("#user").val(),
+      password: $("#pass").val()
+    }, function(error, authData) {
+      $scope.load();
+      if (error) {
+        $scope.unload();
+        console.log("Login Failed!", error);
+      } else {
+        $scope.unload();
+        $scope.page213 = "allWords.html";
+        console.log($scope.page213);
+      }
+    });
+
+
+
+
+
+  };
+
+  $scope.cUser = function() {
+
+    if ($(".dIn").eq(2).val() == $(".dIn").eq(3).val()) {
+
+      ref.createUser({
+        email: $(".dIn").eq(1).val(),
+        password: $(".dIn").eq(2).val()
+      }, function(error, userData) {
+        if (error) {
+          alert("Error creating user:", error);
+
+        } else {
+          alert("Successfully created user account with uid:", userData.uid);
+          ref.child("users").child(userData.uid).set($(".dIn").eq(0).val());
+        }
+      });
+
+
+
+
+    } else {
+
+      alert("Passwords dont match");
+    }
+
+
+
+
+  };
+
+  $scope.showPopup = function() {
+    $scope.data = {};
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      template: '<input type="email" id="hi" ng-model="data.wifi">',
+      title: 'Forgot Password',
+      subTitle: 'Please enter your email',
+      scope: $scope,
+      buttons: [{
+        text: 'Cancel'
+      }, {
+        text: '<b>Submit</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          var ref = new Firebase(
+            "https://spell.firebaseio.com"
+          );
+          ref.resetPassword({
+            email: $("#hi")
+              .val()
+          }, function(error) {
+            if (error) {
+              switch (
+                error.code
+              ) {
+                case "INVALID_USER":
+                  var
+                    alertPopup =
+                    $ionicPopup
+                    .alert({
+                      title: 'Oops!',
+                      template: "Can't Find User"
+                    });
+                  break;
+                default:
+                  var
+                    alertPopup2 =
+                    $ionicPopup
+                    .alert({
+                      title: 'Hmmm..',
+                      template: "It broke: " +
+                        error
+                    });
+              }
+            } else {
+              var
+                alertPopup3 =
+                $ionicPopup
+                .alert({
+                  title: 'Sucess!',
+                  template: "Password reset email sent successfully!"
+                });
+            }
+          });
+        }
+      }]
+    });
+    myPopup.then(function(res) {});
+  };
+
+  $scope.log = function() {
+
+    ref.authWithOAuthPopup("google", function(error, authData) {
+      $scope.load();
+      if (error) {
+        $scope.unload();
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+        $scope.user = authData;
+        $scope.page213 = "allWords.html";
+        $scope.unload();
+        if (authData.uid !== "google:107739024489400360785" && authData.uid !== "google:116656001578322121975") {
+          ref.child("users").child(authData.uid).set(authData.google.displayName);
+        }
+      }
+    });
+
+  };
+
+  $scope.logout = function() {
+    var c = confirm("Are you sure you want to Leave?");
+    if (c) {
+      ref.unauth();
+      $scope.page213 = "login.html";
+
+
+    }
+  };
+
+
+
+
+  //MODAL/POPOVER FUNCTIONS
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+  $ionicModal.fromTemplateUrl('categorize.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal1 = modal;
+  });
+  $scope.openModal1 = function(k) {
+
+		$scope.categorizingWord=k;
+		$scope.modal1.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal1.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal1.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+
+
+  $ionicPopover.fromTemplateUrl('my-popover.html', {
+    scope: $scope
+  }).then(function(popover) {
+    $scope.popover = popover;
+  });
+  $ionicPopover.fromTemplateUrl('my-popover2.html', {
+    scope: $scope
+  }).then(function(popover) {
+    $scope.popover2 = popover;
+  });
+  $scope.alert = function(w) {
+    console.log(w);
+  };
+
+
+
+
+  //WORD FUNCTIONS
+
+  $scope.addME = function(word) {
+
+    ref.child("wordList").child(word.toLowerCase()).child("users").child($scope.user.uid).set(false);
+
+
+    ref.child("wordList").child(word.toLowerCase()).once("value", function(snapshot, prevChildKey) {
+      $scope.words[snapshot.key()] = [snapshot.child("Definition").val(), snapshot.child("users").child($scope.user.uid).val()];
+
+      toaster.pop('success', word + " has been added!!!", snapshot.child("Definition").val()[0]);
+
+    });
+  };
+
+  $scope.learnt = function(word, to, $event) {
+    if (to) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Learn Word',
+        template: "Do you know " + word + "?"
+      });
+
+      confirmPopup.then(function(res) {
+        if (res) {
+          ref.child("wordList").child(word.toLowerCase()).child("users").child($scope.user.uid).set(true);
+          $scope.words[word][1] = true;
+          console.log("Learned");
+        } else {
+
+        }
+      });
+    } else {
+      var confirmPopup2 = $ionicPopup.confirm({
+        title: 'Unlearn Word',
+        template: "You do not know " + word + ". Correct?"
+      });
+
+      confirmPopup2.then(function(res) {
+        if (res) {
+          ref.child("wordList").child(word.toLowerCase()).child("users").child($scope.user.uid).set(false);
+
+          $scope.words[word][1] = false;
+          console.log("unLearned");
+        } else {
+
+        }
+      });
+
+    }
+
+
+  };
+
+  $scope.pick = function(key, val, $event) {
+    if (times % 2 == 1) {
+
+      $(".card").hide();
+      $($event.target).closest(".card").show().css("position", "absolute");
+      $($event.target).closest(".card").animate({
+        bottom: "0",
+        width: "94vw",
+        "margin-top": "0px"
+      });
+
+
+      for (var ii in val) {
+
+        var html = $compile(
+          '<div class="card nd"> <div class="item item-text-wrap item-balanced item-button-right" >' + val[ii] + '</div></div>'
+        )($scope);
+
+        $(".catttt").append(html);
+
+
+
+      }
+      var htm2l = $compile(
+        '<div class="card nd"> <div class="item item-text-wrap item-balanced item-button-right" >All</div></div>'
+      )($scope);
+
+      $(".catttt").append(htm2l);
+
+
+    } else {
+      $(".nd").remove();
+
+      $($event.target).closest(".card").show().css("position", "relative");
+      $($event.target).closest(".card").animate({
+
+        width: "94vw",
+        "margin-top": "20px"
+      });
+
+
+      $(".card").show();
+
+    }
+
+    times++;
+
+  };
+
+  $scope.newWordPick = function() {
+    if ($scope.showALL) {
+
+      var same = true;
+      var currWord = pickRandomProperty($scope.words);
+
+      while (same) {
+        currWord = pickRandomProperty($scope.words);
+        if (currWord.toLowerCase() !== $scope.testedWord) {
+
+          same = false;
+        }
+
+      }
+      $scope.testedWord = currWord;
+      $scope.speak($scope.testedWord);
+    } else {
+      var same2 = true;
+      var currWord2 = pickRandomProperty($scope.words);
+      while ($scope.words[currWord2][1] || same2) {
+        currWord2 = pickRandomProperty($scope.words);
+        if (currWord2.toLowerCase() !== $scope.testedWord) {
+
+          same2 = false;
+        } else {
+          same2 = true;
+        }
+      }
+
+      $scope.testedWord = currWord2;
+      $scope.speak($scope.testedWord);
+    }
+  };
+
+  $scope.defineTEST = function($event) {
+    if ($scope.testedWord === "") {
+      $scope.speak("Click New Word Button First");
+
+
+    } else {
+      $scope.popover2.show($event);
+    }
+  };
+
+  $scope.checkIT = function() {
+    var g = $("#guess").val();
+
+    $scope.speak("You guessed " + g);
+    $scope.speak("The Correct Word is " + $scope.testedWord);
+    if (g.toLowerCase().replace(/\s/g, "") == $scope.testedWord.replace(/\s/g, "")) {
+      ref2.child($scope.testedWord.toLowerCase()).child("Learned").set(true);
+      $scope.words[$scope.testedWord.toLowerCase()][1] = true;
+      $scope.speak("You are Correct");
+      $("#guess").val("");
+    } else {
+      $scope.speak("You are INCORRECT");
+    }
+  };
+
+
+
+
+
+
+  $scope.speakAgain = function() {
+    // 		console.log($scope.testedWord);
+    $scope.speak($scope.testedWord);
+
+
+  };
+  $scope.define = function(word, $event) {
+
+    $scope.currentWord = word;
+    $scope.popover.show($event);
+    console.log(word);
+  };
+
+
+
+
+  $scope.addWord = function() {
+
+    var word = $(".newWord").val().toLowerCase();
+    $scope.speak(word);
+
+    searchFor(word);
+
+
+  };
+
+  //FIREBASE -- CHILD ADDED
+  ref.child("wordList").on("child_added", function(snapshot, prevChildKey) {
+    $scope.allWords[snapshot.key()] = [snapshot.child("Definition").val(), snapshot.child("by").val()];
+
+    //	console.log(snapshot.child("users").child($scope.user.uid).exists());
+    if (snapshot.child("users").child($scope.user.uid).exists()) {
+      $scope.words[snapshot.key()] = [snapshot.child("Definition").val(), snapshot.child("users").child($scope.user.uid).val()];
+
+    }
+
+
+    $scope.$apply();
+  });
+
+  // UTILITY (SPEAK, ALERT, etc...)
+  $scope.speak = function(word) {
+    console.log(word);
+    responsiveVoice.speak(word, "US English Male");
+
+  };
+  $scope.alert = function(a) {
+    ref.child("users").child(a[1]).once("value", function(data) {
+
+      toaster.pop('success', "The Creator Is", data.val());
+
+    });
+  };
+  $scope.load = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  };
+  $scope.unload = function() {
+    $ionicLoading.hide();
+  };
+  $scope.show = function(what) {
+    $('.wordLISTlist .item').hide();
+    if (what == "all") {
+
+
+      $('.item').show();
+    } else if (what == "learned") {
+      $('.item:has(button.true)').show();
+    } else {
+      $(' .item:has(button.false)').show();
+    }
+
+
+  };
+  $scope.sa = function() {
+    $scope.showALL = !$scope.showALL;
+    if ($scope.showALL) {
+
+      $(".taw").text("Testing All Words");
+
+    } else {
+
+      $(".taw").text("Testing Unknown Words");
+    }
+  };
+  $scope.changePage = function(t) {
+
+    $scope.page213 = t;
+
+  };
+  $scope.allTags = "";
+  $scope.tags = function(u) {
+    if ($scope.allTags.indexOf(u) != -1) {
+      $scope.allTags = $scope.allTags.replace(u, "");
+      $scope.allTags = $scope.allTags.replace(",", "");
+    } else {
+      $scope.allTags = u + ", " + $scope.allTags;
+    }
+  };
+  $scope.tagNew = function() {
+    if ($("#newcat").val() !== "")
+      $scope.cats.unshift($("#newcat").val());
+
+
+
+
+  };
+Array.prototype.clean = function(deleteValue) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == deleteValue) {
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
+
+  $scope.catog = function() {
+    var array = $scope.allTags.split(", ");
+		array=array.clean("");
+    ref.child("wordList").child($scope.categorizingWord).child("categories").set(array);
+  for(var i in array){
+	ref.child("categories").child(array[i]).child($scope.categorizingWord).set(true);
+
+
+	}
+
+  };
+
+
+});
+
+
+
+
+//FILTERS
+
+app.filter('custom', function() {
+  return function(input, search, where) {
+    if (!input) return input;
+    if (!search) return input;
+    if (!where) {
+      return input;
+    } else if (where == "words") {
+      var expected = ('' + search).toLowerCase();
+      var result = {};
+      angular.forEach(input, function(value, key) {
+        var actual = ('' + key).toLowerCase();
+        if (actual.indexOf(expected) !== -1) {
+          result[key] = value;
+        }
+      });
+      return result;
+
+    } else {
+      var expected2 = ('' + search).toLowerCase();
+      var result2 = {};
+      angular.forEach(input, function(value, key) {
+        var actual = ('' + key + '' + value[0]).toLowerCase();
+        if (actual.indexOf(expected2) !== -1) {
+          result2[key] = value;
+        }
+      });
+      return result2;
+
+
+
+
+
+    }
+
+
+  };
+}); //SEARCH
+
+app.filter('arrayText', function() {
+  return function(input) {
+
+    return input[0];
+  };
+}); //TEXT FORMAT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $.getJSON('https://rawgit.com/Pokemon9753/GreekLatinRoots2/master/roots.json', function(data) {
+
+
+//   roots = data;
+//   done = true;
+// });
+
+
+// function newRoot() {
+
+
+//   var root = roots[Math.floor(Math.random() * roots.length)];
+
+
+//   console.log(root);
+// }
+
+// setTimeout(function() {
+//   newRoot();
+// }, 100);
+</script>
+</body>
+
+</html>

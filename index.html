@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+ 
+<link rel="stylesheet" href="./skeleton.css">
+
+</head>
+<body><div id="app" class="container">
+            <h1 class="title">
+            Random Odds and Ends
+            </h1>
+            <h6 class="subtitle">
+              This page houses some of my older and smaller projects. These might often be broken - mainly due to Firebase having changed hands in the meanwhile, but maybe some of then could be fun to play with. I'll be adding more as I find and fix them.
+            </h6>
+
+            <h6><b>Some of these are scary to say the least. Please refrain from interaction if you are afraid of terrible coding practices and design.</b></h6>
+
+            <a class="button" href="index.html">Go Home</a>
+        <hr>
+        
+
+        <h4>Abaci</h4>
+<p>When I first started off I was obcessed with Abaci for some reason. I made so many different kinds of abaci. Here they are in all their glory.</p>
+        <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="a in abaci">
+                <td>{{a.title}}</td>
+                <td>{{a.desc}}</td>
+                <td>   <a v-bind:href="'.'+ a.url">Visit App </a></td>
+       
+              </tr>
+            </tbody>
+          </table>
+          <h4>Other Stuff</h4>
+        <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="a in apps">
+                <td>{{a.title}}</td>
+                <td>{{a.desc}}</td>
+                <td>   <a v-bind:href="'.'+ a.url">Visit App </a></td>
+       
+              </tr>
+            </tbody>
+          </table>
+
+
+        </div>
+
+
+
+      <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+            abaci:[
+                {title:"Mayan Abacus [Redux]",url:"/maredux.html",desc:"The most recent of the abaci based on the Mayan Abacus (Base 20) - also the best looking."},
+                
+                {title:"Suanpan",url:"/cabac.html",desc:"A mockup of a Chinese Abacus - aka a Suanpan."},
+                                       
+                {title:"Draggable Abacus",url:"/draggable.html",desc:"An actual draggable Abacus. Magic to a middle schooler."},
+                {title:"Japanese Abacus",url:"/jabac.html",desc:"A Japanese Abacus."},
+                {title:"Mayan Abacus",url:"/mabac.html",desc:"The OG Mayan Abacus."},
+                {title:"Slider Abacus",url:"/slider.html",desc:"A Sliding Abacus. Doesn't even show a total."},
+                                       
+            
+            
+
+            
+            ],
+            apps:[
+                {title:"Monopoly",url:"/monopoly.html",desc:"A Monopoly Clone. There isn't any real interaction past random rolling of the die and moving around- as I was focused more so on the board itself."}
+, {title:"Blackjack",url:"/blackjack.html",desc:"A brutalist interpretation of Blackjack. Clean no fluff UI."},
+{title:"Calender",url:"/calender.html",desc:"A simplistic no-frills Google Calender knockoff."},
+{title:"Bookmarks",url:"/bookmark.html",desc:"A now defunct bookmarks page. Thanks Firebase!"},
+{title:"Color Games",url:"/colorgames.html",desc:"A series of simple Color based Puzzles!"},
+{title:"Data Project",url:"/csse.html",desc:"A hs data project with knifty animations and slideshow controls!"},
+{title:"Guessing Game",url:"/guess.html",desc:"A little guessing game! Brutalist UI!"},
+{title:"Links Tool",url:"/linkstool.html",desc:"A link visualization tool made with Vis.JS- Early family tool prototype."},
+{title:"Solar System",url:"/solarsystem.html",desc:"A web visualiztion of the Solar System. Only works when zoomed   way way out."},
+{title:"Tic Tac Toe",url:"/tictactoe.html",desc:"The world's most difficult game. Now in pretty flat colors and bugs."},                   
+{title:"Simple Solar System",url:"/bss.html",desc:"At least this one works."},                       
+            
+            
+
+            
+            ]
+
+        }
+      })
+    </script>
+</body>
+</html>
